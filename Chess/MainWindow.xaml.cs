@@ -21,19 +21,19 @@ namespace Chess
     public partial class MainWindow : Window
     {
 
-        Schachbrett brett;
+        Chessboard board;
 
         public MainWindow()
         {
             InitializeComponent();
-            brett = new Schachbrett();
-            brett.Init(this);
+            board = new Chessboard(this);
+            board.Init();
         }
 
         public void Select_Field(object sender, RoutedEventArgs e)
         {
 
-            brett.Select_Field((MyButton)sender);
+            board.Select_Field((MyButton)sender);
             
         }
     }

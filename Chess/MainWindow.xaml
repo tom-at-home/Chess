@@ -6,11 +6,225 @@
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
         Title="MyChess" SizeToContent="WidthAndHeight"
-        x:Name="Hauptfenster">
+        x:Name="Hauptfenster"
+        ResizeMode="CanMinimize">
+    
+    <Canvas Height="495" Width="450">
 
-    <Grid Name="grid">
-        <WrapPanel Name="panel" HorizontalAlignment="Left" Height="445" VerticalAlignment="Top" Width="400">
-            <Label Name="info" Width="400" Height="45" Background="LightBlue" Content=""/>
-        </WrapPanel>
-    </Grid>
+        <!-- INFO ANZEIGE -->
+        <Canvas Width="450" Height="45" Canvas.Top="0" Canvas.Left="0">
+            <Label Name="info" Width="450" Height="45" Background="LightBlue" Content=""/>
+        </Canvas>
+
+        <!-- BESCHRIFTUNG OBEN -->
+        <Canvas Width="450" Height="25" Canvas.Left="0" Canvas.Top="45">
+            <WrapPanel Width="450" Height="25">
+                <Label Width="25" Height="25" Background="Beige" Content="" HorizontalContentAlignment="Center" />
+                <Label Width="50" Height="25" Background="Beige" Content="A" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="50" Height="25" Background="Beige" Content="B" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="50" Height="25" Background="Beige" Content="C" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="50" Height="25" Background="Beige" Content="D" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="50" Height="25" Background="Beige" Content="E" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="50" Height="25" Background="Beige" Content="F" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="50" Height="25" Background="Beige" Content="G" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="50" Height="25" Background="Beige" Content="H" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" VerticalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="25" Height="25" Background="Beige" Content="" HorizontalContentAlignment="Center" />
+            </WrapPanel>
+        </Canvas>
+
+        <!-- BESCHRIFTUNG LINKS -->
+        <Canvas Width="25" Height="400" Canvas.Left="0" Canvas.Top="70">
+            <WrapPanel Width="25" Height="400">
+                <Label Width="25" Height="50" Background="Beige" Content="8" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Label Width="25" Height="50" Background="Beige" Content="7" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Label Width="25" Height="50" Background="Beige" Content="6" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Label Width="25" Height="50" Background="Beige" Content="5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Label Width="25" Height="50" Background="Beige" Content="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Label Width="25" Height="50" Background="Beige" Content="3" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Label Width="25" Height="50" Background="Beige" Content="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Label Width="25" Height="50" Background="Beige" Content="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            </WrapPanel>
+        </Canvas>
+
+        <!-- SCHACHBRETT -->
+        <Canvas Width="400" Height="400" Canvas.Left="25" Canvas.Top="70">
+            <WrapPanel Name="panel" HorizontalAlignment="Center" Height="400" VerticalAlignment="Top" Width="400" />
+        </Canvas>
+
+        <!-- BESCHRIFTUNG RECHTS -->
+        <Canvas Width="25" Height="400" Canvas.Left="425" Canvas.Top="70">
+            <WrapPanel Width="25" Height="400">
+                <Label Width="25" Height="50" Background="Beige" Content="8" VerticalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="25" Height="50" Background="Beige" Content="7" VerticalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="25" Height="50" Background="Beige" Content="6" VerticalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="25" Height="50" Background="Beige" Content="5" VerticalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="25" Height="50" Background="Beige" Content="4" VerticalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="25" Height="50" Background="Beige" Content="3" VerticalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="25" Height="50" Background="Beige" Content="2" VerticalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+                <Label Width="25" Height="50" Background="Beige" Content="1" VerticalContentAlignment="Center" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center">
+                    <Label.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-180"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Label.RenderTransform>
+                </Label>
+            </WrapPanel>
+        </Canvas>
+
+        <!-- BESCHRIFTUNG UNTEN -->
+        <Canvas Width="450" Height="25" Canvas.Left="0" Canvas.Top="470">
+            <WrapPanel Width="450" Height="25">
+                <Label Width="25" Height="25" Background="Beige" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Label Width="50" Height="25" Background="Beige" Content="A" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Label Width="50" Height="25" Background="Beige" Content="B" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Label Width="50" Height="25" Background="Beige" Content="C" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Label Width="50" Height="25" Background="Beige" Content="D" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Label Width="50" Height="25" Background="Beige" Content="E" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Label Width="50" Height="25" Background="Beige" Content="F" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Label Width="50" Height="25" Background="Beige" Content="G" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Label Width="50" Height="25" Background="Beige" Content="H" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Label Width="25" Height="25" Background="Beige" Content="" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            </WrapPanel>
+        </Canvas>
+
+    </Canvas>
+       
 </Window>
