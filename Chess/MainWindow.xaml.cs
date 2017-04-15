@@ -21,38 +21,19 @@ namespace Chess
     public partial class MainWindow : Window
     {
 
-        MyButton selectedField = null;
-        MyButton fieldToMove = null;
+        Schachbrett brett;
 
         public MainWindow()
         {
             InitializeComponent();
-            Schachbrett brett = new Schachbrett();
+            brett = new Schachbrett();
             brett.Init(this);
         }
 
         public void Select_Field(object sender, RoutedEventArgs e)
         {
-            
-            if(selectedField == null)
-            {
-                selectedField = (MyButton)sender;
-                selectedField.Background = Brushes.MediumAquamarine;
-                info.Content = selectedField.Name + " AUSGEWÄHLT";
-            }
-            else if(selectedField == (MyButton)sender)
-            {
-                selectedField.Background = selectedField.Color;
-                selectedField = null;
-                info.Content = "NICHT AUSGEWÄHLT";
-            }
-            else
-            {
-                fieldToMove = (MyButton)sender;
-                info.Content = "TRY TO MOVE TO: " + fieldToMove.Name + "\r\nNICHTS AUSGEWÄHLT";
-                selectedField.Background = selectedField.Color;
-                selectedField = null;
-            }
+
+            brett.Select_Field((MyButton)sender);
             
         }
     }

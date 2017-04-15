@@ -12,6 +12,8 @@ namespace Chess
     {
 
         MainWindow mainwindow;
+        MyButton selectedField = null;
+        MyButton fieldToMove = null;
 
         public void Init(MainWindow mainwindow)
         {
@@ -63,6 +65,29 @@ namespace Chess
                     }
                     mainwindow.panel.Children.Add(button);
                 }
+            }
+        }
+
+        public void Select_Field(MyButton selected)
+        {
+            if (selectedField == null)
+            {
+                selectedField = selected;
+                selectedField.Background = Brushes.MediumAquamarine;
+                mainwindow.info.Content = selectedField.Name + " AUSGEWÄHLT";
+            }
+            else if (selectedField == selected)
+            {
+                selectedField.Background = selectedField.Color;
+                selectedField = null;
+                mainwindow.info.Content = "NICHT AUSGEWÄHLT";
+            }
+            else
+            {
+                fieldToMove = selected;
+                mainwindow.info.Content = "TRY TO MOVE TO: " + fieldToMove.Name + "\r\nNICHTS AUSGEWÄHLT";
+                selectedField.Background = selectedField.Color;
+                selectedField = null;
             }
         }
     }
