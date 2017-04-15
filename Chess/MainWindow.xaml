@@ -8,7 +8,7 @@
         Title="MyChess" SizeToContent="WidthAndHeight"
         x:Name="Hauptfenster"
         ResizeMode="CanMinimize">
-    
+
     <Canvas Height="495" Width="450">
 
         <!-- INFO ANZEIGE -->
@@ -226,5 +226,5 @@
         </Canvas>
 
     </Canvas>
-       
+
 </Window>

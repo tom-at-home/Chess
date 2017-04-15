@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Chess
 {
@@ -39,7 +40,6 @@ namespace Chess
                     button.Click += mainwindow.Select_Field;
                     button.Width = 50;
                     button.Height = 50;
-                    button.FontWeight = System.Windows.FontWeights.Bold;
 
                     Char prefixChar = (Char)(prefix + col);
                     name = prefixChar + "" + row;

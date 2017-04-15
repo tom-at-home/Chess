@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace Chess
 {
@@ -13,8 +15,16 @@ namespace Chess
 
         public Pawn(bool isWhite, string pos)
         {
+            Image img = new Image();
+            img.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/bauer.png"));
+
+            StackPanel stackPnl = new StackPanel();
+            stackPnl.Orientation = Orientation.Horizontal;
+            stackPnl.Margin = new System.Windows.Thickness(10);
+            stackPnl.Children.Add(img);
+
             this.isWhite = isWhite;
-            this.View = "B";
+            this.View = stackPnl;
             this.current_position = pos;
             this.desc = "BAUER";
         }

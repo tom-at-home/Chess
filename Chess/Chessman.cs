@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Chess
 {
@@ -11,8 +12,8 @@ namespace Chess
         protected bool isWhite;
         public bool IsWhite { get => isWhite; set => isWhite = value; }
 
-        protected string view;
-        public string View { get => view; set => view = value; }
+        protected StackPanel view;
+        public StackPanel View { get => view; set => view = value; }
 
         protected string current_position;
         public string Current_Position { get => current_position; set => current_position = value; }
