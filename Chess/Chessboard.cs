@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace Chess
 {
@@ -26,7 +21,6 @@ namespace Chess
 
         public void Init()
         {
-
             int prefix;
             string name = "";
 
@@ -84,6 +78,14 @@ namespace Chess
             Pawn pawn_w_6 = new Pawn(true, "F2");
             Pawn pawn_w_7 = new Pawn(true, "G2");
             Pawn pawn_w_8 = new Pawn(true, "H2");
+            Pawn pawn_b_1 = new Pawn(false, "A7");
+            Pawn pawn_b_2 = new Pawn(false, "B7");
+            Pawn pawn_b_3 = new Pawn(false, "C7");
+            Pawn pawn_b_4 = new Pawn(false, "D7");
+            Pawn pawn_b_5 = new Pawn(false, "E7");
+            Pawn pawn_b_6 = new Pawn(false, "F7");
+            Pawn pawn_b_7 = new Pawn(false, "G7");
+            Pawn pawn_b_8 = new Pawn(false, "H7");
             chessman.Add(pawn_w_1);
             chessman.Add(pawn_w_2);
             chessman.Add(pawn_w_3);
@@ -92,6 +94,14 @@ namespace Chess
             chessman.Add(pawn_w_6);
             chessman.Add(pawn_w_7);
             chessman.Add(pawn_w_8);
+            chessman.Add(pawn_b_1);
+            chessman.Add(pawn_b_2);
+            chessman.Add(pawn_b_3);
+            chessman.Add(pawn_b_4);
+            chessman.Add(pawn_b_5);
+            chessman.Add(pawn_b_6);
+            chessman.Add(pawn_b_7);
+            chessman.Add(pawn_b_8);
             DisplayChessman();
         }
 
@@ -101,16 +111,23 @@ namespace Chess
             if (selectedField == null)
             {
                 selectedChessman = GetChessmanAtField(selected);
-
+               
                 if (selectedChessman != null)
                 {
-                    selectedField = selected;
-                    selectedField.Background = Brushes.MediumAquamarine;
-                    mainwindow.info.Content = selectedChessman.Desc + " AUF " + selectedField.Name + " AUSGEWÄHLT";
+                    if (mainwindow.active_player.Color == selectedChessman.Color)
+                    {
+                        selectedField = selected;
+                        selectedField.Background = Brushes.MediumAquamarine;
+                        mainwindow.ShowInfo(selectedChessman.Desc + " AUF " + selectedField.Name + " AUSGEWÄHLT");
+                    }
+                    else
+                    {
+                        mainwindow.ShowInfo("BITTE EINE EIGENE SCHACHFIGUR AUSWÄHLEN");
+                    }
                 }
                 else
                 {
-                    mainwindow.info.Content = "BITTE EINE SCHACHFIGUR AUSWÄHLEN";
+                    mainwindow.ShowInfo("BITTE EINE SCHACHFIGUR AUSWÄHLEN");
                 }
             }
             // SCHACHFIGUR DE-SELEKTIEREN
@@ -119,7 +136,7 @@ namespace Chess
                 selectedField.Background = selectedField.Color;
                 selectedField = null;
                 selectedChessman = null;
-                mainwindow.info.Content = "NICHTS AUSGEWÄHLT";
+                mainwindow.ShowInfo("NICHTS AUSGEWÄHLT");
             }
             // SCHACHFIGUR BEWEGEN
             else
@@ -131,20 +148,25 @@ namespace Chess
                     try
                     {
                         selectedChessman.Move(currentField, fieldToMove);
-                        mainwindow.info.Content = "BEWEGE " + selectedChessman.Desc
+                        mainwindow.ShowInfo("BEWEGE " + selectedChessman.Desc
                                     + " VON " + currentField.Name
-                                    + " AUF " + fieldToMove.Name;
+                                    + " AUF " + fieldToMove.Name);
                         DisplayChessman();
+                        mainwindow.RotatePlayer();
+                        mainwindow.ShowInfo("");
                     }
                     catch (InvalidMoveException)
                     {
-                        mainwindow.info.Content = "UNGÜLTIGER ZUG";
+                        mainwindow.ShowInfo("UNGÜLTIGER ZUG");
                     }
-
+                    catch (BlockedMoveException)
+                    {
+                        mainwindow.ShowInfo("DIESER ZUG IST BLOCKIERT");
+                    }
                 }
                 else
                 {
-                    mainwindow.info.Content = "KEINE FIGUR ZUM BEWEGEN AUSGEWÄHLT!\r\nNICHTS AUSGEWÄHLT";
+                    mainwindow.ShowInfo("KEINE FIGUR ZUM BEWEGEN AUSGEWÄHLT! - NICHTS AUSGEWÄHLT");
                 }
                 selectedField.Background = selectedField.Color;
                 selectedField = null;

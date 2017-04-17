@@ -1,33 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace Chess
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    partial class MainWindow : Window
     {
 
-        Chessboard board;
+        static internal Chessboard board;
+        Player white;
+        Player black;
+        internal Player active_player;
 
         public MainWindow()
         {
             InitializeComponent();
+            InitGame();
+        }
+
+        private void InitGame()
+        {
             board = new Chessboard(this);
             board.Init();
+            white = new Player("WEISS", "white");
+            black = new Player("SCHWARZ", "black");
+            active_player = white;
+            ShowInfo("");
         }
 
         public void Select_Field(object sender, RoutedEventArgs e)
@@ -35,6 +34,25 @@ namespace Chess
 
             board.Select_Field((MyButton)sender);
             
+        }
+
+        public void ShowInfo(string msg)
+        {
+            this.info.Content = active_player.Name + " IST AM ZUG";
+            this.info.Content += "\r\n";
+            this.info.Content += msg;
+        }
+
+        public void RotatePlayer()
+        {
+            if(active_player == white)
+            {
+                active_player = black;
+            }
+            else
+            {
+                active_player = white;
+            }
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Chess
 {
@@ -11,6 +6,9 @@ namespace Chess
     {
         protected bool isWhite;
         public bool IsWhite { get => isWhite; set => isWhite = value; }
+
+        protected string color;
+        public string Color { get => color; }
 
         protected StackPanel view;
         public StackPanel View { get => view; set => view = value; }
