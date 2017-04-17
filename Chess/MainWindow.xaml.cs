@@ -36,11 +36,20 @@ namespace Chess
             
         }
 
-        public void ShowInfo(string msg)
+        public void ShowInfo(string msg, bool rotate = false)
         {
-            this.info.Content = active_player.Name + " IST AM ZUG";
-            this.info.Content += "\r\n";
-            this.info.Content += msg;
+            if(rotate)
+            {
+                this.info.Content = msg;
+                this.info.Content += "\r\n";
+                this.info.Content += active_player.Name + " IST AM ZUG";
+            }
+            else
+            {
+                this.info.Content = active_player.Name + " IST AM ZUG";
+                this.info.Content += "\r\n";
+                this.info.Content += msg;
+            }
         }
 
         public void RotatePlayer()

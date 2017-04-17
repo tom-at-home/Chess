@@ -41,81 +41,6 @@ namespace Chess
             this.current_position = pos;
             this.desc = "BAUER";
         }
-        /*
-        public override void Move(MyButton source, MyButton dest)
-        {
-            int source_col = Convert.ToInt16(Convert.ToChar(source.Name.Substring(0,1)));
-            int source_row = Convert.ToInt16(source.Name.Substring(1, 1));
-            int dest_col = Convert.ToInt16(Convert.ToChar(dest.Name.Substring(0, 1)));
-            int dest_row = Convert.ToInt16(dest.Name.Substring(1, 1));
-
-            if (this.isWhite)
-            {
-                if(source_col == dest_col && dest_row - source_row == 2)
-                {
-                    if(!isMoved && !isBlocked(source, dest))
-                    {
-                        source.Content = "";
-                        this.current_position = GetFieldnameFromInt(dest_col, dest_row);
-                        isMoved = true;
-                    }
-                    else
-                    {
-                        throw new InvalidMoveException();
-                    }
-                }
-                else if (source_col == dest_col && dest_row - source_row == 1)
-                {
-                    if (!isBlocked(source, dest))
-                    {
-                        source.Content = "";
-                        this.current_position = GetFieldnameFromInt(dest_col, dest_row);
-                        isMoved = true;
-                    }
-                    else
-                    {
-                        throw new InvalidMoveException();
-                    }
-                }
-                else
-                {
-                    throw new InvalidMoveException();
-                }
-            }
-            else
-            {
-                if (source_col == dest_col && source_row - dest_row == 2)
-                {
-                    if (!isMoved && !isBlocked(source, dest))
-                    {
-                        source.Content = "";
-                        this.current_position = GetFieldnameFromInt(dest_col, dest_row);
-                        isMoved = true;
-                    }
-                    else
-                    {
-                        throw new InvalidMoveException();
-                    }
-                }
-                else if (source_col == dest_col && source_row - dest_row == 1)
-                {
-                    if (!isBlocked(source, dest))
-                    {
-                        source.Content = "";
-                        this.current_position = GetFieldnameFromInt(dest_col, dest_row);
-                        isMoved = true;
-                    }
-                    else
-                    {
-                        throw new InvalidMoveException();
-                    }
-                }
-                else
-                {
-                    throw new InvalidMoveException();
-                }
-            }
-        }*/
         
         public override void Move(MyButton source, MyButton dest)
         {
@@ -134,6 +59,9 @@ namespace Chess
                         {
                             source.Content = "";
                             this.current_position = GetFieldnameFromInt(dest_col, dest_row);
+                            MainWindow.board.lastAction = "BEWEGE " + this.Desc
+                                    + " VON " + source.Name
+                                    + " AUF " + dest.Name;
                             isMoved = true;
                         }
                         else
@@ -141,6 +69,22 @@ namespace Chess
                             throw new BlockedMoveException();
                         }
 
+                    }
+                    else
+                    {
+                        throw new InvalidMoveException();
+                    }
+                }
+                else if (((source_col-1 == dest_col) || (source_col + 1 == dest_col)) && (dest_row - source_row == 1))
+                {
+                    Chessman opponent = MainWindow.board.GetChessmanAtField(dest);
+                    if (opponent != null && opponent.Color != this.Color)
+                    {
+                        source.Content = "";
+                        this.current_position = GetFieldnameFromInt(dest_col, dest_row);
+                        isMoved = true;
+                        MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name;
+                        MainWindow.board.chessman.Remove(opponent);
                     }
                     else
                     {
@@ -162,6 +106,9 @@ namespace Chess
                         {
                             source.Content = "";
                             this.current_position = GetFieldnameFromInt(dest_col, dest_row);
+                            MainWindow.board.lastAction = "BEWEGE " + this.Desc
+                                    + " VON " + source.Name
+                                    + " AUF " + dest.Name;
                             isMoved = true;
                         }
                         else
@@ -169,6 +116,22 @@ namespace Chess
                             throw new BlockedMoveException();
                         }
 
+                    }
+                    else
+                    {
+                        throw new InvalidMoveException();
+                    }
+                }
+                else if (((source_col - 1 == dest_col) || (source_col + 1 == dest_col)) && (source_row - dest_row == 1))
+                {
+                    Chessman opponent = MainWindow.board.GetChessmanAtField(dest);
+                    if (opponent != null && opponent.Color != this.Color)
+                    {
+                        source.Content = "";
+                        this.current_position = GetFieldnameFromInt(dest_col, dest_row);
+                        isMoved = true;
+                        MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name;
+                        MainWindow.board.chessman.Remove(opponent);
                     }
                     else
                     {

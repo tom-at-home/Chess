@@ -7,12 +7,13 @@ namespace Chess
     class Chessboard
     {
 
-        MainWindow mainwindow;
+        internal MainWindow mainwindow;
         MyButton selectedField = null;
         MyButton fieldToMove = null;
         Chessman selectedChessman = null;
-        List<Chessman> chessman = new List<Chessman>();
+        internal List<Chessman> chessman = new List<Chessman>();
         List<MyButton> squares = new List<MyButton>();
+        internal string lastAction;
 
         public Chessboard(MainWindow mainwindow)
         {
@@ -118,7 +119,8 @@ namespace Chess
                     {
                         selectedField = selected;
                         selectedField.Background = Brushes.MediumAquamarine;
-                        mainwindow.ShowInfo(selectedChessman.Desc + " AUF " + selectedField.Name + " AUSGEWÄHLT");
+                        lastAction = selectedChessman.Desc + " AUF " + selectedField.Name + " AUSGEWÄHLT";
+                        mainwindow.ShowInfo(lastAction);
                     }
                     else
                     {
@@ -148,12 +150,9 @@ namespace Chess
                     try
                     {
                         selectedChessman.Move(currentField, fieldToMove);
-                        mainwindow.ShowInfo("BEWEGE " + selectedChessman.Desc
-                                    + " VON " + currentField.Name
-                                    + " AUF " + fieldToMove.Name);
                         DisplayChessman();
                         mainwindow.RotatePlayer();
-                        mainwindow.ShowInfo("");
+                        mainwindow.ShowInfo(lastAction, true);
                     }
                     catch (InvalidMoveException)
                     {
