@@ -79,6 +79,8 @@ namespace Chess
             Pawn pawn_w_6 = new Pawn(true, "F2");
             Pawn pawn_w_7 = new Pawn(true, "G2");
             Pawn pawn_w_8 = new Pawn(true, "H2");
+            Rook rook_w_1 = new Rook(true, "A1");
+            Rook rook_w_2 = new Rook(true, "H1");
             Pawn pawn_b_1 = new Pawn(false, "A7");
             Pawn pawn_b_2 = new Pawn(false, "B7");
             Pawn pawn_b_3 = new Pawn(false, "C7");
@@ -87,6 +89,8 @@ namespace Chess
             Pawn pawn_b_6 = new Pawn(false, "F7");
             Pawn pawn_b_7 = new Pawn(false, "G7");
             Pawn pawn_b_8 = new Pawn(false, "H7");
+            Rook rook_b_1 = new Rook(false, "A8");
+            Rook rook_b_2 = new Rook(false, "H8");
             chessman.Add(pawn_w_1);
             chessman.Add(pawn_w_2);
             chessman.Add(pawn_w_3);
@@ -95,6 +99,8 @@ namespace Chess
             chessman.Add(pawn_w_6);
             chessman.Add(pawn_w_7);
             chessman.Add(pawn_w_8);
+            chessman.Add(rook_w_1);
+            chessman.Add(rook_w_2);
             chessman.Add(pawn_b_1);
             chessman.Add(pawn_b_2);
             chessman.Add(pawn_b_3);
@@ -103,6 +109,8 @@ namespace Chess
             chessman.Add(pawn_b_6);
             chessman.Add(pawn_b_7);
             chessman.Add(pawn_b_8);
+            chessman.Add(rook_b_1);
+            chessman.Add(rook_b_2);
             DisplayChessman();
         }
 
@@ -146,7 +154,7 @@ namespace Chess
                 fieldToMove = selected;
                 if(selectedChessman != null)
                 {
-                    MyButton currentField = GetField(selectedChessman.Current_Position);
+                    MyButton currentField = GetField(selectedChessman.Current_position);
                     try
                     {
                         selectedChessman.Move(currentField, fieldToMove);
@@ -177,7 +185,7 @@ namespace Chess
         {
             foreach (Chessman item in chessman)
             {
-                MyButton field = GetField(item.Current_Position);
+                MyButton field = GetField(item.Current_position);
                 field.Content = item.View;
             }
         }
@@ -198,7 +206,7 @@ namespace Chess
         {
             foreach (Chessman item in chessman)
             {
-                if(selected.Name == item.Current_Position)
+                if(selected.Name == item.Current_position)
                 {
                     return item;
                 }

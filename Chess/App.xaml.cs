@@ -13,5 +13,15 @@ namespace Chess
     /// </summary>
     public partial class App : Application
     {
+
+        private void InitApp(object sender, StartupEventArgs e)
+        {
+            //MessageBox.Show("Anwendung wird gestartet");
+            MainWindow mainWindow = new MainWindow();
+            //MainWindow.Title = "Hallo";
+            mainWindow.Show();
+            mainWindow.appInstance = mainWindow;
+        }
+
     }
 }
