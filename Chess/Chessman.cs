@@ -4,17 +4,61 @@ namespace Chess
 {
     abstract class Chessman
     {
-        protected bool isWhite;
-        public bool IsWhite { get => isWhite; set => isWhite = value; }
+        private bool isWhite;
+        protected bool IsWhite
+        {
+            get
+            {
+                return isWhite;
+            }
+
+            set
+            {
+                isWhite = value;
+            }
+        }
+
+        //public bool IsWhite { get => IsWhite1; set => IsWhite1 = value; }
 
         protected string color;
-        public string Color { get => color; }
+        public string Color
+        {
+            get
+            {
+                return color;
+            }
+        }
+        //public string Color { get => color; }
 
-        protected StackPanel view;
-        public StackPanel View { get => view; set => view = value; }
+        private StackPanel view;
+        public StackPanel View
+        {
+            get
+            {
+                return view;
+            }
 
-        protected string current_position;
-        public string Current_Position { get => current_position; set => current_position = value; }
+            set
+            {
+                view = value;
+            }
+        }
+        //public StackPanel View { get => view; set => view = value; }
+
+        private string current_position;
+        public string Current_position
+        {
+            get
+            {
+                return current_position;
+            }
+
+            set
+            {
+                current_position = value;
+            }
+        }
+        //public string Current_Position { get => current_position; set => current_position = value; }
 
         protected string desc;
         public string Desc

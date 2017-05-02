@@ -12,6 +12,7 @@ namespace Chess
         Player white;
         Player black;
         internal Player active_player;
+        public MainWindow appInstance;
 
         public MainWindow()
         {
