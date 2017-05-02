@@ -4,42 +4,42 @@ using System.Windows.Media.Imaging;
 
 namespace Chess
 {
-    class Rook : Chessman
+    class Bishop : Chessman
     {
 
-        public Rook(bool isWhite, string pos)
+        public Bishop(bool isWhite, string pos)
         {
 
             this.IsWhite = isWhite;
             if (isWhite)
             {
-                Image whiteRook = new Image();
-                whiteRook.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/turm.png"));
+                Image whiteBishop = new Image();
+                whiteBishop.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/laufer.png"));
 
-                StackPanel whiteRookPnl = new StackPanel();
-                whiteRookPnl.Orientation = Orientation.Horizontal;
-                whiteRookPnl.Margin = new System.Windows.Thickness(8);
-                whiteRookPnl.Children.Add(whiteRook);
+                StackPanel whiteBishopPnl = new StackPanel();
+                whiteBishopPnl.Orientation = Orientation.Horizontal;
+                whiteBishopPnl.Margin = new System.Windows.Thickness(8);
+                whiteBishopPnl.Children.Add(whiteBishop);
 
-                this.View = whiteRookPnl;
+                this.View = whiteBishopPnl;
                 this.color = "white";
             }
             else
             {
-                Image blackRook = new Image();
-                blackRook.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/turm_sw.png"));
+                Image blackBishop = new Image();
+                blackBishop.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/laufer_sw.png"));
 
-                StackPanel blackRookPnl = new StackPanel();
-                blackRookPnl.Orientation = Orientation.Horizontal;
-                blackRookPnl.Margin = new System.Windows.Thickness(8);
-                blackRookPnl.Children.Add(blackRook);
+                StackPanel blackBishopPnl = new StackPanel();
+                blackBishopPnl.Orientation = Orientation.Horizontal;
+                blackBishopPnl.Margin = new System.Windows.Thickness(8);
+                blackBishopPnl.Children.Add(blackBishop);
 
-                this.View = blackRookPnl;
+                this.View = blackBishopPnl;
                 this.color = "black";
             }
 
             this.Current_position = pos;
-            this.desc = "TURM";
+            this.desc = "LÄUFER";
         }
 
         public override void Move(Square source, Square dest)
@@ -50,7 +50,7 @@ namespace Chess
             int dest_col = GetColumnCoordinate(dest);
             int dest_row = GetRowCoordinate(dest);
 
-            if ((source_col == dest_col) || (source_row == dest_row))
+            if ((Math.Abs(source_col - dest_col)) == Math.Abs((source_row - dest_row)))
             {
                 if (!IsBarred(source, dest))
                 {
@@ -94,27 +94,18 @@ namespace Chess
         // Prüft, ob der Zug durch andere Schachfiguren versperrt ist
         private bool IsBarred(Square source, Square dest)
         {
+
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);
             int dest_col = GetColumnCoordinate(dest);
             int dest_row = GetRowCoordinate(dest);
 
-            // Vertikaler Zug
-            if (source_row != dest_row)
+            // Diagonaler Zug
+            if(CanMoveDiagonal(source, dest))
             {
-                if(CanMoveVertical(source, dest))
-                {
-                    return false;
-                }
+                return false;
             }
-            // Horizontaler Zug
-            else if (source_col != dest_col)
-            {
-                if (CanMoveHorizontal(source, dest))
-                {
-                    return false;
-                }
-            }
+
             return true;
         }
     }

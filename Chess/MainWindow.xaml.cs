@@ -2,9 +2,7 @@
 
 namespace Chess
 {
-    /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
-    /// </summary>
+
     partial class MainWindow : Window
     {
 

@@ -125,5 +125,68 @@ namespace Chess
             return true;
         }
 
+        public bool CanMoveDiagonal(Square source, Square dest)
+        {
+            int source_col = GetColumnCoordinate(source);
+            int source_row = GetRowCoordinate(source);
+            int dest_col = GetColumnCoordinate(dest);
+            int dest_row = GetRowCoordinate(dest);
+
+            // Diagonal - von links unten nach rechts oben 
+            if ((source_row < dest_row) && (source_col < dest_col))
+            {
+                int i;
+                int j = source_row +1;
+                for (i = source_col + 1; i < dest_col; i++, j++)
+                {
+                    if (MainWindow.board.GetChessmanAtSquare(MainWindow.board.GetSquare(GetSquarenameFromCoordinates(i, j))) != null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            // Diagonal - von rechts oben nach links unten 
+            else if ((source_row > dest_row) && (source_col > dest_col))
+            {
+                int i;
+                int j = source_row - 1;
+                for (i = source_col - 1; i > dest_col; i--, j--)
+                {
+                    if (MainWindow.board.GetChessmanAtSquare(MainWindow.board.GetSquare(GetSquarenameFromCoordinates(i, j))) != null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            // Diagonal - von rechts unten nach links oben 
+            else if ((source_row < dest_row) && (source_col > dest_col))
+            {
+                int i;
+                int j = source_row + 1;
+                for (i = source_col - 1; i > dest_col; i--, j++)
+                {
+                    if (MainWindow.board.GetChessmanAtSquare(MainWindow.board.GetSquare(GetSquarenameFromCoordinates(i, j))) != null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            // Diagonal - von links oben nach rechts unten 
+            else if ((source_row > dest_row) && (source_col < dest_col))
+            {
+                int i;
+                int j = source_row - 1;
+                for (i = source_col + 1; i < dest_col; i++, j--)
+                {
+                    if (MainWindow.board.GetChessmanAtSquare(MainWindow.board.GetSquare(GetSquarenameFromCoordinates(i, j))) != null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            // Der Weg ist frei
+            return true;
+        }
+
     }
 }

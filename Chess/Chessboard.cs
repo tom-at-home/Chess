@@ -81,6 +81,8 @@ namespace Chess
             Pawn pawn_w_8 = new Pawn(true, "H2");
             Rook rook_w_1 = new Rook(true, "A1");
             Rook rook_w_2 = new Rook(true, "H1");
+            Bishop bishop_w_1 = new Bishop(true, "C1");
+            Bishop bishop_w_2 = new Bishop(true, "F1");
             Pawn pawn_b_1 = new Pawn(false, "A7");
             Pawn pawn_b_2 = new Pawn(false, "B7");
             Pawn pawn_b_3 = new Pawn(false, "C7");
@@ -91,6 +93,8 @@ namespace Chess
             Pawn pawn_b_8 = new Pawn(false, "H7");
             Rook rook_b_1 = new Rook(false, "A8");
             Rook rook_b_2 = new Rook(false, "H8");
+            Bishop bishop_b_1 = new Bishop(false, "C8");
+            Bishop bishop_b_2 = new Bishop(false, "F8");
             chessman.Add(pawn_w_1);
             chessman.Add(pawn_w_2);
             chessman.Add(pawn_w_3);
@@ -100,6 +104,9 @@ namespace Chess
             chessman.Add(pawn_w_7);
             chessman.Add(pawn_w_8);
             chessman.Add(rook_w_1);
+            chessman.Add(rook_w_2);
+            chessman.Add(bishop_w_1);
+            chessman.Add(bishop_w_2);
             chessman.Add(rook_w_2);
             chessman.Add(pawn_b_1);
             chessman.Add(pawn_b_2);
@@ -111,6 +118,8 @@ namespace Chess
             chessman.Add(pawn_b_8);
             chessman.Add(rook_b_1);
             chessman.Add(rook_b_2);
+            chessman.Add(bishop_b_1);
+            chessman.Add(bishop_b_2);
             DisplayChessman();
         }
 

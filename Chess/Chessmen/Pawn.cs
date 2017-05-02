@@ -55,7 +55,7 @@ namespace Chess
                 {
                     if ((dest_row - source_row == 1) || (dest_row - source_row == 2 && !isMoved))
                     {
-                        if(!isBlocked(source, dest))
+                        if(!IsBarred(source, dest))
                         {
                             source.Content = "";
                             this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
@@ -102,7 +102,7 @@ namespace Chess
                 {
                     if ((source_row - dest_row == 1) || (source_row - dest_row == 2 && !isMoved))
                     {
-                        if (!isBlocked(source, dest))
+                        if (!IsBarred(source, dest))
                         {
                             source.Content = "";
                             this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
@@ -145,7 +145,8 @@ namespace Chess
             }
         }
 
-        private bool isBlocked(Square source, Square dest)
+        // Prüft, ob der Zug durch andere Schachfiguren versperrt ist
+        private bool IsBarred(Square source, Square dest)
         {
 
             int source_col = Convert.ToInt16(Convert.ToChar(source.Name.Substring(0, 1)));
