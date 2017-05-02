@@ -44,7 +44,6 @@ namespace Chess
 
         public override void Move(Square source, Square dest)
         {
-
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);
             int dest_col = GetColumnCoordinate(dest);

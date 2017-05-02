@@ -107,7 +107,6 @@ namespace Chess
             chessman.Add(rook_w_2);
             chessman.Add(bishop_w_1);
             chessman.Add(bishop_w_2);
-            chessman.Add(rook_w_2);
             chessman.Add(pawn_b_1);
             chessman.Add(pawn_b_2);
             chessman.Add(pawn_b_3);
