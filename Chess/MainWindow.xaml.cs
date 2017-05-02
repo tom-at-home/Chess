@@ -34,6 +34,7 @@ namespace Chess
 
             board.Select_Field((MyButton)sender);
             
+            
         }
 
         public void ShowInfo(string msg, bool rotate = false)
