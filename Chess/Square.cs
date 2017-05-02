@@ -8,11 +8,10 @@ using System.Windows.Media;
 
 namespace Chess
 {
-    class MyButton : Button
+    class Square : Button
     {
 
         private SolidColorBrush color;
-
         public SolidColorBrush Color
         {
             get { return color; }

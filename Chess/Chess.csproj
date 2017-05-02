@@ -55,9 +55,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BlockedMoveException.cs" />
-    <Compile Include="Chessman.cs" />
+    <Compile Include="Chessmen\Chessman.cs" />
     <Compile Include="InvalidMoveException.cs" />
-    <Compile Include="MyButton.cs" />
+    <Compile Include="Square.cs" />
     <Compile Include="Chessboard.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -73,8 +73,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Rook.cs" />
-    <Compile Include="Pawn.cs" />
+    <Compile Include="Chessmen\Rook.cs" />
+    <Compile Include="Chessmen\Pawn.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -102,6 +102,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\laufer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\laufer_sw.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\bauer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

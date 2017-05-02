@@ -42,7 +42,7 @@ namespace Chess
             this.desc = "BAUER";
         }
         
-        public override void Move(MyButton source, MyButton dest)
+        public override void Move(Square source, Square dest)
         {
             int source_col = Convert.ToInt16(Convert.ToChar(source.Name.Substring(0, 1)));
             int source_row = Convert.ToInt16(source.Name.Substring(1, 1));
@@ -58,7 +58,7 @@ namespace Chess
                         if(!isBlocked(source, dest))
                         {
                             source.Content = "";
-                            this.Current_position = GetFieldnameFromInt(dest_col, dest_row);
+                            this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
                             MainWindow.board.lastAction = "BEWEGE " + this.Desc
                                     + " VON " + source.Name
                                     + " AUF " + dest.Name;
@@ -77,11 +77,11 @@ namespace Chess
                 }
                 else if (((source_col-1 == dest_col) || (source_col + 1 == dest_col)) && (dest_row - source_row == 1))
                 {
-                    Chessman opponent = MainWindow.board.GetChessmanAtField(dest);
+                    Chessman opponent = MainWindow.board.GetChessmanAtSquare(dest);
                     if (opponent != null && opponent.Color != this.Color)
                     {
                         source.Content = "";
-                        this.Current_position = GetFieldnameFromInt(dest_col, dest_row);
+                        this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
                         isMoved = true;
                         MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name;
                         MainWindow.board.chessman.Remove(opponent);
@@ -105,7 +105,7 @@ namespace Chess
                         if (!isBlocked(source, dest))
                         {
                             source.Content = "";
-                            this.Current_position = GetFieldnameFromInt(dest_col, dest_row);
+                            this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
                             MainWindow.board.lastAction = "BEWEGE " + this.Desc
                                     + " VON " + source.Name
                                     + " AUF " + dest.Name;
@@ -124,11 +124,11 @@ namespace Chess
                 }
                 else if (((source_col - 1 == dest_col) || (source_col + 1 == dest_col)) && (source_row - dest_row == 1))
                 {
-                    Chessman opponent = MainWindow.board.GetChessmanAtField(dest);
+                    Chessman opponent = MainWindow.board.GetChessmanAtSquare(dest);
                     if (opponent != null && opponent.Color != this.Color)
                     {
                         source.Content = "";
-                        this.Current_position = GetFieldnameFromInt(dest_col, dest_row);
+                        this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
                         isMoved = true;
                         MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name;
                         MainWindow.board.chessman.Remove(opponent);
@@ -145,15 +145,7 @@ namespace Chess
             }
         }
 
-        private String GetFieldnameFromInt(int col, int row)
-        {
-            Char prefix = (Char)col;
-            string field_name = prefix + "" + row;
-
-            return field_name;
-        }
-
-        private bool isBlocked(MyButton source, MyButton dest)
+        private bool isBlocked(Square source, Square dest)
         {
 
             int source_col = Convert.ToInt16(Convert.ToChar(source.Name.Substring(0, 1)));
@@ -165,7 +157,7 @@ namespace Chess
             {
                 for(int i = source_row+1; i <= dest_row; i++)
                 {
-                    if(MainWindow.board.GetChessmanAtField(MainWindow.board.GetField(GetFieldnameFromInt(dest_col, i))) != null)
+                    if(MainWindow.board.GetChessmanAtSquare(MainWindow.board.GetSquare(GetSquarenameFromCoordinates(dest_col, i))) != null)
                     {
                         return true;
                     }
@@ -175,7 +167,7 @@ namespace Chess
             {
                 for (int i = source_row - 1; i >= dest_row; i--)
                 {
-                    if (MainWindow.board.GetChessmanAtField(MainWindow.board.GetField(GetFieldnameFromInt(dest_col, i))) != null)
+                    if (MainWindow.board.GetChessmanAtSquare(MainWindow.board.GetSquare(GetSquarenameFromCoordinates(dest_col, i))) != null)
                     {
                         return true;
                     }

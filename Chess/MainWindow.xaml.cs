@@ -33,7 +33,7 @@ namespace Chess
         public void Select_Field(object sender, RoutedEventArgs e)
         {
 
-            board.Select_Field((MyButton)sender);
+            board.Select_Field((Square)sender);
             
             
         }

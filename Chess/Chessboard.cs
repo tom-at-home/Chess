@@ -8,11 +8,11 @@ namespace Chess
     {
 
         internal MainWindow mainwindow;
-        MyButton selectedField = null;
-        MyButton fieldToMove = null;
+        Square selectedField = null;
+        Square fieldToMove = null;
         Chessman selectedChessman = null;
         internal List<Chessman> chessman = new List<Chessman>();
-        List<MyButton> squares = new List<MyButton>();
+        List<Square> squares = new List<Square>();
         internal string lastAction;
 
         public Chessboard(MainWindow mainwindow)
@@ -30,44 +30,44 @@ namespace Chess
                 prefix = 65;
                 for (int col = 0; col < 8; col++)
                 {
-                    MyButton button = new MyButton();
-                    button.Content = "";
-                    button.Click += mainwindow.Select_Field;
-                    button.Width = 50;
-                    button.Height = 50;
+                    Square square = new Square();
+                    square.Content = "";
+                    square.Click += mainwindow.Select_Field;
+                    square.Width = 50;
+                    square.Height = 50;
 
                     Char prefixChar = (Char)(prefix + col);
                     name = prefixChar + "" + row;
-                    button.Name = name;
+                    square.Name = name;
 
                     if (row % 2 == 0)
                     {
                         if(col % 2 == 0)
                         {
-                            button.Color = Brushes.White;
-                            button.Background = button.Color;
+                            square.Color = Brushes.White;
+                            square.Background = square.Color;
                         }
                         else
                         {
-                            button.Color = Brushes.RosyBrown;
-                            button.Background = button.Color;
+                            square.Color = Brushes.RosyBrown;
+                            square.Background = square.Color;
                         }
                     }
                     else
                     {
                         if (col % 2 == 0)
                         {
-                            button.Color = Brushes.RosyBrown;
-                            button.Background = button.Color;
+                            square.Color = Brushes.RosyBrown;
+                            square.Background = square.Color;
                         }
                         else
                         {
-                            button.Color = Brushes.White;
-                            button.Background = button.Color;
+                            square.Color = Brushes.White;
+                            square.Background = square.Color;
                         }
                     }
-                    mainwindow.panel.Children.Add(button);
-                    squares.Add(button);
+                    mainwindow.panel.Children.Add(square);
+                    squares.Add(square);
                 }
             }
 
@@ -114,12 +114,12 @@ namespace Chess
             DisplayChessman();
         }
 
-        public void Select_Field(MyButton selected)
+        public void Select_Field(Square selected)
         {         
             // SCHACHFIGUR SELEKTIEREN
             if (selectedField == null)
             {
-                selectedChessman = GetChessmanAtField(selected);
+                selectedChessman = GetChessmanAtSquare(selected);
                
                 if (selectedChessman != null)
                 {
@@ -154,7 +154,7 @@ namespace Chess
                 fieldToMove = selected;
                 if(selectedChessman != null)
                 {
-                    MyButton currentField = GetField(selectedChessman.Current_position);
+                    Square currentField = GetSquare(selectedChessman.Current_position);
                     try
                     {
                         selectedChessman.Move(currentField, fieldToMove);
@@ -185,14 +185,14 @@ namespace Chess
         {
             foreach (Chessman item in chessman)
             {
-                MyButton field = GetField(item.Current_position);
+                Square field = GetSquare(item.Current_position);
                 field.Content = item.View;
             }
         }
 
-        public MyButton GetField(string pos)
+        public Square GetSquare(string pos)
         {
-            foreach (MyButton item in squares)
+            foreach (Square item in squares)
             {
                 if(item.Name == pos)
                 {
@@ -202,7 +202,7 @@ namespace Chess
             return null;
         }
 
-        public Chessman GetChessmanAtField(MyButton selected)
+        public Chessman GetChessmanAtSquare(Square selected)
         {
             foreach (Chessman item in chessman)
             {
