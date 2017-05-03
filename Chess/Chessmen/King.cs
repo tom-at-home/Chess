@@ -42,6 +42,29 @@ namespace Chess
             this.desc = "KÖNIG";
         }
 
+        public override bool IsMoveValid(Square dest)
+        {
+            Square source = MainWindow.board.GetSquare(this.Current_position);
+
+            int source_col = GetColumnCoordinate(source);
+            int source_row = GetRowCoordinate(source);
+            int dest_col = GetColumnCoordinate(dest);
+            int dest_row = GetRowCoordinate(dest);
+
+            // Prüft auf gültigen Zug: VERTIKAL oder HORIZONTAL oder DIAGONAL
+            // bei einer Zugweite von genau einem Feld
+            return (
+                (source_col == dest_col && Math.Abs(source_row - dest_row) == 1) ||
+                (source_row == dest_row && Math.Abs(source_col - dest_col) == 1) ||
+                ((Math.Abs(source_col - dest_col) == Math.Abs(source_row - dest_row)) && (Math.Abs(source_col - dest_col) == 1))
+               );
+        }
+
+        public override bool IsMoveBlocked(Square dest)
+        {
+            return false;
+        }
+
         public override void Move(Square source, Square dest)
         {
 
@@ -51,43 +74,48 @@ namespace Chess
             int dest_row = GetRowCoordinate(dest);
 
             // Prüft auf gültigen Zug: VERTIKAL oder HORIZONTAL oder DIAGONAL
-            if (
-                (source_col == dest_col && Math.Abs(source_row - dest_row) == 1) || 
-                (source_row == dest_row && Math.Abs(source_col - dest_col) == 1) || 
-                ((Math.Abs(source_col - dest_col) == Math.Abs(source_row - dest_row)) && (Math.Abs(source_col - dest_col) == 1))
-               )
+            // bei einer Reichweite von einem Feld
+            if (IsMoveValid(dest))
             {
-                if (!PlacedInCheck(dest))
+                if (!IsMoveBlocked(dest))
                 {
-                    // Gewoehnlicher Zug ohne Angriff
-                    if (MainWindow.board.GetChessmanAtSquare(dest) == null)
+                    if (!IsPlacedInCheck(dest))
                     {
-                        source.Content = "";
-                        this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                        MainWindow.board.lastAction = "BEWEGE " + this.Desc
-                                + " VON " + source.Name
-                                + " AUF " + dest.Name;
-                    }
-                    else
-                    {
-                        Chessman chessmanAtDest = MainWindow.board.GetChessmanAtSquare(dest);
-                        // Angriffszug
-                        if (chessmanAtDest.Color != this.Color)
+                        // Gewoehnlicher Zug ohne Angriff
+                        if (MainWindow.board.GetChessmanAtSquare(dest) == null)
                         {
                             source.Content = "";
                             this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                            MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
-                            MainWindow.board.chessman.Remove(chessmanAtDest);
+                            MainWindow.board.lastAction = "BEWEGE " + this.Desc
+                                    + " VON " + source.Name
+                                    + " AUF " + dest.Name;
                         }
                         else
                         {
-                            throw new BlockedMoveException();
+                            Chessman chessmanAtDest = MainWindow.board.GetChessmanAtSquare(dest);
+                            // Angriffszug
+                            if (chessmanAtDest.Color != this.Color)
+                            {
+                                source.Content = "";
+                                this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                                MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
+                                MainWindow.board.chessman.Remove(chessmanAtDest);
+                            }
+                            else
+                            {
+                                throw new BlockedMoveException();
+                            }
                         }
                     }
+                    else
+                    {
+                        throw new PlacedInCheckException();
+                    }
+
                 }
                 else
                 {
-                    throw new PlacedInCheckException();
+                    throw new BlockedMoveException();
                 }
             }
             else
@@ -96,7 +124,7 @@ namespace Chess
             }
         }
 
-        public bool PlacedInCheck(Square dest)
+        public bool IsPlacedInCheck(Square dest)
         {
 
             foreach (Chessman chessman in MainWindow.board.chessman)

@@ -42,15 +42,33 @@ namespace Chess
             this.desc = "LÄUFER";
         }
 
-        /*public bool IsMoveValid(Square dest)
+        public override bool IsMoveValid(Square dest)
         {
-            Square source = 
+            Square source = MainWindow.board.GetSquare(this.Current_position);
+            int source_col = GetColumnCoordinate(source);
+            int source_row = GetRowCoordinate(source);
+            int dest_col = GetColumnCoordinate(dest);
+            int dest_row = GetRowCoordinate(dest);
 
+            return (Math.Abs(source_col - dest_col)) == Math.Abs((source_row - dest_row));
+        }
+
+        // Prüft, ob der Zug durch andere Schachfiguren versperrt ist
+        public override bool IsMoveBlocked(Square dest)
+        {
+
+            Square source = MainWindow.board.GetSquare(this.Current_position);
+
+            // Diagonaler Zug
+            if (CanMoveDiagonal(source, dest))
+            {
+                return false;
+            }
 
             return true;
-        }*/
+        }
 
-        public override void Move(Square source, Square dest, bool jump = true)
+        public override void Move(Square source, Square dest)
         {
 
             int source_col = GetColumnCoordinate(source);
@@ -58,9 +76,9 @@ namespace Chess
             int dest_col = GetColumnCoordinate(dest);
             int dest_row = GetRowCoordinate(dest);
 
-            if ((Math.Abs(source_col - dest_col)) == Math.Abs((source_row - dest_row)))
+            if (IsMoveValid(dest))
             {
-                if (!IsBlocked(source, dest))
+                if (!IsMoveBlocked(dest))
                 {
                     // Gewoehnlicher Zug ohne Angriff
                     if (MainWindow.board.GetChessmanAtSquare(dest) == null)
@@ -97,19 +115,6 @@ namespace Chess
             {
                 throw new InvalidMoveException();
             }
-        }
-
-        // Prüft, ob der Zug durch andere Schachfiguren versperrt ist
-        private bool IsBlocked(Square source, Square dest)
-        {
-
-            // Diagonaler Zug
-            if(CanMoveDiagonal(source, dest))
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

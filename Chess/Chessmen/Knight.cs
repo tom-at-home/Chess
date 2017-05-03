@@ -42,6 +42,23 @@ namespace Chess
             this.desc = "SPRINGER";
         }
 
+        public override bool IsMoveValid(Square dest)
+        {
+            Square source = MainWindow.board.GetSquare(this.Current_position);
+            int source_col = GetColumnCoordinate(source);
+            int source_row = GetRowCoordinate(source);
+            int dest_col = GetColumnCoordinate(dest);
+            int dest_row = GetRowCoordinate(dest);
+
+            // Prüft auf gültigen Zug
+            return CanJump(source, dest);
+        }
+
+        public override bool IsMoveBlocked(Square dest)
+        {
+            return false;
+        }
+
         public override void Move(Square source, Square dest)
         {
             int source_col = GetColumnCoordinate(source);
@@ -50,9 +67,10 @@ namespace Chess
             int dest_row = GetRowCoordinate(dest);
 
             // Überprüfung auf gültigen Zug
-            if (CanJump(source, dest))
+            if (IsMoveValid(dest))
             {
-
+                if (!IsMoveBlocked(dest))
+                {
                     // Gewoehnlicher Zug ohne Angriff
                     if (MainWindow.board.GetChessmanAtSquare(dest) == null)
                     {
@@ -78,13 +96,16 @@ namespace Chess
                             throw new BlockedMoveException();
                         }
                     }
-
+                }
+                else
+                {
+                    throw new BlockedMoveException();
+                }
             }
             else
             {
                 throw new InvalidMoveException();
             }
         }
-
     }
 }

@@ -41,7 +41,17 @@ namespace Chess
             this.Current_position = pos;
             this.desc = "BAUER";
         }
-        
+
+        public override bool IsMoveBlocked(Square dest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsMoveValid(Square dest)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void Move(Square source, Square dest)
         {
             int source_col = Convert.ToInt16(Convert.ToChar(source.Name.Substring(0, 1)));

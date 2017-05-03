@@ -42,6 +42,55 @@ namespace Chess
             this.desc = "DAME";
         }
 
+        public override bool IsMoveValid(Square dest)
+        {
+            Square source = MainWindow.board.GetSquare(this.Current_position);
+            int source_col = GetColumnCoordinate(source);
+            int source_row = GetRowCoordinate(source);
+            int dest_col = GetColumnCoordinate(dest);
+            int dest_row = GetRowCoordinate(dest);
+
+            // Prüft auf gültigen Zug: VERTIKAL oder HORIZONTAL oder DIAGONAL
+            return ((source_col == dest_col) || (source_row == dest_row) || Math.Abs(source_col - dest_col) == Math.Abs(source_row - dest_row));
+        }
+
+        // Prüft, ob der Zug durch andere Schachfiguren versperrt ist
+        public override bool IsMoveBlocked(Square dest)
+        {
+            Square source = MainWindow.board.GetSquare(this.Current_position);
+            int source_col = GetColumnCoordinate(source);
+            int source_row = GetRowCoordinate(source);
+            int dest_col = GetColumnCoordinate(dest);
+            int dest_row = GetRowCoordinate(dest);
+
+            // Vertikaler Zug
+            if (source_col == dest_col)
+            {
+                if (CanMoveVertical(source, dest))
+                {
+                    return false;
+                }
+            }
+            // Horizontaler Zug
+            else if (source_row == dest_row)
+            {
+                if (CanMoveHorizontal(source, dest))
+                {
+                    return false;
+                }
+            }
+            // Diagonaler Zug
+            else if ((Math.Abs(source_col - dest_col)) == Math.Abs((source_row - dest_row)))
+            {
+                if (CanMoveDiagonal(source, dest))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public override void Move(Square source, Square dest)
         {
 
@@ -51,9 +100,9 @@ namespace Chess
             int dest_row = GetRowCoordinate(dest);
 
             // Prüft auf gültigen Zug: VERTIKAL oder HORIZONTAL oder DIAGONAL
-            if ((source_col == dest_col) || (source_row == dest_row) || (Math.Abs(source_col - dest_col)) == Math.Abs((source_row - dest_row)))
+            if (IsMoveValid(dest))
             {
-                if (!IsBlocked(source, dest))
+                if (!IsMoveBlocked(dest))
                 {
                     // Gewoehnlicher Zug ohne Angriff
                     if (MainWindow.board.GetChessmanAtSquare(dest) == null)
@@ -90,42 +139,6 @@ namespace Chess
             {
                 throw new InvalidMoveException();
             }
-        }
-
-        // Prüft, ob der Zug durch andere Schachfiguren versperrt ist
-        private bool IsBlocked(Square source, Square dest)
-        {
-            int source_col = GetColumnCoordinate(source);
-            int source_row = GetRowCoordinate(source);
-            int dest_col = GetColumnCoordinate(dest);
-            int dest_row = GetRowCoordinate(dest);
-
-            // Vertikaler Zug
-            if (source_col == dest_col)
-            {
-                if (CanMoveVertical(source, dest))
-                {
-                    return false;
-                }
-            }
-            // Horizontaler Zug
-            else if (source_row == dest_row)
-            {
-                if (CanMoveHorizontal(source, dest))
-                {
-                    return false;
-                }
-            }
-            // Diagonaler Zug
-            else if ((Math.Abs(source_col - dest_col)) == Math.Abs((source_row - dest_row)))
-            {
-                if (CanMoveDiagonal(source, dest))
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
     }
 }

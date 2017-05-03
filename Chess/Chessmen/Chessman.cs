@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Chess.Chessmen;
+using System;
 using System.Windows.Controls;
 
 namespace Chess
 {
-    abstract class Chessman
+    abstract class Chessman: IMovable
     {
         private bool isWhite;
         protected bool IsWhite
@@ -39,6 +40,12 @@ namespace Chess
             set { desc = value; }
         }
 
+        public abstract bool IsMoveValid(Square dest);
+
+        public abstract bool IsMoveBlocked(Square dest);
+
+        public abstract void Move(Square source, Square dest);
+
         public String GetSquarenameFromCoordinates(int col, int row)
         {
             Char prefix = (Char)col;
@@ -46,8 +53,6 @@ namespace Chess
 
             return field_name;
         }
-
-        public abstract void Move(Square source, Square dest);
 
         public int GetColumnCoordinate(Square square)
         {
@@ -211,6 +216,5 @@ namespace Chess
 
             return false;
         }
-
     }
 }

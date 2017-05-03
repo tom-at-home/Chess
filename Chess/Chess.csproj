@@ -56,6 +56,7 @@
     </ApplicationDefinition>
     <Compile Include="BlockedMoveException.cs" />
     <Compile Include="Chessmen\King.cs" />
+    <Compile Include="Chessmen\IMovable.cs" />
     <Compile Include="Chessmen\Queen.cs" />
     <Compile Include="Chessmen\Chessman.cs" />
     <Compile Include="Chessmen\Bishop.cs" />
