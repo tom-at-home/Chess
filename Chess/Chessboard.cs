@@ -231,11 +231,11 @@ namespace Chess
             return null;
         }
 
-        public Chessman GetChessmanAtSquare(Square selected)
+        public Chessman GetChessmanAtSquare(Square square)
         {
             foreach (Chessman item in chessman)
             {
-                if(selected.Name == item.Current_position)
+                if(square.Name == item.Current_position)
                 {
                     return item;
                 }
