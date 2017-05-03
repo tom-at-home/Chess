@@ -42,7 +42,15 @@ namespace Chess
             this.desc = "LÄUFER";
         }
 
-        public override void Move(Square source, Square dest)
+        /*public bool IsMoveValid(Square dest)
+        {
+            Square source = 
+
+
+            return true;
+        }*/
+
+        public override void Move(Square source, Square dest, bool jump = true)
         {
 
             int source_col = GetColumnCoordinate(source);
@@ -52,7 +60,7 @@ namespace Chess
 
             if ((Math.Abs(source_col - dest_col)) == Math.Abs((source_row - dest_row)))
             {
-                if (!IsBarred(source, dest))
+                if (!IsBlocked(source, dest))
                 {
                     // Gewoehnlicher Zug ohne Angriff
                     if (MainWindow.board.GetChessmanAtSquare(dest) == null)
@@ -92,7 +100,7 @@ namespace Chess
         }
 
         // Prüft, ob der Zug durch andere Schachfiguren versperrt ist
-        private bool IsBarred(Square source, Square dest)
+        private bool IsBlocked(Square source, Square dest)
         {
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);

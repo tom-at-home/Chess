@@ -80,9 +80,13 @@ namespace Chess
             Pawn pawn_w_7 = new Pawn(true, "G2");
             Pawn pawn_w_8 = new Pawn(true, "H2");
             Rook rook_w_1 = new Rook(true, "A1");
-            Rook rook_w_2 = new Rook(true, "H1");
+            Knight knight_w_1 = new Knight(true, "B1");
             Bishop bishop_w_1 = new Bishop(true, "C1");
+            Queen queen_w = new Queen(true, "D1");
+            King king_w = new King(true, "E1");
             Bishop bishop_w_2 = new Bishop(true, "F1");
+            Knight knight_w_2 = new Knight(true, "G1");
+            Rook rook_w_2 = new Rook(true, "H1");
             Pawn pawn_b_1 = new Pawn(false, "A7");
             Pawn pawn_b_2 = new Pawn(false, "B7");
             Pawn pawn_b_3 = new Pawn(false, "C7");
@@ -92,9 +96,15 @@ namespace Chess
             Pawn pawn_b_7 = new Pawn(false, "G7");
             Pawn pawn_b_8 = new Pawn(false, "H7");
             Rook rook_b_1 = new Rook(false, "A8");
-            Rook rook_b_2 = new Rook(false, "H8");
+            Knight knight_b_1 = new Knight(false, "B8");
             Bishop bishop_b_1 = new Bishop(false, "C8");
+            Queen queen_b = new Queen(false, "D8");
+            King king_b = new King(false, "E8");
             Bishop bishop_b_2 = new Bishop(false, "F8");
+            Knight knight_b_2 = new Knight(false, "G8");        
+            Rook rook_b_2 = new Rook(false, "H8");
+
+            // WEISSE SPIELFIGUREN
             chessman.Add(pawn_w_1);
             chessman.Add(pawn_w_2);
             chessman.Add(pawn_w_3);
@@ -107,6 +117,12 @@ namespace Chess
             chessman.Add(rook_w_2);
             chessman.Add(bishop_w_1);
             chessman.Add(bishop_w_2);
+            chessman.Add(knight_w_1);
+            chessman.Add(knight_w_2);
+            chessman.Add(queen_w);
+            chessman.Add(king_w);
+
+            // SCHWARZE SPIELFIGUREN
             chessman.Add(pawn_b_1);
             chessman.Add(pawn_b_2);
             chessman.Add(pawn_b_3);
@@ -119,6 +135,11 @@ namespace Chess
             chessman.Add(rook_b_2);
             chessman.Add(bishop_b_1);
             chessman.Add(bishop_b_2);
+            chessman.Add(knight_b_1);
+            chessman.Add(knight_b_2);
+            chessman.Add(queen_b);
+            chessman.Add(king_b);
+
             DisplayChessman();
         }
 

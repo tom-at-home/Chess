@@ -4,42 +4,42 @@ using System.Windows.Media.Imaging;
 
 namespace Chess
 {
-    class Rook : Chessman
+    class Knight : Chessman
     {
 
-        public Rook(bool isWhite, string pos)
+        public Knight(bool isWhite, string pos)
         {
 
             this.IsWhite = isWhite;
             if (isWhite)
             {
-                Image whiteRook = new Image();
-                whiteRook.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/turm.png"));
+                Image whiteKnight = new Image();
+                whiteKnight.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/springer.png"));
 
-                StackPanel whiteRookPnl = new StackPanel();
-                whiteRookPnl.Orientation = Orientation.Horizontal;
-                whiteRookPnl.Margin = new System.Windows.Thickness(8);
-                whiteRookPnl.Children.Add(whiteRook);
+                StackPanel whiteKnightPnl = new StackPanel();
+                whiteKnightPnl.Orientation = Orientation.Horizontal;
+                whiteKnightPnl.Margin = new System.Windows.Thickness(8);
+                whiteKnightPnl.Children.Add(whiteKnight);
 
-                this.View = whiteRookPnl;
+                this.View = whiteKnightPnl;
                 this.color = "white";
             }
             else
             {
-                Image blackRook = new Image();
-                blackRook.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/turm_sw.png"));
+                Image blackKnight = new Image();
+                blackKnight.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/springer_sw.png"));
 
-                StackPanel blackRookPnl = new StackPanel();
-                blackRookPnl.Orientation = Orientation.Horizontal;
-                blackRookPnl.Margin = new System.Windows.Thickness(8);
-                blackRookPnl.Children.Add(blackRook);
+                StackPanel blackKnightPnl = new StackPanel();
+                blackKnightPnl.Orientation = Orientation.Horizontal;
+                blackKnightPnl.Margin = new System.Windows.Thickness(8);
+                blackKnightPnl.Children.Add(blackKnight);
 
-                this.View = blackRookPnl;
+                this.View = blackKnightPnl;
                 this.color = "black";
             }
 
             this.Current_position = pos;
-            this.desc = "TURM";
+            this.desc = "SPRINGER";
         }
 
         public override void Move(Square source, Square dest)
@@ -49,10 +49,10 @@ namespace Chess
             int dest_col = GetColumnCoordinate(dest);
             int dest_row = GetRowCoordinate(dest);
 
-            if ((source_col == dest_col) || (source_row == dest_row))
+            // Überprüfung auf gültigen Zug
+            if (CanJump(source, dest))
             {
-                if (!IsBlocked(source, dest))
-                {
+
                     // Gewoehnlicher Zug ohne Angriff
                     if (MainWindow.board.GetChessmanAtSquare(dest) == null)
                     {
@@ -78,11 +78,7 @@ namespace Chess
                             throw new BlockedMoveException();
                         }
                     }
-                }
-                else
-                {
-                    throw new BlockedMoveException();
-                }
+
             }
             else
             {
@@ -90,31 +86,5 @@ namespace Chess
             }
         }
 
-        // Prüft, ob der Zug durch andere Schachfiguren versperrt ist
-        private bool IsBlocked(Square source, Square dest)
-        {
-            int source_col = GetColumnCoordinate(source);
-            int source_row = GetRowCoordinate(source);
-            int dest_col = GetColumnCoordinate(dest);
-            int dest_row = GetRowCoordinate(dest);
-
-            // Vertikaler Zug
-            if (source_row != dest_row)
-            {
-                if(CanMoveVertical(source, dest))
-                {
-                    return false;
-                }
-            }
-            // Horizontaler Zug
-            else if (source_col != dest_col)
-            {
-                if (CanMoveHorizontal(source, dest))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
     }
 }

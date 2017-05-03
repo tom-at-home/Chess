@@ -4,52 +4,54 @@ using System.Windows.Media.Imaging;
 
 namespace Chess
 {
-    class Rook : Chessman
+    class Queen : Chessman
     {
 
-        public Rook(bool isWhite, string pos)
+        public Queen(bool isWhite, string pos)
         {
 
             this.IsWhite = isWhite;
             if (isWhite)
             {
-                Image whiteRook = new Image();
-                whiteRook.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/turm.png"));
+                Image whiteQueen = new Image();
+                whiteQueen.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/dame.png"));
 
-                StackPanel whiteRookPnl = new StackPanel();
-                whiteRookPnl.Orientation = Orientation.Horizontal;
-                whiteRookPnl.Margin = new System.Windows.Thickness(8);
-                whiteRookPnl.Children.Add(whiteRook);
+                StackPanel whiteQueenPnl = new StackPanel();
+                whiteQueenPnl.Orientation = Orientation.Horizontal;
+                whiteQueenPnl.Margin = new System.Windows.Thickness(8);
+                whiteQueenPnl.Children.Add(whiteQueen);
 
-                this.View = whiteRookPnl;
+                this.View = whiteQueenPnl;
                 this.color = "white";
             }
             else
             {
-                Image blackRook = new Image();
-                blackRook.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/turm_sw.png"));
+                Image blackQueen = new Image();
+                blackQueen.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/dame_sw.png"));
 
-                StackPanel blackRookPnl = new StackPanel();
-                blackRookPnl.Orientation = Orientation.Horizontal;
-                blackRookPnl.Margin = new System.Windows.Thickness(8);
-                blackRookPnl.Children.Add(blackRook);
+                StackPanel blackQueenPnl = new StackPanel();
+                blackQueenPnl.Orientation = Orientation.Horizontal;
+                blackQueenPnl.Margin = new System.Windows.Thickness(8);
+                blackQueenPnl.Children.Add(blackQueen);
 
-                this.View = blackRookPnl;
+                this.View = blackQueenPnl;
                 this.color = "black";
             }
 
             this.Current_position = pos;
-            this.desc = "TURM";
+            this.desc = "DAME";
         }
 
         public override void Move(Square source, Square dest)
         {
+
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);
             int dest_col = GetColumnCoordinate(dest);
             int dest_row = GetRowCoordinate(dest);
 
-            if ((source_col == dest_col) || (source_row == dest_row))
+            // Prüft auf gültigen Zug: VERTIKAL oder HORIZONTAL oder DIAGONAL
+            if ((source_col == dest_col) || (source_row == dest_row) || (Math.Abs(source_col - dest_col)) == Math.Abs((source_row - dest_row)))
             {
                 if (!IsBlocked(source, dest))
                 {
@@ -99,21 +101,30 @@ namespace Chess
             int dest_row = GetRowCoordinate(dest);
 
             // Vertikaler Zug
-            if (source_row != dest_row)
+            if (source_col == dest_col)
             {
-                if(CanMoveVertical(source, dest))
+                if (CanMoveVertical(source, dest))
                 {
                     return false;
                 }
             }
             // Horizontaler Zug
-            else if (source_col != dest_col)
+            else if (source_row == dest_row)
             {
                 if (CanMoveHorizontal(source, dest))
                 {
                     return false;
                 }
             }
+            // Diagonaler Zug
+            else if ((Math.Abs(source_col - dest_col)) == Math.Abs((source_row - dest_row)))
+            {
+                if (CanMoveDiagonal(source, dest))
+                {
+                    return false;
+                }
+            }
+
             return true;
         }
     }

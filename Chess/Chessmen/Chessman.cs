@@ -59,7 +59,7 @@ namespace Chess
             return Convert.ToInt16(square.Name.Substring(1, 1));
         }
 
-        public bool CanMoveVertical(Square source, Square dest)
+        protected bool CanMoveVertical(Square source, Square dest)
         {
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);
@@ -92,7 +92,7 @@ namespace Chess
             return true;
         }
 
-        public bool CanMoveHorizontal(Square source, Square dest)
+        protected bool CanMoveHorizontal(Square source, Square dest)
         {
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);
@@ -125,7 +125,7 @@ namespace Chess
             return true;
         }
 
-        public bool CanMoveDiagonal(Square source, Square dest)
+        protected bool CanMoveDiagonal(Square source, Square dest)
         {
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);
@@ -145,7 +145,7 @@ namespace Chess
                     }
                 }
             }
-            // Diagonal - von rechts oben nach links unten 
+            // Diagonal - von rechts oben nach links unten
             else if ((source_row > dest_row) && (source_col > dest_col))
             {
                 int i;
@@ -158,7 +158,7 @@ namespace Chess
                     }
                 }
             }
-            // Diagonal - von rechts unten nach links oben 
+            // Diagonal - von rechts unten nach links oben
             else if ((source_row < dest_row) && (source_col > dest_col))
             {
                 int i;
@@ -186,6 +186,30 @@ namespace Chess
             }
             // Der Weg ist frei
             return true;
+        }
+
+        protected bool CanJump(Square source, Square dest)
+        {
+            int source_col = GetColumnCoordinate(source);
+            int source_row = GetRowCoordinate(source);
+            int dest_col = GetColumnCoordinate(dest);
+            int dest_row = GetRowCoordinate(dest);
+
+            if (
+                dest == MainWindow.board.GetSquare(GetSquarenameFromCoordinates(source_col + 1, source_row + 2)) ||
+                dest == MainWindow.board.GetSquare(GetSquarenameFromCoordinates(source_col + 2, source_row + 1)) ||
+                dest == MainWindow.board.GetSquare(GetSquarenameFromCoordinates(source_col + 2, source_row - 1)) ||
+                dest == MainWindow.board.GetSquare(GetSquarenameFromCoordinates(source_col + 1, source_row - 2)) ||
+                dest == MainWindow.board.GetSquare(GetSquarenameFromCoordinates(source_col - 1, source_row - 2)) ||
+                dest == MainWindow.board.GetSquare(GetSquarenameFromCoordinates(source_col - 2, source_row - 1)) ||
+                dest == MainWindow.board.GetSquare(GetSquarenameFromCoordinates(source_col - 2, source_row + 1)) ||
+                dest == MainWindow.board.GetSquare(GetSquarenameFromCoordinates(source_col - 1, source_row + 2))
+                )
+            {
+                return true;
+            }
+
+            return false;
         }
 
     }
