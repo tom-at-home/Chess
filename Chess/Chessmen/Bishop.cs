@@ -94,10 +94,6 @@ namespace Chess
         // Prüft, ob der Zug durch andere Schachfiguren versperrt ist
         private bool IsBarred(Square source, Square dest)
         {
-            int source_col = GetColumnCoordinate(source);
-            int source_row = GetRowCoordinate(source);
-            int dest_col = GetColumnCoordinate(dest);
-            int dest_row = GetRowCoordinate(dest);
 
             // Diagonaler Zug
             if(CanMoveDiagonal(source, dest))
