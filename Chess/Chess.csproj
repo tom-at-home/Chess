@@ -57,6 +57,8 @@
     <Compile Include="BlockedMoveException.cs" />
     <Compile Include="Chessmen\King.cs" />
     <Compile Include="Chessmen\IMovable.cs" />
+    <Compile Include="Chessmen\PawnWhite.cs" />
+    <Compile Include="Chessmen\PawnBlack.cs" />
     <Compile Include="Chessmen\Queen.cs" />
     <Compile Include="Chessmen\Chessman.cs" />
     <Compile Include="Chessmen\Bishop.cs" />
@@ -80,7 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chessmen\Rook.cs" />
-    <Compile Include="Chessmen\Pawn.cs" />
+    <None Include="Chessmen\Pawn.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -127,7 +129,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\bauer.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\bauer_sw.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -144,6 +146,7 @@
     <Content Include="Images\turm_sw.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="TODO_LISTE.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

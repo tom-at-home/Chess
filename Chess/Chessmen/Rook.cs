@@ -4,8 +4,11 @@ using System.Windows.Media.Imaging;
 
 namespace Chess
 {
+
     class Rook : Chessman
     {
+
+        private bool isMoved = false;
 
         public Rook(bool isWhite, string pos)
         {
@@ -97,6 +100,7 @@ namespace Chess
                     {
                         source.Content = "";
                         this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                        this.isMoved = true;
                         MainWindow.board.lastAction = "BEWEGE " + this.Desc
                                 + " VON " + source.Name
                                 + " AUF " + dest.Name;
@@ -109,6 +113,7 @@ namespace Chess
                         {
                             source.Content = "";
                             this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                            this.isMoved = true;
                             MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
                             MainWindow.board.chessman.Remove(chessmanAtDest);
                         }

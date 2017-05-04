@@ -7,6 +7,11 @@ namespace Chess
     class King : Chessman
     {
 
+        private bool isMoved = false;
+
+        // Speichert, ob der König bereits eine Rochade ausgeführt hat
+        private bool HasPerformedCastling;
+
         public King(bool isWhite, string pos)
         {
 
@@ -42,6 +47,16 @@ namespace Chess
             this.desc = "KÖNIG";
         }
 
+        public bool CheckCastlingKingsSide()
+        {
+            return true;
+        }
+
+        public bool CheckCastlingQueensSide()
+        {
+            return true;
+        }
+
         public override bool IsMoveValid(Square dest)
         {
             Square source = MainWindow.board.GetSquare(this.Current_position);
@@ -56,12 +71,31 @@ namespace Chess
             return (
                 (source_col == dest_col && Math.Abs(source_row - dest_row) == 1) ||
                 (source_row == dest_row && Math.Abs(source_col - dest_col) == 1) ||
-                ((Math.Abs(source_col - dest_col) == Math.Abs(source_row - dest_row)) && (Math.Abs(source_col - dest_col) == 1))
+                ((Math.Abs(source_col - dest_col) == Math.Abs(source_row - dest_row)) && (Math.Abs(source_col - dest_col) == 1)) ||
+                CheckCastlingKingsSide() ||
+                CheckCastlingQueensSide()
                );
         }
 
         public override bool IsMoveBlocked(Square dest)
         {
+            return false;
+        }
+
+        public bool IsMovePlacingInCheck(Square dest)
+        {
+
+            foreach (Chessman chessman in MainWindow.board.chessman)
+            {
+                if (this.Color != chessman.Color)
+                {
+                    if(chessman.IsMoveValid(dest) && !chessman.IsMoveBlocked(dest))
+                    {
+                        return true;
+                    }
+                }
+            }
+
             return false;
         }
 
@@ -79,13 +113,14 @@ namespace Chess
             {
                 if (!IsMoveBlocked(dest))
                 {
-                    if (!IsPlacedInCheck(dest))
+                    if (!IsMovePlacingInCheck(dest))
                     {
                         // Gewoehnlicher Zug ohne Angriff
                         if (MainWindow.board.GetChessmanAtSquare(dest) == null)
                         {
                             source.Content = "";
                             this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                            this.isMoved = true;
                             MainWindow.board.lastAction = "BEWEGE " + this.Desc
                                     + " VON " + source.Name
                                     + " AUF " + dest.Name;
@@ -98,6 +133,7 @@ namespace Chess
                             {
                                 source.Content = "";
                                 this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                                this.isMoved = true;
                                 MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
                                 MainWindow.board.chessman.Remove(chessmanAtDest);
                             }
@@ -123,58 +159,5 @@ namespace Chess
                 throw new InvalidMoveException();
             }
         }
-
-        public bool IsPlacedInCheck(Square dest)
-        {
-
-            foreach (Chessman chessman in MainWindow.board.chessman)
-            {
-                if(this.Color != chessman.Color)
-                {
-
-                }
-            }
-
-            return false;
-        }
-
-        /*
-        // Prüft, ob der Zug durch andere Schachfiguren versperrt ist
-        private bool IsBlocked(Square source, Square dest)
-        {
-            int source_col = GetColumnCoordinate(source);
-            int source_row = GetRowCoordinate(source);
-            int dest_col = GetColumnCoordinate(dest);
-            int dest_row = GetRowCoordinate(dest);
-
-            // Vertikaler Zug
-            if (source_col == dest_col)
-            {
-                if (CanMoveVertical(source, dest))
-                {
-                    return false;
-                }
-            }
-            // Horizontaler Zug
-            else if (source_row == dest_row)
-            {
-                if (CanMoveHorizontal(source, dest))
-                {
-                    return false;
-                }
-            }
-            // Diagonaler Zug
-            else if ((Math.Abs(source_col - dest_col)) == Math.Abs((source_row - dest_row)))
-            {
-                if (CanMoveDiagonal(source, dest))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-        */
-
     }
 }

@@ -71,14 +71,14 @@ namespace Chess
                 }
             }
 
-            Pawn pawn_w_1 = new Pawn(true, "A2");
-            Pawn pawn_w_2 = new Pawn(true, "B2");
-            Pawn pawn_w_3 = new Pawn(true, "C2");
-            Pawn pawn_w_4 = new Pawn(true, "D2");
-            Pawn pawn_w_5 = new Pawn(true, "E2");
-            Pawn pawn_w_6 = new Pawn(true, "F2");
-            Pawn pawn_w_7 = new Pawn(true, "G2");
-            Pawn pawn_w_8 = new Pawn(true, "H2");
+            PawnWhite pawn_w_1 = new PawnWhite("A2");
+            PawnWhite pawn_w_2 = new PawnWhite("B2");
+            PawnWhite pawn_w_3 = new PawnWhite("C2");
+            PawnWhite pawn_w_4 = new PawnWhite("D2");
+            PawnWhite pawn_w_5 = new PawnWhite("E2");
+            PawnWhite pawn_w_6 = new PawnWhite("F2");
+            PawnWhite pawn_w_7 = new PawnWhite("G2");
+            PawnWhite pawn_w_8 = new PawnWhite("H2");
             Rook rook_w_1 = new Rook(true, "A1");
             Knight knight_w_1 = new Knight(true, "B1");
             Bishop bishop_w_1 = new Bishop(true, "C1");
@@ -87,14 +87,14 @@ namespace Chess
             Bishop bishop_w_2 = new Bishop(true, "F1");
             Knight knight_w_2 = new Knight(true, "G1");
             Rook rook_w_2 = new Rook(true, "H1");
-            Pawn pawn_b_1 = new Pawn(false, "A7");
-            Pawn pawn_b_2 = new Pawn(false, "B7");
-            Pawn pawn_b_3 = new Pawn(false, "C7");
-            Pawn pawn_b_4 = new Pawn(false, "D7");
-            Pawn pawn_b_5 = new Pawn(false, "E7");
-            Pawn pawn_b_6 = new Pawn(false, "F7");
-            Pawn pawn_b_7 = new Pawn(false, "G7");
-            Pawn pawn_b_8 = new Pawn(false, "H7");
+            PawnBlack pawn_b_1 = new PawnBlack("A7");
+            PawnBlack pawn_b_2 = new PawnBlack("B7");
+            PawnBlack pawn_b_3 = new PawnBlack("C7");
+            PawnBlack pawn_b_4 = new PawnBlack("D7");
+            PawnBlack pawn_b_5 = new PawnBlack("E7");
+            PawnBlack pawn_b_6 = new PawnBlack("F7");
+            PawnBlack pawn_b_7 = new PawnBlack("G7");
+            PawnBlack pawn_b_8 = new PawnBlack("H7");
             Rook rook_b_1 = new Rook(false, "A8");
             Knight knight_b_1 = new Knight(false, "B8");
             Bishop bishop_b_1 = new Bishop(false, "C8");
@@ -198,6 +198,10 @@ namespace Chess
                     catch (BlockedMoveException)
                     {
                         mainwindow.ShowInfo("DIESER ZUG IST BLOCKIERT");
+                    }
+                    catch (PlacedInCheckException)
+                    {
+                        mainwindow.ShowInfo("DIESER ZUG SETZT DEN KÖNIG IN SCHACH");
                     }
                 }
                 else

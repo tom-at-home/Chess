@@ -8,6 +8,7 @@ namespace Chess
 {
     class Player
     {
+
         private string name;
         public string Name
         {
