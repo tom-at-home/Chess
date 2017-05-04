@@ -9,8 +9,11 @@ namespace Chess
 
         private bool isMoved = false;
 
-        public Pawn(bool isWhite, string pos)
+        public Pawn(bool isWhite, string pos) : base(isWhite, pos)
         {
+
+            this.desc = "BAUER";
+
             Image whitePawn = new Image();
             whitePawn.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/bauer.png"));
 
@@ -27,7 +30,6 @@ namespace Chess
             blackPawnPnl.Margin = new System.Windows.Thickness(8);
             blackPawnPnl.Children.Add(blackPawn);
 
-            this.IsWhite = isWhite;
             if (isWhite)
             {
                 this.View = whitePawnPnl;
@@ -38,8 +40,7 @@ namespace Chess
                 this.View = blackPawnPnl;
                 this.color = "black";
             }           
-            this.Current_position = pos;
-            this.desc = "BAUER";
+
         }
 
         public override bool IsMoveBlocked(Square dest)

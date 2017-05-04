@@ -103,7 +103,6 @@ namespace Chess
             Bishop bishop_b_2 = new Bishop(false, "F8");
             Knight knight_b_2 = new Knight(false, "G8");        
             Rook rook_b_2 = new Rook(false, "H8");
-
             // WEISSE SPIELFIGUREN
             chessman.Add(pawn_w_1);
             chessman.Add(pawn_w_2);
@@ -242,6 +241,18 @@ namespace Chess
                 if(square.Name == item.Current_position)
                 {
                     return item;
+                }
+            }
+            return null;
+        }
+
+        public Rook GetRook(string orig_pos)
+        {
+            foreach (Chessman item in chessman)
+            {
+                if (item is Rook && item.Orig_position == orig_pos)
+                {
+                    return (Rook)item;
                 }
             }
             return null;

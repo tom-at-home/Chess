@@ -8,12 +8,18 @@ namespace Chess
     class Rook : Chessman
     {
 
-        private bool isMoved = false;
+        private bool isMoved;
+        public bool IsMoved
+        {
+            get { return isMoved; }
+            set { isMoved = value; }
+        }
 
-        public Rook(bool isWhite, string pos)
+        public Rook(bool isWhite, string pos) : base(isWhite, pos)
         {
 
-            this.IsWhite = isWhite;
+            this.desc = "TURM";
+
             if (isWhite)
             {
                 Image whiteRook = new Image();
@@ -41,8 +47,6 @@ namespace Chess
                 this.color = "black";
             }
 
-            this.Current_position = pos;
-            this.desc = "TURM";
         }
 
         public override bool IsMoveValid(Square dest)

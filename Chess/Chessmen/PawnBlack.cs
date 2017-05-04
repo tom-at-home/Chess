@@ -9,8 +9,10 @@ namespace Chess
 
         private bool isMoved = false;
 
-        public PawnBlack(string pos)
+        public PawnBlack(string pos) : base(false, pos)
         {
+
+            this.desc = "BAUER";
 
             Image blackPawn = new Image();
             blackPawn.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/bauer_sw.png"));
@@ -20,32 +22,30 @@ namespace Chess
             blackPawnPnl.Margin = new System.Windows.Thickness(8);
             blackPawnPnl.Children.Add(blackPawn);
 
-            this.IsWhite = false;
-
             this.View = blackPawnPnl;
             this.color = "black";
 
-            this.Current_position = pos;
-            this.desc = "BAUER";
         }
 
         public override bool IsMoveBlocked(Square dest)
         {
-
+            
             Square source = MainWindow.board.GetSquare(this.Current_position);
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);
             int dest_col = GetColumnCoordinate(dest);
             int dest_row = GetRowCoordinate(dest);
 
-            for (int i = source_row - 1; i >= dest_row; i--)
+            if(source_col == dest_col)
             {
-                if (MainWindow.board.GetChessmanAtSquare(MainWindow.board.GetSquare(GetSquarenameFromCoordinates(dest_col, i))) != null)
+                for (int i = source_row - 1; i >= dest_row; i--)
                 {
-                    return true;
+                    if (MainWindow.board.GetChessmanAtSquare(MainWindow.board.GetSquare(GetSquarenameFromCoordinates(dest_col, i))) != null)
+                    {
+                        return true;
+                    }
                 }
             }
-
             return false;
         }
 

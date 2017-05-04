@@ -26,6 +26,12 @@ namespace Chess
             set { view = value; }
         }
 
+        protected string orig_position;
+        public string Orig_position
+        {
+            get { return orig_position; }
+        }
+
         private string current_position;
         public string Current_position
         {
@@ -38,6 +44,13 @@ namespace Chess
         {
             get { return desc; }
             set { desc = value; }
+        }
+
+        public Chessman(bool isWhite, string pos)
+        {
+            this.IsWhite = isWhite;
+            this.orig_position = pos;
+            this.Current_position = pos;
         }
 
         public abstract bool IsMoveValid(Square dest);

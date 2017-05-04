@@ -7,10 +7,11 @@ namespace Chess
     class Bishop : Chessman
     {
 
-        public Bishop(bool isWhite, string pos)
+        public Bishop(bool isWhite, string pos) : base(isWhite, pos)
         {
 
-            this.IsWhite = isWhite;
+            this.desc = "LÄUFER";
+
             if (isWhite)
             {
                 Image whiteBishop = new Image();
@@ -38,8 +39,6 @@ namespace Chess
                 this.color = "black";
             }
 
-            this.Current_position = pos;
-            this.desc = "LÄUFER";
         }
 
         public override bool IsMoveValid(Square dest)

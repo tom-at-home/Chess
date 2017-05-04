@@ -7,10 +7,11 @@ namespace Chess
     class Queen : Chessman
     {
 
-        public Queen(bool isWhite, string pos)
+        public Queen(bool isWhite, string pos) : base(isWhite, pos)
         {
 
-            this.IsWhite = isWhite;
+            this.desc = "DAME";
+
             if (isWhite)
             {
                 Image whiteQueen = new Image();
@@ -38,8 +39,6 @@ namespace Chess
                 this.color = "black";
             }
 
-            this.Current_position = pos;
-            this.desc = "DAME";
         }
 
         public override bool IsMoveValid(Square dest)
