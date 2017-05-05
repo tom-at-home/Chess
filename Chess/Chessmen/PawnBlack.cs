@@ -110,6 +110,12 @@ namespace Chess
                                 + " VON " + source.Name
                                 + " AUF " + dest.Name;
                         isMoved = true;
+                        // Zieht ein Bauer im Doppelschritt,
+                        // kann dieser unmittelbar danach 'en passant' geschlagen werden
+                        if(Math.Abs(source_row - dest_row) == 2)
+                        {
+                            MainWindow.appInstance.active_player.DoubleStepMovedPawn = this;
+                        }
                     }
                     else
                     {

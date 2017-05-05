@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Chess
 {
-    abstract class Chessman: IMovable
+    public abstract class Chessman: IMovable
     {
         private bool isWhite;
         protected bool IsWhite

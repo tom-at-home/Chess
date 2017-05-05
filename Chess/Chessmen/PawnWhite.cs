@@ -79,11 +79,24 @@ namespace Chess
                 return
                     //  Der Bauer darf ein Feld VERTIKAL vorrücken
                     (source_col == dest_col && dest_row - source_row == 1    ) ||
-                    // oder ein Feld DIAGONAL den Gegner angreifen
+                    // oder ein Feld DIAGONAL den Gegner schlagen
                     (
                         ((source_col - 1 == dest_col) || (source_col + 1 == dest_col))
                           && (dest_row - source_row == 1)
                           && (opponent != null)
+                    ) ||
+                    // oder einen gegnerischen Bauer en passant schlagen
+                    (
+                        ((source_col - 1 == dest_col) || (source_col + 1 == dest_col))
+                          && (dest_row - source_row == 1)
+                          && (source_row == 5)
+                          && (MainWindow.appInstance.waiting_player.DoubleStepMovedPawn != null)
+                          && (Convert.ToInt16(MainWindow.appInstance.waiting_player.DoubleStepMovedPawn.Current_position.Substring(1, 1)) == 5)
+                          && (
+                          (Convert.ToInt16(Convert.ToChar(MainWindow.appInstance.waiting_player.DoubleStepMovedPawn.Current_position.Substring(0, 1))) == source_col - 1) 
+                          ||
+                          (Convert.ToInt16(Convert.ToChar(MainWindow.appInstance.waiting_player.DoubleStepMovedPawn.Current_position.Substring(0, 1))) == source_col + 1)
+                          )
                     );
             }
         }
@@ -108,6 +121,12 @@ namespace Chess
                                 + " VON " + source.Name
                                 + " AUF " + dest.Name;
                         isMoved = true;
+                        // Zieht ein Bauer im Doppelschritt,
+                        // kann dieser unmittelbar danach 'en passant' geschlagen werden
+                        if (Math.Abs(source_row - dest_row) == 2)
+                        {
+                            MainWindow.appInstance.active_player.DoubleStepMovedPawn = this;
+                        }
                     }
                     else
                     {

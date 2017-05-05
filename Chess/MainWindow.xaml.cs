@@ -3,14 +3,18 @@
 namespace Chess
 {
 
-    partial class MainWindow : Window
+    public partial class MainWindow : Window
     {
 
         static internal Chessboard board;
+
         Player white;
         Player black;
-        internal Player active_player;
-        public MainWindow appInstance;
+
+        public Player active_player;
+        public Player waiting_player;
+
+        public static MainWindow appInstance;
 
         public MainWindow()
         {
@@ -57,11 +61,16 @@ namespace Chess
             if(active_player == white)
             {
                 active_player = black;
+                waiting_player = white;
             }
             else
             {
                 active_player = white;
+                waiting_player = black;
             }
+
+            active_player.DoubleStepMovedPawn = null;
+
         }
     }
 }

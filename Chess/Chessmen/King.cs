@@ -57,7 +57,7 @@ namespace Chess
             int dest_row = GetRowCoordinate(dest);
 
             // Bewegung bei der kleinen Rochade
-            if (source_col - dest_col == -2)
+            if (source_col - dest_col == -2 && source_row == dest_row)
             {
 
                 Rook rook = MainWindow.board.GetRook("H" + this.Orig_position.Substring(1, 1));
@@ -76,8 +76,30 @@ namespace Chess
         }
 
         // Prüft, ob die große Rochade möglich ist
-        public bool CanPerformCastlingQueensSide()
+        public bool CanPerformCastlingQueensSide(Square dest)
         {
+            Square source = MainWindow.board.GetSquare(this.Current_position);
+            int source_col = GetColumnCoordinate(source);
+            int source_row = GetRowCoordinate(source);
+            int dest_col = GetColumnCoordinate(dest);
+            int dest_row = GetRowCoordinate(dest);
+
+            // Bewegung bei der großen Rochade
+            if (source_col - dest_col == 2 && source_row == dest_row)
+            {
+
+                Rook rook = MainWindow.board.GetRook("A" + this.Orig_position.Substring(1, 1));
+                if (rook != null && !rook.IsMoved && !this.isMoved && !this.HasPerformedCastling)
+                {
+                    Square orig_rook_pos = MainWindow.board.GetSquare(rook.Orig_position);
+                    if (CanMoveHorizontal(source, orig_rook_pos))
+                    {
+                        return true;
+                    }
+                }
+
+            }
+
             return false;
         }
 
@@ -96,8 +118,8 @@ namespace Chess
                 (source_col == dest_col && Math.Abs(source_row - dest_row) == 1) ||
                 (source_row == dest_row && Math.Abs(source_col - dest_col) == 1) ||
                 ((Math.Abs(source_col - dest_col) == Math.Abs(source_row - dest_row)) && (Math.Abs(source_col - dest_col) == 1)) ||
-                CanPerformCastlingKingsSide(dest) 
-                /*|| CheckCastlingQueensSide()*/
+                CanPerformCastlingKingsSide(dest) ||
+                CanPerformCastlingQueensSide(dest)
                );
         }
 
@@ -155,7 +177,7 @@ namespace Chess
                         if (MainWindow.board.GetChessmanAtSquare(dest) == null)
                         {
                             // Kleine Rochade
-                            if (source_col - dest_col == -2)
+                            if (source_col - dest_col == -2 && source_row == dest_row)
                             {
                                 Rook rook = MainWindow.board.GetRook("H" + this.Orig_position.Substring(1, 1));
                                 Square rook_source = MainWindow.board.GetSquare(rook.Orig_position);
@@ -167,6 +189,23 @@ namespace Chess
                                 this.HasPerformedCastling = true;
                                 rook.IsMoved = true;
                                 MainWindow.board.lastAction = this.Desc + " FÜHRT DIE KLEINE ROCHADE"
+                                        + " VON " + source.Name
+                                        + " AUF " + dest.Name
+                                        + " AUS";
+                            }
+                            // Große Rochade
+                            else if (source_col - dest_col == 2 && source_row == dest_row)
+                            {
+                                Rook rook = MainWindow.board.GetRook("A" + this.Orig_position.Substring(1, 1));
+                                Square rook_source = MainWindow.board.GetSquare(rook.Orig_position);
+                                source.Content = "";
+                                rook_source.Content = "";
+                                this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                                rook.Current_position = GetSquarenameFromCoordinates(dest_col + 1, dest_row);
+                                this.isMoved = true;
+                                this.HasPerformedCastling = true;
+                                rook.IsMoved = true;
+                                MainWindow.board.lastAction = this.Desc + " FÜHRT DIE GROßE ROCHADE"
                                         + " VON " + source.Name
                                         + " AUF " + dest.Name
                                         + " AUS";

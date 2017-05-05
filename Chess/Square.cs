@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace Chess
 {
-    class Square : Button
+    public class Square : Button
     {
 
         private SolidColorBrush color;

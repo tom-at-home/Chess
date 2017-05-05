@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace Chess
 {
-    class Player
+    public class Player
     {
+
+        private Chessman doubleStepMovedPawn;
+        public Chessman DoubleStepMovedPawn
+        {
+            get { return doubleStepMovedPawn; }
+            set { doubleStepMovedPawn = value; }
+        }
 
         private string name;
         public string Name

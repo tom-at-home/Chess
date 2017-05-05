@@ -20,7 +20,7 @@ namespace Chess
             MainWindow mainWindow = new MainWindow();
             //MainWindow.Title = "Hallo";
             mainWindow.Show();
-            mainWindow.appInstance = mainWindow;
+            Chess.MainWindow.appInstance = mainWindow;
         }
 
     }
