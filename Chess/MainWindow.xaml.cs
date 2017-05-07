@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 
 namespace Chess
 {
@@ -71,6 +72,16 @@ namespace Chess
 
             active_player.DoubleStepMovedPawn = null;
 
+            // Prüfen, ob dem Spieler Schach geboten wird
+            active_player.IsKingInCheck = board.IsKingInCheck(active_player.Color);
+            if (active_player.IsKingInCheck)
+            {
+                this.info.Foreground = Brushes.Red;
+            }
+            else
+            {
+                this.info.Foreground = Brushes.Black;
+            }
         }
     }
 }

@@ -9,6 +9,14 @@ namespace Chess
     public class Player
     {
 
+        private bool isKingInCheck;
+        public bool IsKingInCheck
+        {
+            get { return isKingInCheck; }
+            set { isKingInCheck = value; }
+        }
+
+
         private Chessman doubleStepMovedPawn;
         public Chessman DoubleStepMovedPawn
         {

@@ -57,54 +57,5 @@ namespace Chess
         {
             return false;
         }
-
-        public override void Move(Square source, Square dest)
-        {
-            int source_col = GetColumnCoordinate(source);
-            int source_row = GetRowCoordinate(source);
-            int dest_col = GetColumnCoordinate(dest);
-            int dest_row = GetRowCoordinate(dest);
-
-            // Überprüfung auf gültigen Zug
-            if (IsMoveValid(dest))
-            {
-                if (!IsMoveBlocked(dest))
-                {
-                    // Gewoehnlicher Zug ohne Angriff
-                    if (MainWindow.board.GetChessmanAtSquare(dest) == null)
-                    {
-                        source.Content = "";
-                        this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                        MainWindow.board.lastAction = "BEWEGE " + this.Desc
-                                + " VON " + source.Name
-                                + " AUF " + dest.Name;
-                    }
-                    else
-                    {
-                        Chessman chessmanAtDest = MainWindow.board.GetChessmanAtSquare(dest);
-                        // Angriffszug
-                        if (chessmanAtDest.Color != this.Color)
-                        {
-                            source.Content = "";
-                            this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                            MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
-                            MainWindow.board.chessman.Remove(chessmanAtDest);
-                        }
-                        else
-                        {
-                            throw new BlockedMoveException();
-                        }
-                    }
-                }
-                else
-                {
-                    throw new BlockedMoveException();
-                }
-            }
-            else
-            {
-                throw new InvalidMoveException();
-            }
-        }
     }
 }

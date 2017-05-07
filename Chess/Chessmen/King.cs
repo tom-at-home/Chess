@@ -61,7 +61,7 @@ namespace Chess
             {
 
                 Rook rook = MainWindow.board.GetRook("H" + this.Orig_position.Substring(1, 1));
-                if(rook != null && !rook.IsMoved && !this.isMoved && !this.HasPerformedCastling)
+                if (rook != null && !rook.IsMoved && !this.isMoved && !this.HasPerformedCastling)
                 {
                     Square orig_rook_pos = MainWindow.board.GetSquare(rook.Orig_position);
                     if (CanMoveHorizontal(source, orig_rook_pos))
@@ -145,7 +145,7 @@ namespace Chess
             {
                 if (this.Color != chessman.Color)
                 {
-                    if(chessman.IsMoveValid(dest) && !chessman.IsMoveBlocked(dest))
+                    if (chessman.IsMoveValid(dest) && !chessman.IsMoveBlocked(dest))
                     {
                         this.Current_position = last_pos;
                         return true;
@@ -171,20 +171,26 @@ namespace Chess
             {
                 if (!IsMoveBlocked(dest))
                 {
-                    if (!IsMovePlacingInCheck(dest))
+                    //if (!IsMovePlacingInCheck(dest))
+                    //{
+                    // Gewoehnlicher Zug ohne Angriff
+                    if (MainWindow.board.GetChessmanAtSquare(dest) == null)
                     {
-                        // Gewoehnlicher Zug ohne Angriff
-                        if (MainWindow.board.GetChessmanAtSquare(dest) == null)
+                        // Kleine Rochade
+                        if (source_col - dest_col == -2 && source_row == dest_row)
                         {
-                            // Kleine Rochade
-                            if (source_col - dest_col == -2 && source_row == dest_row)
+                            Rook rook = MainWindow.board.GetRook("H" + this.Orig_position.Substring(1, 1));
+                            Square rook_source = MainWindow.board.GetSquare(rook.Orig_position);
+
+                            string last_pos = this.Current_position;
+                            string rook_last_pos = rook.Current_position;
+                            this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                            rook.Current_position = GetSquarenameFromCoordinates(dest_col - 1, dest_row);
+
+                            if (!MainWindow.board.IsKingInCheck(this.Color))
                             {
-                                Rook rook = MainWindow.board.GetRook("H" + this.Orig_position.Substring(1, 1));
-                                Square rook_source = MainWindow.board.GetSquare(rook.Orig_position);
                                 source.Content = "";
                                 rook_source.Content = "";
-                                this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                                rook.Current_position = GetSquarenameFromCoordinates(dest_col-1, dest_row);
                                 this.isMoved = true;
                                 this.HasPerformedCastling = true;
                                 rook.IsMoved = true;
@@ -193,15 +199,31 @@ namespace Chess
                                         + " AUF " + dest.Name
                                         + " AUS";
                             }
-                            // Große Rochade
-                            else if (source_col - dest_col == 2 && source_row == dest_row)
+                            // Zug Rückgängig machen, wenn sich nach dem Zug
+                            // der König in Schach befinden würde
+                            else
                             {
-                                Rook rook = MainWindow.board.GetRook("A" + this.Orig_position.Substring(1, 1));
-                                Square rook_source = MainWindow.board.GetSquare(rook.Orig_position);
+                                this.Current_position = last_pos;
+                                rook.Current_position = rook_last_pos;
+                                throw new PlacedInCheckException();
+                            }
+
+                        }
+                        // Große Rochade
+                        else if (source_col - dest_col == 2 && source_row == dest_row)
+                        {
+                            Rook rook = MainWindow.board.GetRook("A" + this.Orig_position.Substring(1, 1));
+                            Square rook_source = MainWindow.board.GetSquare(rook.Orig_position);
+
+                            string last_pos = this.Current_position;
+                            string rook_last_pos = rook.Current_position;
+                            this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                            rook.Current_position = GetSquarenameFromCoordinates(dest_col + 1, dest_row);
+
+                            if (!MainWindow.board.IsKingInCheck(this.Color))
+                            {
                                 source.Content = "";
                                 rook_source.Content = "";
-                                this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                                rook.Current_position = GetSquarenameFromCoordinates(dest_col + 1, dest_row);
                                 this.isMoved = true;
                                 this.HasPerformedCastling = true;
                                 rook.IsMoved = true;
@@ -210,39 +232,73 @@ namespace Chess
                                         + " AUF " + dest.Name
                                         + " AUS";
                             }
+                            // Zug Rückgängig machen, wenn sich nach dem Zug
+                            // der König in Schach befinden würde
                             else
                             {
+                                this.Current_position = last_pos;
+                                rook.Current_position = rook_last_pos;
+                                throw new PlacedInCheckException();
+                            }
+                        }
+                        // Einfacher Zug
+                        else
+                        {
+                            string last_pos = this.Current_position;
+                            this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+
+                            if (!MainWindow.board.IsKingInCheck(this.Color))
+                            {
                                 source.Content = "";
-                                this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
                                 this.isMoved = true;
                                 MainWindow.board.lastAction = "BEWEGE " + this.Desc
                                         + " VON " + source.Name
                                         + " AUF " + dest.Name;
                             }
-                        }
-                        else
-                        {
-                            Chessman chessmanAtDest = MainWindow.board.GetChessmanAtSquare(dest);
-                            // Angriffszug
-                            if (chessmanAtDest.Color != this.Color)
-                            {
-                                source.Content = "";
-                                this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                                this.isMoved = true;
-                                MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
-                                MainWindow.board.chessman.Remove(chessmanAtDest);
-                            }
+                            // Zug Rückgängig machen, wenn sich nach dem Zug
+                            // der König in Schach befinden würde
                             else
                             {
-                                throw new BlockedMoveException();
+                                this.Current_position = last_pos;
+                                throw new PlacedInCheckException();
                             }
                         }
                     }
                     else
                     {
-                        throw new PlacedInCheckException();
-                    }
+                        Chessman chessmanAtDest = MainWindow.board.GetChessmanAtSquare(dest);
+                        // Angriffszug
+                        if (chessmanAtDest.Color != this.Color)
+                        {
+                            string last_pos = this.Current_position;
+                            this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                            MainWindow.board.chessman.Remove(chessmanAtDest);
 
+                            if (!MainWindow.board.IsKingInCheck(this.Color))
+                            {
+                                source.Content = "";
+                                this.isMoved = true;
+                                MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
+                            }
+                            // Zug Rückgängig machen, wenn sich nach dem Zug
+                            // der König in Schach befinden würde
+                            else
+                            {
+                                this.Current_position = last_pos;
+                                MainWindow.board.chessman.Add(chessmanAtDest);
+                                throw new PlacedInCheckException();
+                            }
+                        }
+                        else
+                        {
+                            throw new BlockedMoveException();
+                        }
+                    }
+                    //}
+                    //else
+                    //{
+                    //    throw new PlacedInCheckException();
+                    //}
                 }
                 else
                 {

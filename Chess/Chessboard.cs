@@ -200,7 +200,14 @@ namespace Chess
                     }
                     catch (PlacedInCheckException)
                     {
-                        mainwindow.ShowInfo("DIESER ZUG SETZT DEN KÖNIG IN SCHACH");
+                        if (mainwindow.active_player.IsKingInCheck)
+                        {
+                            mainwindow.ShowInfo("DIESER ZUG IST NICHT MÖGLICH (KÖNIG WIRD BEDROHT)");
+                        }
+                        else
+                        {
+                            mainwindow.ShowInfo("DIESER ZUG SETZT DEN KÖNIG IN SCHACH");
+                        }
                     }
                 }
                 else
@@ -256,6 +263,38 @@ namespace Chess
                 }
             }
             return null;
+        }
+
+        public Square GetKingsPosition(string color)
+        {
+            string orig_pos = color == "white" ? "E1" : "E8";
+
+            foreach (Chessman item in chessman)
+            {
+                if (item is King && item.Orig_position == orig_pos)
+                {
+                    return GetSquare(item.Current_position);
+                }
+            }
+            return null;
+        }
+
+        // Überprüft, ob sich der König in Schach befindet
+        public bool IsKingInCheck(string color)
+        {
+            Square kings_pos = GetKingsPosition(color);
+
+            foreach (Chessman chessman in chessman)
+            {
+                if (color != chessman.Color)
+                {
+                    if (chessman.IsMoveValid(kings_pos) && !chessman.IsMoveBlocked(kings_pos))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

@@ -57,6 +57,7 @@
     <Compile Include="BlockedMoveException.cs" />
     <Compile Include="Chessmen\King.cs" />
     <Compile Include="Chessmen\IMovable.cs" />
+    <None Include="Chessmen\PawnBlack - Kopie.cs" />
     <Compile Include="Chessmen\PawnWhite.cs" />
     <Compile Include="Chessmen\PawnBlack.cs" />
     <Compile Include="Chessmen\Queen.cs" />

@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Chess
 {
-    public abstract class Chessman: IMovable
+    public abstract class Chessman : IMovable
     {
         private bool isWhite;
         protected bool IsWhite
@@ -57,7 +57,89 @@ namespace Chess
 
         public abstract bool IsMoveBlocked(Square dest);
 
-        public abstract void Move(Square source, Square dest);
+        //public abstract void Move(Square source, Square dest);
+
+        public virtual void Move(Square source, Square dest)
+        {
+
+            int source_col = GetColumnCoordinate(source);
+            int source_row = GetRowCoordinate(source);
+            int dest_col = GetColumnCoordinate(dest);
+            int dest_row = GetRowCoordinate(dest);
+
+            // Prüft auf gültigen Zug: VERTIKAL oder HORIZONTAL oder DIAGONAL
+            if (IsMoveValid(dest))
+            {
+                if (!IsMoveBlocked(dest))
+                {
+                    // Gewoehnlicher Zug ohne Angriff
+                    if (MainWindow.board.GetChessmanAtSquare(dest) == null)
+                    {
+
+                        string last_pos = this.Current_position;
+                        this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+
+                        if (!MainWindow.board.IsKingInCheck(this.Color))
+                        {
+                            source.Content = "";
+                            //this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                            MainWindow.board.lastAction = "BEWEGE " + this.Desc
+                                    + " VON " + source.Name
+                                    + " AUF " + dest.Name;
+                        }
+                        // Zug Rückgängig machen, wenn sich nach dem Zug
+                        // der König in Schach befinden würde
+                        else
+                        {
+                            this.Current_position = last_pos;
+                            throw new PlacedInCheckException();
+                        }
+
+                    }
+                    else
+                    {
+                        Chessman chessmanAtDest = MainWindow.board.GetChessmanAtSquare(dest);
+                        // Angriffszug
+                        if (chessmanAtDest.Color != this.Color)
+                        {
+
+                            string last_pos = this.Current_position;
+                            this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                            MainWindow.board.chessman.Remove(chessmanAtDest);
+
+                            if (!MainWindow.board.IsKingInCheck(this.Color))
+                            {
+                                source.Content = "";
+                                //this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                                MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
+
+                            }
+                            // Zug Rückgängig machen, wenn sich nach dem Zug
+                            // der König in Schach befinden würde
+                            else
+                            {
+                                this.Current_position = last_pos;
+                                MainWindow.board.chessman.Add(chessmanAtDest);
+                                throw new PlacedInCheckException();
+                            }
+
+                        }
+                        else
+                        {
+                            throw new BlockedMoveException();
+                        }
+                    }
+                }
+                else
+                {
+                    throw new BlockedMoveException();
+                }
+            }
+            else
+            {
+                throw new InvalidMoveException();
+            }
+        }
 
         public String GetSquarenameFromCoordinates(int col, int row)
         {
@@ -154,7 +236,7 @@ namespace Chess
             if ((source_row < dest_row) && (source_col < dest_col))
             {
                 int i;
-                int j = source_row +1;
+                int j = source_row + 1;
                 for (i = source_col + 1; i < dest_col; i++, j++)
                 {
                     if (MainWindow.board.GetChessmanAtSquare(MainWindow.board.GetSquare(GetSquarenameFromCoordinates(i, j))) != null)
@@ -229,5 +311,54 @@ namespace Chess
 
             return false;
         }
+
+        // Überprüft, ob sich der König nach diesem Zug in Schach befinden würde
+        public bool IsMovePlacingKingInCheck(Square dest)
+        {
+
+            Square source = MainWindow.board.GetSquare(this.Current_position);
+            Square kings_pos = MainWindow.board.GetKingsPosition(this.Color);
+            int source_col = GetColumnCoordinate(source);
+            int source_row = GetRowCoordinate(source);
+            int dest_col = GetColumnCoordinate(dest);
+            int dest_row = GetRowCoordinate(dest);
+
+            string last_pos = this.Current_position;
+            this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+
+            foreach (Chessman chessman in MainWindow.board.chessman)
+            {
+                if (this.Color != chessman.Color)
+                {
+                    if (chessman.IsMoveValid(kings_pos) && !chessman.IsMoveBlocked(kings_pos))
+                    {
+                        this.Current_position = last_pos;
+                        return true;
+                    }
+                }
+            }
+
+            this.Current_position = last_pos;
+            return false;
+        }
+
+        //// Überprüft, ob sich der eigene König in Schach befindet
+        //public bool IsOwnKingInCheck()
+        //{
+        //    Square kings_pos = MainWindow.board.GetKingsPosition(this.Color);
+
+        //    foreach (Chessman chessman in MainWindow.board.chessman)
+        //    {
+        //        if (this.Color != chessman.Color)
+        //        {
+        //            if (chessman.IsMoveValid(kings_pos) && !chessman.IsMoveBlocked(kings_pos))
+        //            {
+        //                return true;
+        //            }
+        //        }
+        //    }
+        //    return false;
+        //}
+
     }
 }

@@ -66,9 +66,9 @@ namespace Chess
             {
                 return
                     //  Der Bauer darf ein oder zwei Felder VERTIKAL vorrücken
-                    (   source_col == dest_col && dest_row - source_row >= 1 && dest_row - source_row <= 2  ) ||
+                    (source_col == dest_col && dest_row - source_row >= 1 && dest_row - source_row <= 2) ||
                     (
-                    // oder ein Feld DIAGONAL den Gegner angreifen
+                        // oder ein Feld DIAGONAL den Gegner angreifen
                         ((source_col - 1 == dest_col) || (source_col + 1 == dest_col))
                           && (dest_row - source_row == 1)
                           && (opponent != null)
@@ -78,7 +78,7 @@ namespace Chess
             {
                 return
                     //  Der Bauer darf ein Feld VERTIKAL vorrücken
-                    (source_col == dest_col && dest_row - source_row == 1    ) ||
+                    (source_col == dest_col && dest_row - source_row == 1) ||
                     // oder ein Feld DIAGONAL den Gegner schlagen
                     (
                         ((source_col - 1 == dest_col) || (source_col + 1 == dest_col))
@@ -92,11 +92,7 @@ namespace Chess
                           && (source_row == 5)
                           && (MainWindow.appInstance.waiting_player.DoubleStepMovedPawn != null)
                           && (Convert.ToInt16(MainWindow.appInstance.waiting_player.DoubleStepMovedPawn.Current_position.Substring(1, 1)) == 5)
-                          && (
-                          (Convert.ToInt16(Convert.ToChar(MainWindow.appInstance.waiting_player.DoubleStepMovedPawn.Current_position.Substring(0, 1))) == source_col - 1) 
-                          ||
-                          (Convert.ToInt16(Convert.ToChar(MainWindow.appInstance.waiting_player.DoubleStepMovedPawn.Current_position.Substring(0, 1))) == source_col + 1)
-                          )
+                          && (Convert.ToInt16(Convert.ToChar(MainWindow.appInstance.waiting_player.DoubleStepMovedPawn.Current_position.Substring(0, 1))) == dest_col)
                     );
             }
         }
@@ -115,17 +111,29 @@ namespace Chess
                 {
                     if (!IsMoveBlocked(dest))
                     {
-                        source.Content = "";
+                        string last_pos = this.Current_position;
                         this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                        MainWindow.board.lastAction = "BEWEGE " + this.Desc
-                                + " VON " + source.Name
-                                + " AUF " + dest.Name;
-                        isMoved = true;
-                        // Zieht ein Bauer im Doppelschritt,
-                        // kann dieser unmittelbar danach 'en passant' geschlagen werden
-                        if (Math.Abs(source_row - dest_row) == 2)
+
+                        if (!MainWindow.board.IsKingInCheck(this.Color))
                         {
-                            MainWindow.appInstance.active_player.DoubleStepMovedPawn = this;
+                            source.Content = "";
+                            MainWindow.board.lastAction = "BEWEGE " + this.Desc
+                                    + " VON " + source.Name
+                                    + " AUF " + dest.Name;
+                            isMoved = true;
+                            // Zieht ein Bauer im Doppelschritt,
+                            // kann dieser unmittelbar danach 'en passant' geschlagen werden
+                            if (Math.Abs(source_row - dest_row) == 2)
+                            {
+                                MainWindow.appInstance.active_player.DoubleStepMovedPawn = this;
+                            }
+                        }
+                        // Zug Rückgängig machen, wenn sich nach dem Zug
+                        // der König in Schach befinden würde
+                        else
+                        {
+                            this.Current_position = last_pos;
+                            throw new PlacedInCheckException();
                         }
                     }
                     else
@@ -138,13 +146,58 @@ namespace Chess
                 else
                 {
                     Chessman opponent = MainWindow.board.GetChessmanAtSquare(dest);
+                    string last_pos = this.Current_position;
 
-                    source.Content = "";
-                    this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                    isMoved = true;
-                    MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name;
-                    MainWindow.board.chessman.Remove(opponent);
+                    // Standardangriff
+                    if (opponent != null)
+                    {
+                        this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                        MainWindow.board.chessman.Remove(opponent);
+
+                        if (!MainWindow.board.IsKingInCheck(this.Color))
+                        {
+                            source.Content = "";
+                            isMoved = true;
+                            MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name;
+                        }
+                        // Zug Rückgängig machen, wenn sich nach dem Zug
+                        // der König in Schach befinden würde
+                        else
+                        {
+                            this.Current_position = last_pos;
+                            MainWindow.board.chessman.Add(opponent);
+                            throw new PlacedInCheckException();
+                        }
+
+                    }
+                    // En Passant Angriff
+                    else
+                    {
+                        string opponent_curr_pos = GetSquarenameFromCoordinates(dest_col, 5);
+                        Square opponent_pos_square = MainWindow.board.GetSquare(opponent_curr_pos);
+                        opponent = MainWindow.board.GetChessmanAtSquare(opponent_pos_square);
+
+                        this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                        MainWindow.board.chessman.Remove(opponent);
+
+                        if (!MainWindow.board.IsKingInCheck(this.Color))
+                        {
+                            source.Content = "";
+                            opponent_pos_square.Content = "";
+                            isMoved = true;
+                            MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name + " IM VORBEIGEHEN (EN PASSANT)";
+                        }
+                        // Zug Rückgängig machen, wenn sich nach dem Zug
+                        // der König in Schach befinden würde
+                        else
+                        {
+                            this.Current_position = last_pos;
+                            MainWindow.board.chessman.Add(opponent);
+                            throw new PlacedInCheckException();
+                        }
+                    }
                 }
+
             }
             else
             {
