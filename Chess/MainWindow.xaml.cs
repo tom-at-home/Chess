@@ -15,6 +15,8 @@ namespace Chess
         public Player active_player;
         public Player waiting_player;
 
+        public MemoryLogger logger;
+
         public static MainWindow appInstance;
 
         public MainWindow()
@@ -27,9 +29,11 @@ namespace Chess
         {
             board = new Chessboard(this);
             board.Init();
+            logger = new MemoryLogger();
             white = new Player("WEISS", "white");
             black = new Player("SCHWARZ", "black");
             active_player = white;
+            waiting_player = black;
             ShowInfo("");
         }
 
@@ -37,7 +41,6 @@ namespace Chess
         {
 
             board.Select_Field((Square)sender);
-            
             
         }
 

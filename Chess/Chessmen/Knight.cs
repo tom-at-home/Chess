@@ -11,6 +11,7 @@ namespace Chess
         {
 
             this.desc = "SPRINGER";
+            this.NotationCode = "S";
 
             if (isWhite)
             {

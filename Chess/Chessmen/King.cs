@@ -16,6 +16,7 @@ namespace Chess
         {
 
             this.desc = "KÖNIG";
+            this.NotationCode = "K";
 
             if (isWhite)
             {
@@ -171,9 +172,6 @@ namespace Chess
             {
                 if (!IsMoveBlocked(dest))
                 {
-                    //if (!IsMovePlacingInCheck(dest))
-                    //{
-                    // Gewoehnlicher Zug ohne Angriff
                     if (MainWindow.board.GetChessmanAtSquare(dest) == null)
                     {
                         // Kleine Rochade
@@ -198,6 +196,12 @@ namespace Chess
                                         + " VON " + source.Name
                                         + " AUF " + dest.Name
                                         + " AUS";
+
+                                // Neuer Logeintrag wird initialisiert
+                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                log.PerformedCastlingKingsSide = true;
+                                log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
+                                MainWindow.appInstance.logger.Add(log);
                             }
                             // Zug Rückgängig machen, wenn sich nach dem Zug
                             // der König in Schach befinden würde
@@ -231,6 +235,13 @@ namespace Chess
                                         + " VON " + source.Name
                                         + " AUF " + dest.Name
                                         + " AUS";
+
+                                // Neuer Logeintrag
+                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                log.PerfomedCastlingQueensSide = true;
+                                log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
+                                MainWindow.appInstance.logger.Add(log);
+
                             }
                             // Zug Rückgängig machen, wenn sich nach dem Zug
                             // der König in Schach befinden würde
@@ -254,6 +265,11 @@ namespace Chess
                                 MainWindow.board.lastAction = "BEWEGE " + this.Desc
                                         + " VON " + source.Name
                                         + " AUF " + dest.Name;
+
+                                // Neuer Logeintrag
+                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
+                                MainWindow.appInstance.logger.Add(log);
                             }
                             // Zug Rückgängig machen, wenn sich nach dem Zug
                             // der König in Schach befinden würde
@@ -279,6 +295,13 @@ namespace Chess
                                 source.Content = "";
                                 this.isMoved = true;
                                 MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
+
+                                // Neuer Logeintrag
+                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                log.OpponentMan = chessmanAtDest;
+                                log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
+                                MainWindow.appInstance.logger.Add(log);
+
                             }
                             // Zug Rückgängig machen, wenn sich nach dem Zug
                             // der König in Schach befinden würde
@@ -294,11 +317,6 @@ namespace Chess
                             throw new BlockedMoveException();
                         }
                     }
-                    //}
-                    //else
-                    //{
-                    //    throw new PlacedInCheckException();
-                    //}
                 }
                 else
                 {

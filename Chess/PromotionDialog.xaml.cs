@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Chess
 {
@@ -35,10 +24,10 @@ namespace Chess
         public void InitBoard()
         {
 
-            rook = new Rook(toPromote.IsWhite, "A1");
-            knight = new Knight(toPromote.IsWhite, "A2");
-            bishop = new Bishop(toPromote.IsWhite, "A3");
-            queen = new Queen(toPromote.IsWhite, "A4");
+            rook = new Rook(toPromote.IsWhite, "A1") { Current_position = toPromote.Current_position, IsMoved = true };
+            knight = new Knight(toPromote.IsWhite, "A2") { Current_position = toPromote.Current_position };
+            bishop = new Bishop(toPromote.IsWhite, "A3") { Current_position = toPromote.Current_position };
+            queen = new Queen(toPromote.IsWhite, "A4") { Current_position = toPromote.Current_position };
 
             Chessman[] promMan = new Chessman[4] { rook, knight, bishop, queen };
 

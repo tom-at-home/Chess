@@ -46,6 +46,13 @@ namespace Chess
             set { desc = value; }
         }
 
+        protected string notationCode;
+        public string NotationCode
+        {
+            get { return notationCode; }
+            set { notationCode = value; }
+        }
+
         public Chessman(bool isWhite, string pos)
         {
             this.IsWhite = isWhite;
@@ -86,6 +93,12 @@ namespace Chess
                             MainWindow.board.lastAction = "BEWEGE " + this.Desc
                                     + " VON " + source.Name
                                     + " AUF " + dest.Name;
+
+                            // Neuer Logeintrag
+                            LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                            log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
+                            MainWindow.appInstance.logger.Add(log);
+
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
                         // der König in Schach befinden würde
@@ -113,6 +126,12 @@ namespace Chess
                                 //this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
                                 MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
 
+                                // Neuer Logeintrag wird initialisiert
+                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                log.OpponentMan = chessmanAtDest;
+                                log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
+                                MainWindow.appInstance.logger.Add(log);
+
                             }
                             // Zug Rückgängig machen, wenn sich nach dem Zug
                             // der König in Schach befinden würde
@@ -122,7 +141,6 @@ namespace Chess
                                 MainWindow.board.chessman.Add(chessmanAtDest);
                                 throw new PlacedInCheckException();
                             }
-
                         }
                         else
                         {

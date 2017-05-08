@@ -11,6 +11,7 @@ namespace Chess
         {
 
             this.desc = "LÄUFER";
+            this.NotationCode = "L";
 
             if (isWhite)
             {

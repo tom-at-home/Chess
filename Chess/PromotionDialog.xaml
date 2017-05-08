@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chess"
         mc:Ignorable="d"
-        Title="Select a chessman to promote" Height="100" Width="300">
+        Title="Wähle die neue Figur aus" Height="100" Width="350">
     <Grid>
         <WrapPanel Name="panel" HorizontalAlignment="Center" Height="50" VerticalAlignment="Center" Width="200" />
     </Grid>

@@ -74,38 +74,38 @@ namespace Chess
             // WEISSE SPIELFIGUREN
             //PawnWhite pawn_w_1 = new PawnWhite(true, "A2");
             PawnWhite pawn_w_2 = new PawnWhite(true, "B2");
-            PawnWhite pawn_w_3 = new PawnWhite(true, "C6");
+            PawnWhite pawn_w_3 = new PawnWhite(true, "C7");
             PawnWhite pawn_w_4 = new PawnWhite(true, "D2");
             PawnWhite pawn_w_5 = new PawnWhite(true, "E2");
             PawnWhite pawn_w_6 = new PawnWhite(true, "F2");
             PawnWhite pawn_w_7 = new PawnWhite(true, "G2");
             PawnWhite pawn_w_8 = new PawnWhite(true, "H2");
-            //Rook rook_w_1 = new Rook(true, "A1");
-            //Knight knight_w_1 = new Knight(true, "B1");
-            //Bishop bishop_w_1 = new Bishop(true, "C1");
-            //Queen queen_w = new Queen(true, "D1");
+            Rook rook_w_1 = new Rook(true, "A1");
+            Knight knight_w_1 = new Knight(true, "B1");
+            Bishop bishop_w_1 = new Bishop(true, "C1");
+            Queen queen_w = new Queen(true, "D1");
             King king_w = new King(true, "E1");
-            //Bishop bishop_w_2 = new Bishop(true, "F1");
-            //Knight knight_w_2 = new Knight(true, "G1");
-            //Rook rook_w_2 = new Rook(true, "H1");
+            Bishop bishop_w_2 = new Bishop(true, "F1");
+            Knight knight_w_2 = new Knight(true, "G1");
+            Rook rook_w_2 = new Rook(true, "H1");
 
             // SCHWARZE SPIELFIGUREN
-            PawnBlack pawn_b_1 = new PawnBlack(false, "A3");
-            //PawnBlack pawn_b_2 = new PawnBlack("B7");
-            //PawnBlack pawn_b_3 = new PawnBlack("C7");
-            //PawnBlack pawn_b_4 = new PawnBlack("D7");
-            //PawnBlack pawn_b_5 = new PawnBlack("E7");
-            //PawnBlack pawn_b_6 = new PawnBlack("F7");
-            //PawnBlack pawn_b_7 = new PawnBlack("G7");
-            //PawnBlack pawn_b_8 = new PawnBlack("H7");
-            //Rook rook_b_1 = new Rook(false, "A8");
-            //Knight knight_b_1 = new Knight(false, "B8");
-            //Bishop bishop_b_1 = new Bishop(false, "C8");
-            //Queen queen_b = new Queen(false, "D8");
+            PawnBlack pawn_b_1 = new PawnBlack(false, "A2");
+            PawnBlack pawn_b_2 = new PawnBlack(false, "B7");
+            //PawnBlack pawn_b_3 = new PawnBlack(false, "C7");
+            PawnBlack pawn_b_4 = new PawnBlack(false, "D7");
+            //PawnBlack pawn_b_5 = new PawnBlack(false, "E7");
+            //PawnBlack pawn_b_6 = new PawnBlack(false, "F7");
+            //PawnBlack pawn_b_7 = new PawnBlack(false, "G7");
+            //PawnBlack pawn_b_8 = new PawnBlack(false, "H7");
+            Rook rook_b_1 = new Rook(false, "A8");
+            Knight knight_b_1 = new Knight(false, "B8");
+            Bishop bishop_b_1 = new Bishop(false, "C8");
+            Queen queen_b = new Queen(false, "D8");
             King king_b = new King(false, "E8");
-            //Bishop bishop_b_2 = new Bishop(false, "F8");
-            //Knight knight_b_2 = new Knight(false, "G8");
-            //Rook rook_b_2 = new Rook(false, "H8");
+            Bishop bishop_b_2 = new Bishop(false, "F8");
+            Knight knight_b_2 = new Knight(false, "G8");
+            Rook rook_b_2 = new Rook(false, "H8");
 
             // WEISSE SPIELFIGUREN
             //chessman.Add(pawn_w_1);
@@ -116,31 +116,31 @@ namespace Chess
             chessman.Add(pawn_w_6);
             chessman.Add(pawn_w_7);
             chessman.Add(pawn_w_8);
-            //chessman.Add(rook_w_1);
-            //chessman.Add(rook_w_2);
-            //chessman.Add(bishop_w_1);
-            //chessman.Add(bishop_w_2);
-            //chessman.Add(knight_w_1);
-            //chessman.Add(knight_w_2);
-            //chessman.Add(queen_w);
+            chessman.Add(rook_w_1);
+            chessman.Add(rook_w_2);
+            chessman.Add(bishop_w_1);
+            chessman.Add(bishop_w_2);
+            chessman.Add(knight_w_1);
+            chessman.Add(knight_w_2);
+            chessman.Add(queen_w);
             chessman.Add(king_w);
 
             // SCHWARZE SPIELFIGUREN
             chessman.Add(pawn_b_1);
-            //chessman.Add(pawn_b_2);
+            chessman.Add(pawn_b_2);
             //chessman.Add(pawn_b_3);
-            //chessman.Add(pawn_b_4);
+            chessman.Add(pawn_b_4);
             //chessman.Add(pawn_b_5);
             //chessman.Add(pawn_b_6);
             //chessman.Add(pawn_b_7);
             //chessman.Add(pawn_b_8);
-            //chessman.Add(rook_b_1);
-            //chessman.Add(rook_b_2);
+            chessman.Add(rook_b_1);
+            chessman.Add(rook_b_2);
             //chessman.Add(bishop_b_1);
-            //chessman.Add(bishop_b_2);
-            //chessman.Add(knight_b_1);
-            //chessman.Add(knight_b_2);
-            //chessman.Add(queen_b);
+            chessman.Add(bishop_b_2);
+            chessman.Add(knight_b_1);
+            chessman.Add(knight_b_2);
+            chessman.Add(queen_b);
             chessman.Add(king_b);
 
             DisplayChessman();

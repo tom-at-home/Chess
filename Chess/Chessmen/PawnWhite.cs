@@ -10,8 +10,6 @@ namespace Chess
         public PawnWhite(bool isWhite, string pos) : base(isWhite, pos)
         {
 
-            this.desc = "BAUER";
-
             Image whitePawn = new Image();
             whitePawn.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/bauer.png"));
 
@@ -119,21 +117,27 @@ namespace Chess
                                     + " VON " + source.Name
                                     + " AUF " + dest.Name;
                             isMoved = true;
+
+                            // Neuer Logeintrag wird initialisiert
+                            LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+
                             // Zieht ein Bauer im Doppelschritt,
                             // kann dieser unmittelbar danach 'en passant' geschlagen werden
                             if (Math.Abs(source_row - dest_row) == 2)
                             {
                                 MainWindow.appInstance.active_player.DoubleStepMovedPawn = this;
                             }
+                            // Zieht ein Bauer auf die letzte Linie, kann er umgewandelt werden
                             if (dest_row == 8)
                             {
-
-                                PromotionDialog pd = new PromotionDialog(this);
-                                pd.ShowDialog();
-
-                                MainWindow.board.lastAction += " UND WIRD IN " + promotedIn.Desc + " UMGEWANDELT";
-
+                                // Ein modales Fenster zur Auswahl der neuen Figur wird geöffnet
+                                PromotePawn();
+                                // Der Logeintrag wird um die umgewandelte Figur ergänzt
+                                log.PromotedIn = this.promotedIn;
                             }
+                            log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
+                            MainWindow.appInstance.logger.Add(log);
+        
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
                         // der König in Schach befinden würde
@@ -166,6 +170,21 @@ namespace Chess
                             source.Content = "";
                             isMoved = true;
                             MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name;
+
+                            // Neuer Logeintrag wird initialisiert
+                            LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                            log.OpponentMan = opponent;
+
+                            // Zieht ein Bauer auf die letzte Linie, kann er umgewandelt werden
+                            if (dest_row == 8)
+                            {
+                                PromotePawn();
+                                log.PromotedIn = this.promotedIn;
+                            }
+
+                            log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
+                            MainWindow.appInstance.logger.Add(log);
+
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
                         // der König in Schach befinden würde
@@ -193,6 +212,14 @@ namespace Chess
                             opponent_pos_square.Content = "";
                             isMoved = true;
                             MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name + " IM VORBEIGEHEN (EN PASSANT)";
+
+                            // Neuer Logeintrag
+                            LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                            log.OpponentMan = opponent;
+                            log.TookEnPassant = true;
+                            log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
+                            MainWindow.appInstance.logger.Add(log);
+
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
                         // der König in Schach befinden würde
@@ -204,7 +231,6 @@ namespace Chess
                         }
                     }
                 }
-
             }
             else
             {

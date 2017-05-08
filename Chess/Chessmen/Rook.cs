@@ -19,6 +19,7 @@ namespace Chess
         {
 
             this.desc = "TURM";
+            this.NotationCode = "T";
 
             if (isWhite)
             {

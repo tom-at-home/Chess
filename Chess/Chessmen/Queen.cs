@@ -11,6 +11,7 @@ namespace Chess
         {
 
             this.desc = "DAME";
+            this.NotationCode = "D";
 
             if (isWhite)
             {
