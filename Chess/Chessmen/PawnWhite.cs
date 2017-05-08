@@ -4,12 +4,10 @@ using System.Windows.Media.Imaging;
 
 namespace Chess
 {
-    class PawnWhite : Chessman
+    public class PawnWhite : Pawn
     {
 
-        private bool isMoved = false;
-
-        public PawnWhite(string pos) : base(true, pos)
+        public PawnWhite(bool isWhite, string pos) : base(isWhite, pos)
         {
 
             this.desc = "BAUER";
@@ -126,6 +124,15 @@ namespace Chess
                             if (Math.Abs(source_row - dest_row) == 2)
                             {
                                 MainWindow.appInstance.active_player.DoubleStepMovedPawn = this;
+                            }
+                            if (dest_row == 8)
+                            {
+
+                                PromotionDialog pd = new PromotionDialog(this);
+                                pd.ShowDialog();
+
+                                MainWindow.board.lastAction += " UND WIRD IN " + promotedIn.Desc + " UMGEWANDELT";
+
                             }
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug

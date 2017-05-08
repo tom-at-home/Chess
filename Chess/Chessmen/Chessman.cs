@@ -7,7 +7,7 @@ namespace Chess
     public abstract class Chessman : IMovable
     {
         private bool isWhite;
-        protected bool IsWhite
+        public bool IsWhite
         {
             get { return isWhite; }
             set { isWhite = value; }

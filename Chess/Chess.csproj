@@ -57,7 +57,6 @@
     <Compile Include="BlockedMoveException.cs" />
     <Compile Include="Chessmen\King.cs" />
     <Compile Include="Chessmen\IMovable.cs" />
-    <None Include="Chessmen\PawnBlack - Kopie.cs" />
     <Compile Include="Chessmen\PawnWhite.cs" />
     <Compile Include="Chessmen\PawnBlack.cs" />
     <Compile Include="Chessmen\Queen.cs" />
@@ -66,6 +65,9 @@
     <Compile Include="Chessmen\Knight.cs" />
     <Compile Include="PlacedInCheckException.cs" />
     <Compile Include="InvalidMoveException.cs" />
+    <Compile Include="PromotionDialog.xaml.cs">
+      <DependentUpon>PromotionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Square.cs" />
     <Compile Include="Chessboard.cs" />
     <Page Include="MainWindow.xaml">
@@ -80,10 +82,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PromotionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chessmen\Rook.cs" />
-    <None Include="Chessmen\Pawn.cs" />
+    <Compile Include="Chessmen\Pawn.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
