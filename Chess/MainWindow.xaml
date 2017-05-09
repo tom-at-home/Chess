@@ -9,11 +9,38 @@
         x:Name="Hauptfenster"
         ResizeMode="CanMinimize">
 
-    <Canvas Height="495" Width="450">
+    <Canvas Height="495" Width="600">
+        
+        <!-- TIMER 2 ANZEIGE -->
+        <Canvas Width="150" Height="40" Canvas.Top="45" Canvas.Left="450" Background="LightBlue" >
+            <WrapPanel Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label x:Name="timer_lbl_2" Width="150" Height="40" Background="Honeydew" Content="00:00:00" FontSize="22" FontFamily="Verdana" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            </WrapPanel>
+        </Canvas>
+
+        <!-- TIMER 1 ANZEIGE -->
+        <Canvas Width="150" Height="40" Canvas.Top="455" Canvas.Left="450" Background="LightBlue" >
+            <WrapPanel Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label x:Name="timer_lbl_1" Width="150" Height="40" Background="Honeydew" Content="00:00:00" FontSize="22" FontFamily="Verdana" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            </WrapPanel>
+        </Canvas>
+
+        <!-- ANZEIGE DER ZÜGE -->
+        <Canvas Width="150" Height="370" Canvas.Top="85" Canvas.Left="450">
+            <WrapPanel Name="moves_region_panel" HorizontalAlignment="Center" Height="370" VerticalAlignment="Top" Width="150">
+                <ListView x:Name="movesList" Height="370" Width="150" FontSize="14" Background="WhiteSmoke" BorderThickness="0">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Züge" Width="120" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </WrapPanel>
+        </Canvas>
 
         <!-- INFO ANZEIGE -->
-        <Canvas Width="450" Height="45" Canvas.Top="0" Canvas.Left="0">
-            <Label Name="info" Width="450" Height="45" Background="LightBlue" Content=""/>
+        <Canvas Width="600" Height="45" Canvas.Top="0" Canvas.Left="0">
+            <Label Name="info" Width="600" Height="45" Background="LightBlue" Content=""/>
         </Canvas>
 
         <!-- BESCHRIFTUNG OBEN -->

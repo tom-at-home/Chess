@@ -26,5 +26,69 @@ namespace Chess
             this.OwnManSource = OwnManSource;
             this.OwnManDest = OwnManDest;
         }
+
+        public override string ToString()
+        {
+            string str = "";
+
+            // Angriffszug
+            if(OpponentMan != null)
+            {
+
+                str += OwnMan.NotationCode;
+                str += OwnManSource.Substring(0, 1).ToLower() + "" + OwnManSource.Substring(1, 1);
+                str += "x";
+                str += OpponentMan.NotationCode;
+                str += OwnManDest.Substring(0, 1).ToLower() + "" + OwnManDest.Substring(1, 1);
+
+                // En Passant geschlagen
+                if (TookEnPassant)
+                {
+                    str += " e.p.";
+                }
+            }
+            // Einfacher Zug ohne Angriff
+            else
+            {
+
+                if (PerformedCastlingKingsSide)
+                {
+                    str += "00-00";
+                }
+                else if (PerfomedCastlingQueensSide)
+                {
+                    str += "00-00-00";
+                }
+                else
+                {
+                    str += OwnMan.NotationCode;
+                    str += OwnManSource.Substring(0, 1).ToLower() + "" + OwnManSource.Substring(1, 1);
+                    str += "-";
+                    str += OwnManDest.Substring(0, 1).ToLower() + "" + OwnManDest.Substring(1, 1);
+                }
+
+            }
+
+            // Prüft, ob der Bauer umgewandelt wurde
+            if(PromotedIn != null)
+            {
+                str += PromotedIn.NotationCode;
+            }
+
+            // Prüft, ob der Gegner Schach oder Matt gesetzt wurde
+            if (PlacedInCheck)
+            {
+                if (PlacedInMate)
+                {
+                    str += "#";
+                }
+                else
+                {
+                    str += "+";
+                }
+            }
+
+            return str;
+        }
     }
 }

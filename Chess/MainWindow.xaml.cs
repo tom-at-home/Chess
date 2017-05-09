@@ -29,11 +29,16 @@ namespace Chess
         {
             board = new Chessboard(this);
             board.Init();
+
             logger = new MemoryLogger();
-            white = new Player("WEISS", "white");
-            black = new Player("SCHWARZ", "black");
+            //movesList.ItemsSource = logger.GetAll();
+
+            white = new Player("WEISS", "white", new Timer(timer_lbl_1));
+            black = new Player("SCHWARZ", "black", new Timer(timer_lbl_2));
             active_player = white;
             waiting_player = black;
+            active_player.timer.Start();
+
             ShowInfo("");
         }
 
@@ -72,6 +77,9 @@ namespace Chess
                 active_player = white;
                 waiting_player = black;
             }
+
+            active_player.timer.Start();
+            waiting_player.timer.Stop();
 
             active_player.DoubleStepMovedPawn = null;
 

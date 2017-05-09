@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="Square.cs" />
     <Compile Include="Chessboard.cs" />
+    <Compile Include="Timer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

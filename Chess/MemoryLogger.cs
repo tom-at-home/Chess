@@ -16,12 +16,18 @@ namespace Chess
         public void Add(LogEntry log)
         {
             this.logs.Add(log);
+            MainWindow.appInstance.movesList.Items.Add(log.ToString());
         }
 
         public LogEntry Get(int index)
         {
             return logs[index];
         }
+
+        //public List<LogEntry> GetAll()
+        //{
+        //    return this.logs;
+        //}
 
     }
 }

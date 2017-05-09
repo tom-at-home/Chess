@@ -9,13 +9,14 @@ namespace Chess
     public class Player
     {
 
+        public Timer timer;
+
         private bool isKingInCheck;
         public bool IsKingInCheck
         {
             get { return isKingInCheck; }
             set { isKingInCheck = value; }
         }
-
 
         private Chessman doubleStepMovedPawn;
         public Chessman DoubleStepMovedPawn
@@ -42,7 +43,7 @@ namespace Chess
             get { return isWhite; }
         }
 
-        public Player(string name, string color)
+        public Player(string name, string color, Timer timer)
         {
             this.name = name;
             this.color = color;
@@ -55,6 +56,8 @@ namespace Chess
             {
                 this.isWhite = false;
             }
+
+            this.timer = timer;
         }
 
     }
