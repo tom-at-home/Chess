@@ -15,6 +15,8 @@ namespace Chess
 
         public void Add(LogEntry log)
         {
+            //log.Representation = log.ToString();
+            //log.TimeTaken = MainWindow.appInstance.active_player.timer.display.Content.ToString();
             this.logs.Add(log);
             MainWindow.appInstance.movesList.Items.Add(log.ToString());
         }
@@ -24,10 +26,10 @@ namespace Chess
             return logs[index];
         }
 
-        //public List<LogEntry> GetAll()
-        //{
-        //    return this.logs;
-        //}
+        public List<LogEntry> GetAll()
+        {
+            return this.logs;
+        }
 
     }
 }

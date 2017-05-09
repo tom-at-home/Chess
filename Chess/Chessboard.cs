@@ -44,7 +44,7 @@ namespace Chess
                     {
                         if(col % 2 == 0)
                         {
-                            square.Color = Brushes.White;
+                            square.Color = Brushes.WhiteSmoke;
                             square.Background = square.Color;
                         }
                         else
@@ -62,7 +62,7 @@ namespace Chess
                         }
                         else
                         {
-                            square.Color = Brushes.White;
+                            square.Color = Brushes.WhiteSmoke;
                             square.Background = square.Color;
                         }
                     }

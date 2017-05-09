@@ -20,6 +20,9 @@ namespace Chess
         public bool PerfomedCastlingQueensSide = false;
         public bool TookEnPassant = false;
 
+        //public string Representation;
+        //public string TimeTaken;
+
         public LogEntry(Chessman OwnMan, string OwnManSource, string OwnManDest)
         {
             this.OwnMan = OwnMan;

@@ -71,11 +71,13 @@ namespace Chess
             {
                 active_player = black;
                 waiting_player = white;
+                playerIndicator.Fill = Brushes.Black;
             }
             else
             {
                 active_player = white;
                 waiting_player = black;
+                playerIndicator.Fill = Brushes.WhiteSmoke;
             }
 
             active_player.timer.Start();
@@ -87,11 +89,11 @@ namespace Chess
             active_player.IsKingInCheck = board.IsKingInCheck(active_player.Color);
             if (active_player.IsKingInCheck)
             {
-                this.info.Foreground = Brushes.Red;
+                this.info.Background = Brushes.IndianRed;
             }
             else
             {
-                this.info.Foreground = Brushes.Black;
+                this.info.Background = new SolidColorBrush(Color.FromRgb(0x5A, 0x7E, 0x8F));
             }
         }
     }

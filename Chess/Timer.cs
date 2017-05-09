@@ -12,7 +12,7 @@ namespace Chess
     public class Timer
     {
 
-        Label display;
+        public Label display;
         DateTime start_time;
         DateTime played_time;
         DispatcherTimer dt;
