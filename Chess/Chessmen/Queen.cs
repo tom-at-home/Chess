@@ -1,19 +1,44 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace Chess
 {
+
+    [Serializable()]
     class Queen : Chessman
     {
 
-        public Queen(bool isWhite, string pos) : base(isWhite, pos)
+        public Queen(bool isWhite, string pos, Game game) : base(isWhite, pos, game)
         {
 
             this.desc = "DAME";
             this.NotationCode = "D";
 
             if (isWhite)
+            {
+
+                this.color = "white";
+            }
+            else
+            {
+                this.color = "black";
+            }
+
+            this.setView();
+        }
+
+        public void setView()
+        {
+            StreamingContext context = new StreamingContext();
+            this.OnDeserialized(context);
+        }
+
+        [OnDeserialized()]
+        internal void OnDeserialized(StreamingContext context)
+        {
+            if (IsWhite)
             {
                 Image whiteQueen = new Image();
                 whiteQueen.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/dame.png"));
@@ -24,7 +49,7 @@ namespace Chess
                 whiteQueenPnl.Children.Add(whiteQueen);
 
                 this.View = whiteQueenPnl;
-                this.color = "white";
+
             }
             else
             {
@@ -37,14 +62,13 @@ namespace Chess
                 blackQueenPnl.Children.Add(blackQueen);
 
                 this.View = blackQueenPnl;
-                this.color = "black";
-            }
 
+            }
         }
 
         public override bool IsMoveValid(Square dest)
         {
-            Square source = MainWindow.board.GetSquare(this.Current_position);
+            Square source = this.game.board.GetSquare(this.Current_position);
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);
             int dest_col = GetColumnCoordinate(dest);
@@ -57,7 +81,7 @@ namespace Chess
         // Prüft, ob der Zug durch andere Schachfiguren versperrt ist
         public override bool IsMoveBlocked(Square dest)
         {
-            Square source = MainWindow.board.GetSquare(this.Current_position);
+            Square source = this.game.board.GetSquare(this.Current_position);
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);
             int dest_col = GetColumnCoordinate(dest);

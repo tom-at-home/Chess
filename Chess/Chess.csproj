@@ -63,6 +63,7 @@
     <Compile Include="Chessmen\Chessman.cs" />
     <Compile Include="Chessmen\Bishop.cs" />
     <Compile Include="Chessmen\Knight.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="LogEntry.cs" />
     <Compile Include="MemoryLogger.cs" />
     <Compile Include="PlacedInCheckException.cs" />

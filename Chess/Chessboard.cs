@@ -4,27 +4,38 @@ using System.Windows.Media;
 
 namespace Chess
 {
+
+    [Serializable()]
     class Chessboard
     {
 
-        internal MainWindow mainwindow;
+        Game game;
+
+        [NonSerialized]
         Square selectedField = null;
+
+        [NonSerialized]
         Square fieldToMove = null;
+
         Chessman selectedChessman = null;
+
         internal List<Chessman> chessman = new List<Chessman>();
+
+        [NonSerialized]
         List<Square> squares = new List<Square>();
+
         internal string lastAction;
 
-        public Chessboard(MainWindow mainwindow)
+        public Chessboard(Game game)
         {
-            this.mainwindow = mainwindow;
+            this.game = game;
         }
 
         public void Init()
         {
             int prefix;
             string name = "";
-
+           
             for (int row = 8; row > 0; row--)
             {
                 prefix = 65;
@@ -32,7 +43,7 @@ namespace Chess
                 {
                     Square square = new Square();
                     square.Content = "";
-                    square.Click += mainwindow.Select_Field;
+                    square.Click += game.View.Select_Field;
                     square.Width = 50;
                     square.Height = 50;
 
@@ -66,46 +77,46 @@ namespace Chess
                             square.Background = square.Color;
                         }
                     }
-                    mainwindow.panel.Children.Add(square);
+                    game.View.panel.Children.Add(square);
                     squares.Add(square);
                 }
             }
 
             // WEISSE SPIELFIGUREN
-            PawnWhite pawn_w_1 = new PawnWhite(true, "A2");
-            PawnWhite pawn_w_2 = new PawnWhite(true, "B2");
-            PawnWhite pawn_w_3 = new PawnWhite(true, "C2");
-            PawnWhite pawn_w_4 = new PawnWhite(true, "D2");
-            PawnWhite pawn_w_5 = new PawnWhite(true, "E2");
-            PawnWhite pawn_w_6 = new PawnWhite(true, "F2");
-            PawnWhite pawn_w_7 = new PawnWhite(true, "G2");
-            PawnWhite pawn_w_8 = new PawnWhite(true, "H2");
-            Rook rook_w_1 = new Rook(true, "A1");
-            Knight knight_w_1 = new Knight(true, "B1");
-            Bishop bishop_w_1 = new Bishop(true, "C1");
-            Queen queen_w = new Queen(true, "D1");
-            King king_w = new King(true, "E1");
-            Bishop bishop_w_2 = new Bishop(true, "F1");
-            Knight knight_w_2 = new Knight(true, "G1");
-            Rook rook_w_2 = new Rook(true, "H1");
+            PawnWhite pawn_w_1 = new PawnWhite(true, "A2", game);
+            PawnWhite pawn_w_2 = new PawnWhite(true, "B2", game);
+            PawnWhite pawn_w_3 = new PawnWhite(true, "C2", game);
+            PawnWhite pawn_w_4 = new PawnWhite(true, "D2", game);
+            PawnWhite pawn_w_5 = new PawnWhite(true, "E2", game);
+            PawnWhite pawn_w_6 = new PawnWhite(true, "F2", game);
+            PawnWhite pawn_w_7 = new PawnWhite(true, "G2", game);
+            PawnWhite pawn_w_8 = new PawnWhite(true, "H2", game);
+            Rook rook_w_1 = new Rook(true, "A1", game);
+            Knight knight_w_1 = new Knight(true, "B1", game);
+            Bishop bishop_w_1 = new Bishop(true, "C1", game);
+            Queen queen_w = new Queen(true, "D1", game);
+            King king_w = new King(true, "E1", game);
+            Bishop bishop_w_2 = new Bishop(true, "F1", game);
+            Knight knight_w_2 = new Knight(true, "G1", game);
+            Rook rook_w_2 = new Rook(true, "H1", game);
 
             // SCHWARZE SPIELFIGUREN
-            PawnBlack pawn_b_1 = new PawnBlack(false, "A7");
-            PawnBlack pawn_b_2 = new PawnBlack(false, "B7");
-            PawnBlack pawn_b_3 = new PawnBlack(false, "C7");
-            PawnBlack pawn_b_4 = new PawnBlack(false, "D7");
-            PawnBlack pawn_b_5 = new PawnBlack(false, "E7");
-            PawnBlack pawn_b_6 = new PawnBlack(false, "F7");
-            PawnBlack pawn_b_7 = new PawnBlack(false, "G7");
-            PawnBlack pawn_b_8 = new PawnBlack(false, "H7");
-            Rook rook_b_1 = new Rook(false, "A8");
-            Knight knight_b_1 = new Knight(false, "B8");
-            Bishop bishop_b_1 = new Bishop(false, "C8");
-            Queen queen_b = new Queen(false, "D8");
-            King king_b = new King(false, "E8");
-            Bishop bishop_b_2 = new Bishop(false, "F8");
-            Knight knight_b_2 = new Knight(false, "G8");
-            Rook rook_b_2 = new Rook(false, "H8");
+            PawnBlack pawn_b_1 = new PawnBlack(false, "A7", game);
+            PawnBlack pawn_b_2 = new PawnBlack(false, "B7", game);
+            PawnBlack pawn_b_3 = new PawnBlack(false, "C7", game);
+            PawnBlack pawn_b_4 = new PawnBlack(false, "D7", game);
+            PawnBlack pawn_b_5 = new PawnBlack(false, "E7", game);
+            PawnBlack pawn_b_6 = new PawnBlack(false, "F7", game);
+            PawnBlack pawn_b_7 = new PawnBlack(false, "G7", game);
+            PawnBlack pawn_b_8 = new PawnBlack(false, "H7", game);
+            Rook rook_b_1 = new Rook(false, "A8", game);
+            Knight knight_b_1 = new Knight(false, "B8", game);
+            Bishop bishop_b_1 = new Bishop(false, "C8", game);
+            Queen queen_b = new Queen(false, "D8", game);
+            King king_b = new King(false, "E8", game);
+            Bishop bishop_b_2 = new Bishop(false, "F8", game);
+            Knight knight_b_2 = new Knight(false, "G8", game);
+            Rook rook_b_2 = new Rook(false, "H8", game);
 
             // WEISSE SPIELFIGUREN
             chessman.Add(pawn_w_1);
@@ -155,21 +166,21 @@ namespace Chess
                
                 if (selectedChessman != null)
                 {
-                    if (mainwindow.active_player.Color == selectedChessman.Color)
+                    if (game.GetActivePlayer().Color == selectedChessman.Color)
                     {
                         selectedField = selected;
                         selectedField.Background = Brushes.MediumAquamarine;
                         lastAction = selectedChessman.Desc + " AUF " + selectedField.Name + " AUSGEWÄHLT";
-                        mainwindow.ShowInfo(lastAction);
+                        game.ShowInfo(lastAction);
                     }
                     else
                     {
-                        mainwindow.ShowInfo("BITTE EINE EIGENE SCHACHFIGUR AUSWÄHLEN");
+                        game.ShowInfo("BITTE EINE EIGENE SCHACHFIGUR AUSWÄHLEN");
                     }
                 }
                 else
                 {
-                    mainwindow.ShowInfo("BITTE EINE SCHACHFIGUR AUSWÄHLEN");
+                    game.ShowInfo("BITTE EINE SCHACHFIGUR AUSWÄHLEN");
                 }
             }
             // SCHACHFIGUR DE-SELEKTIEREN
@@ -178,7 +189,7 @@ namespace Chess
                 selectedField.Background = selectedField.Color;
                 selectedField = null;
                 selectedChessman = null;
-                mainwindow.ShowInfo("NICHTS AUSGEWÄHLT");
+                game.ShowInfo("NICHTS AUSGEWÄHLT");
             }
             // SCHACHFIGUR BEWEGEN
             else
@@ -186,37 +197,39 @@ namespace Chess
                 fieldToMove = selected;
                 if(selectedChessman != null)
                 {
+                    
                     Square currentField = GetSquare(selectedChessman.Current_position);
                     try
                     {
+                        selectedChessman.Game = game;
                         selectedChessman.Move(currentField, fieldToMove);
                         DisplayChessman();
-                        mainwindow.RotatePlayer();
-                        mainwindow.ShowInfo(lastAction, true);
+                        game.RotatePlayer();
+                        game.ShowInfo(lastAction, true);
                     }
                     catch (InvalidMoveException)
                     {
-                        mainwindow.ShowInfo("UNGÜLTIGER ZUG");
+                        game.ShowInfo("UNGÜLTIGER ZUG");
                     }
                     catch (BlockedMoveException)
                     {
-                        mainwindow.ShowInfo("DIESER ZUG IST BLOCKIERT");
+                        game.ShowInfo("DIESER ZUG IST BLOCKIERT");
                     }
                     catch (PlacedInCheckException)
                     {
-                        if (mainwindow.active_player.IsKingInCheck)
+                        if (game.GetActivePlayer().IsKingInCheck)
                         {
-                            mainwindow.ShowInfo("DIESER ZUG IST NICHT MÖGLICH (KÖNIG WIRD BEDROHT)");
+                            game.ShowInfo("DIESER ZUG IST NICHT MÖGLICH (KÖNIG WIRD BEDROHT)");
                         }
                         else
                         {
-                            mainwindow.ShowInfo("DIESER ZUG SETZT DEN KÖNIG IN SCHACH");
+                            game.ShowInfo("DIESER ZUG SETZT DEN KÖNIG IN SCHACH");
                         }
                     }
                 }
                 else
                 {
-                    mainwindow.ShowInfo("KEINE FIGUR ZUM BEWEGEN AUSGEWÄHLT! - NICHTS AUSGEWÄHLT");
+                    game.ShowInfo("KEINE FIGUR ZUM BEWEGEN AUSGEWÄHLT! - NICHTS AUSGEWÄHLT");
                 }
                 selectedField.Background = selectedField.Color;
                 selectedField = null;
@@ -230,6 +243,14 @@ namespace Chess
             {
                 Square field = GetSquare(item.Current_position);
                 field.Content = item.View;
+            }
+        }
+
+        public void Clear()
+        {
+            foreach (Square square in squares)
+            {
+                square.Content = "";
             }
         }
 

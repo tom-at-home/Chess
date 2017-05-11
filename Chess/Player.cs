@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Chess
 {
+
+    [Serializable()]
     public class Player
     {
 
@@ -41,6 +43,13 @@ namespace Chess
         public bool IsWhite
         {
             get { return isWhite; }
+        }
+
+        private bool isWaiting;
+        public bool IsWaiting
+        {
+            get { return isWaiting; }
+            set { isWaiting = value; }
         }
 
         public Player(string name, string color, Timer timer)

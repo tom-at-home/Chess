@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -9,13 +10,20 @@ using System.Windows.Threading;
 
 namespace Chess
 {
+
+    [Serializable()]
     public class Timer
     {
+        [NonSerialized]
+        internal Label display;
 
-        Label display;
         DateTime start_time;
+
         DateTime played_time;
+
+        [NonSerialized]
         DispatcherTimer dt;
+
         int played_seconds;
 
         private bool isInitialized = false;
@@ -31,9 +39,18 @@ namespace Chess
             played_seconds = 0;
             dt = new DispatcherTimer();
             dt.Tick += new EventHandler(Timer_Tick);
+            // auch möglich:
+            // dt.Tick += Timer_Tick;
             dt.Interval = TimeSpan.FromSeconds(1);
             // auch möglich:
             // dt.Interval = new TimeSpan(0, 0, 1);           
+        }
+
+        public void Reset()
+        {
+            dt = new DispatcherTimer();
+            dt.Tick += new EventHandler(Timer_Tick);
+            dt.Interval = TimeSpan.FromSeconds(1);
         }
 
         public void Start()
@@ -66,7 +83,5 @@ namespace Chess
             played_time = start_time.AddSeconds(played_seconds);
             display.Content = played_time.ToString("HH:mm:ss");
         }
-
-
     }
 }
