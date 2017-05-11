@@ -16,16 +16,12 @@ namespace Chess
         public MainWindow View
         {
             get { return view; }
-            // set { view = value; }
         }
 
         internal Chessboard board;
 
         Player white;
         Player black;
-
-        //public Player GetActivePlayer();
-        //public Player GetWaitingPlayer();
 
         public MemoryLogger logger;
 
@@ -44,9 +40,6 @@ namespace Chess
 
             white = new Player("WEISS", "white", new Timer(this.view.timer_lbl_1));
             black = new Player("SCHWARZ", "black", new Timer(this.view.timer_lbl_2));
-            //GetActivePlayer() = white;
-            //GetWaitingPlayer() = black;
-            //GetActivePlayer().timer.Start();
             white.timer.Start();
 
             ShowInfo("");
@@ -131,7 +124,7 @@ namespace Chess
             }
 
             // Färbt die Infoanzeige rot, 
-            // wenn dem Spieler Schach geboten wird
+            // wenn dem aktiven Spieler Schach geboten wird
             if (GetActivePlayer().IsKingInCheck)
             {
                 this.view.info.Background = Brushes.IndianRed;
@@ -183,21 +176,18 @@ namespace Chess
 
             // Log-Einträge ( Historie der Züge )
             // der Liste wieder neu hinzufügen
-            foreach (LogEntry le in this.logger.logs)
+            foreach (LogEntry log in this.logger.logs)
             {
-                this.View.movesList.Items.Add(le);
+                this.View.movesList.Items.Add(log);
             }
 
-            // Optische Status-Anzeige des Schachbretts aktualisieren
+            // Die Status-Anzeige des Schachbretts aktualisieren
             RefreshBoardIndicators();
 
         }
 
-
-
         internal void Save_Game()
         {
-
 
             //int i = 433;
             //BinaryWriter sw = new BinaryWriter(new FileStream("chess.X.sav", FileMode.Create)  );
@@ -210,7 +200,6 @@ namespace Chess
 
             //int t = sr.ReadInt32();
             //sw.Flush();
-
 
             FileStream fileStream = new FileStream("chess.sav", FileMode.Create);
 

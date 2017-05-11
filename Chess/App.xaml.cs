@@ -14,10 +14,10 @@ namespace Chess
 
         private void InitApp(object sender, StartupEventArgs e)
         {
-            //MessageBox.Show("Anwendung wird gestartet");
+            // MessageBox.Show("Anwendung wird gestartet");
             MainWindow mainWindow = new MainWindow();
-            //Chess.MainWindow.appInstance = mainWindow;
-            //MainWindow.Title = "Hallo";
+            // Chess.MainWindow.appInstance = mainWindow;
+            // MainWindow.Title = "My Title";
             mainWindow.Show();
             
         }

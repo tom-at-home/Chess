@@ -13,7 +13,7 @@ namespace Chess
         public Game Game
         {
             get { return game; }
-            set { game = value; } //svens 
+            set { game = value; }
         }
 
         protected bool isWhite;
