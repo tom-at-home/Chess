@@ -73,11 +73,13 @@ namespace Chess
                         if(col % 2 == 0)
                         {
                             square.Color = Brushes.WhiteSmoke;
+                            square.BorderBrush = Brushes.WhiteSmoke;
                             square.Background = square.Color;
                         }
                         else
                         {
                             square.Color = Brushes.RosyBrown;
+                            square.BorderBrush = Brushes.RosyBrown;
                             square.Background = square.Color;
                         }
                     }
@@ -86,11 +88,13 @@ namespace Chess
                         if (col % 2 == 0)
                         {
                             square.Color = Brushes.RosyBrown;
+                            square.BorderBrush = Brushes.RosyBrown;
                             square.Background = square.Color;
                         }
                         else
                         {
                             square.Color = Brushes.WhiteSmoke;
+                            square.BorderBrush = Brushes.WhiteSmoke;
                             square.Background = square.Color;
                         }
                     }
