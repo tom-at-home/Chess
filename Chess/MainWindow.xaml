@@ -9,8 +9,35 @@
         x:Name="Hauptfenster"
         ResizeMode="CanMinimize">
 
+    <Window.Resources>
+        <Style x:Key="LoadSaveButton" TargetType="Button">
+            <Setter Property="Background" Value="#5A7E8F"/>
+            <Setter Property="Foreground" Value="DarkKhaki"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#CA5100"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Foreground" Value="LightCoral"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+
     <Canvas Height="540" Width="600">
-        
+
         <!-- TIMER 2 ANZEIGE ( OBEN ) -->
         <Canvas Width="150" Height="40" Canvas.Top="45" Canvas.Left="450" Background="LightBlue" >
             <WrapPanel Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -260,12 +287,11 @@
         <!-- LOAD / SAVE BUTTONS ( UNTEN ) -->
         <Canvas Width="600" Height="45" Canvas.Top="495" Canvas.Left="0" Background="#5A7E8F" >
             <WrapPanel Width="600" Height="45">
-
-                <Button Name="LoadBtn" Width="160" Height="29" Content="SPIEL LADEN" Margin="40, 8,200, 0" FontWeight="Bold" FontSize="16" Foreground="DarkKhaki" Background="#5A7E8F" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Load_Game"></Button>
-                <Button Name="SaveBtn" Width="160" Height="29" Content="SPIEL SPEICHERN" Margin="0, 8, 0, 0" FontWeight="Bold" FontSize="16" Foreground="DarkKhaki" Background="#5A7E8F" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Save_Game"></Button>
+                <Button Name="SaveBtn" Style="{StaticResource LoadSaveButton}" Width="160" Height="29" Content="SPIEL SPEICHERN" Margin="40, 8,220, 0" Click="Save_Game"></Button>
+                <Button Name="LoadBtn" Style="{StaticResource LoadSaveButton}" Width="160" Height="29" Content="SPIEL LADEN" Margin="0, 8, 0, 0" Click="Load_Game"></Button>
             </WrapPanel>
         </Canvas>
-        
+
     </Canvas>
 
 </Window>

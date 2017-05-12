@@ -30,11 +30,11 @@ namespace Chess
                 this.color = "black";
             }
 
-            this.setView();
+            this.SetView();
 
         }
 
-        public void setView()
+        public void SetView()
         {
             StreamingContext context = new StreamingContext();
             this.OnDeserialized(context);

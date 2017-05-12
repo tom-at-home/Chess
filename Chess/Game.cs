@@ -133,6 +133,7 @@ namespace Chess
             {
                 this.view.info.Background = new SolidColorBrush(Color.FromRgb(0x5A, 0x7E, 0x8F));
             }
+
         }
 
         internal void Load_Game()
@@ -151,8 +152,8 @@ namespace Chess
 
             fileStream.Close();
 
-            // Den Schachfiguren die Game-Eigenschaft neu zuweisen
-            // und diese auf dem Brett neu aufstellen
+            // Nach dem Laden den Schachfiguren die Eigenschaft - Game - neu zuweisen
+            // und die Figuren auf dem Brett neu aufstellen
             foreach (Chessman chessman in this.board.chessman)
             {
                 chessman.Game = this;
@@ -189,6 +190,8 @@ namespace Chess
         internal void Save_Game()
         {
 
+            // Experimente mit BinaryWriter //
+
             //int i = 433;
             //BinaryWriter sw = new BinaryWriter(new FileStream("chess.X.sav", FileMode.Create)  );
             //sw.Write(i);
@@ -201,11 +204,11 @@ namespace Chess
             //int t = sr.ReadInt32();
             //sw.Flush();
 
-            FileStream fileStream = new FileStream("chess.sav", FileMode.Create);
 
+            // Serialisieren mit BinaryFormatter //
+            FileStream fileStream = new FileStream("chess.sav", FileMode.Create);
             BinaryFormatter formatter = new BinaryFormatter();
 
-            //formatter.Serialize(fileStream, this);
             formatter.Serialize(fileStream, this.white);
             formatter.Serialize(fileStream, this.black);
             formatter.Serialize(fileStream, this.board.chessman);

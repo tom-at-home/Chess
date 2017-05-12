@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Chess
@@ -46,12 +48,27 @@ namespace Chess
                     square.Click += game.View.Select_Field;
                     square.Width = 50;
                     square.Height = 50;
+                    
+                    //square.BorderThickness = Control.BorderThicknessProperty.;
+                    //square.OverridesDefaultStyle = true;
+                    //square.BorderThickness = new Thickness(0);
+                    //square.BorderBrush = Brushes.Transparent;
+
+                    //Style style = new Style
+                    //{
+                    //    TargetType = typeof(Control)
+                    //};
+                    ////style.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.Green));
+                    //style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(10.0)));
+
+                    //square.Style = style;
+                 
 
                     Char prefixChar = (Char)(prefix + col);
                     name = prefixChar + "" + row;
                     square.Name = name;
 
-                    if (row % 2 == 0)
+                   if (row % 2 == 0)
                     {
                         if(col % 2 == 0)
                         {
