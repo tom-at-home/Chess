@@ -222,7 +222,7 @@ namespace Chess
                                 // Neuer Logeintrag
                                 LogEntry log = new LogEntry(this, last_pos, this.Current_position);
                                 log.PerformedCastlingKingsSide = true;
-                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
                                 this.game.logger.Add(log);
                                 this.game.View.movesList.Items.Add(log);
                             }
@@ -262,7 +262,7 @@ namespace Chess
                                 // Neuer Logeintrag
                                 LogEntry log = new LogEntry(this, last_pos, this.Current_position);
                                 log.PerfomedCastlingQueensSide = true;
-                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
                                 this.game.logger.Add(log);
                                 this.game.View.movesList.Items.Add(log);
 
@@ -292,7 +292,7 @@ namespace Chess
 
                                 // Neuer Logeintrag
                                 LogEntry log = new LogEntry(this, last_pos, this.Current_position);
-                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
                                 this.game.logger.Add(log);
                                 this.game.View.movesList.Items.Add(log);
                             }
@@ -324,7 +324,7 @@ namespace Chess
                                 // Neuer Logeintrag
                                 LogEntry log = new LogEntry(this, last_pos, this.Current_position);
                                 log.OpponentMan = chessmanAtDest;
-                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
                                 this.game.logger.Add(log);
                                 this.game.View.movesList.Items.Add(log);
 

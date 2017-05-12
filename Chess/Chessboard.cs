@@ -166,7 +166,7 @@ namespace Chess
                
                 if (selectedChessman != null)
                 {
-                    if (game.active_player.Color == selectedChessman.Color)
+                    if (game.GetActivePlayer().Color == selectedChessman.Color)
                     {
                         selectedField = selected;
                         selectedField.Background = Brushes.MediumAquamarine;
@@ -217,7 +217,7 @@ namespace Chess
                     }
                     catch (PlacedInCheckException)
                     {
-                        if (game.active_player.IsKingInCheck)
+                        if (game.GetActivePlayer().IsKingInCheck)
                         {
                             game.ShowInfo("DIESER ZUG IST NICHT MÖGLICH (KÖNIG WIRD BEDROHT)");
                         }

@@ -11,16 +11,11 @@ namespace Chess
     public partial class MainWindow : Window
     {
 
-        // Die Instanz von MainWindow wird in der Variable appInstance gespeichert
-        // Die Zuweisung erfolgt in der Klasse App
-        //public static MainWindow appInstance;
-
-        internal Game game;
+        Game game;
 
         public MainWindow()
         {
             InitializeComponent();
-            //appInstance = this;
             game = new Game(this);
             game.Init();
         }

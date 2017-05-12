@@ -15,7 +15,7 @@ namespace Chess
     public class Timer
     {
         [NonSerialized]
-        Label display;
+        internal Label display;
 
         DateTime start_time;
 
@@ -33,21 +33,24 @@ namespace Chess
             this.display = display;
         }
 
-        [OnDeserialized()]
-        internal void OnDeserialized(StreamingContext context)
-        {
-            dt = new DispatcherTimer();
-        }
-
         public void Init()
         {
             start_time = new DateTime();
             played_seconds = 0;
             dt = new DispatcherTimer();
             dt.Tick += new EventHandler(Timer_Tick);
+            // auch möglich:
+            // dt.Tick += Timer_Tick;
             dt.Interval = TimeSpan.FromSeconds(1);
             // auch möglich:
             // dt.Interval = new TimeSpan(0, 0, 1);           
+        }
+
+        public void Reset()
+        {
+            dt = new DispatcherTimer();
+            dt.Tick += new EventHandler(Timer_Tick);
+            dt.Interval = TimeSpan.FromSeconds(1);
         }
 
         public void Start()
@@ -80,7 +83,5 @@ namespace Chess
             played_time = start_time.AddSeconds(played_seconds);
             display.Content = played_time.ToString("HH:mm:ss");
         }
-
-
     }
 }

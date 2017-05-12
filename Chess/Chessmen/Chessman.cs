@@ -13,7 +13,7 @@ namespace Chess
         public Game Game
         {
             get { return game; }
-            set { game = value; } //svens 
+            set { game = value; }
         }
 
         protected bool isWhite;
@@ -108,7 +108,7 @@ namespace Chess
 
                             // Neuer Logeintrag
                             LogEntry log = new LogEntry(this, last_pos, this.Current_position);
-                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
                             this.game.logger.Add(log);
                             this.game.View.movesList.Items.Add(log);
 
@@ -142,7 +142,7 @@ namespace Chess
                                 // Neuer Logeintrag
                                 LogEntry log = new LogEntry(this, last_pos, this.Current_position);
                                 log.OpponentMan = chessmanAtDest;
-                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
                                 this.game.logger.Add(log);
                                 this.game.View.movesList.Items.Add(log);
                             }

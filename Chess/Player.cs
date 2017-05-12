@@ -45,6 +45,13 @@ namespace Chess
             get { return isWhite; }
         }
 
+        private bool isWaiting;
+        public bool IsWaiting
+        {
+            get { return isWaiting; }
+            set { isWaiting = value; }
+        }
+
         public Player(string name, string color, Timer timer)
         {
             this.name = name;

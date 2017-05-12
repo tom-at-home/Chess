@@ -258,11 +258,11 @@
         </Canvas>
 
         <!-- LOAD / SAVE BUTTONS ( UNTEN ) -->
-        <Canvas Width="600" Height="45" Canvas.Top="495" Canvas.Left="0" Background="LightBlue" >
+        <Canvas Width="600" Height="45" Canvas.Top="495" Canvas.Left="0" Background="#5A7E8F" >
             <WrapPanel Width="600" Height="45">
 
-                <Button Name="LoadBtn" Width="160" Height="25" Content="Spiel Laden" Margin="40, 10, 15, 10" Foreground="NavajoWhite" Background="#FFCA5100" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Load_Game"></Button>
-                <Button Name="SaveBtn" Width="160" Height="25" Content="Spiel Speichern" Margin="30, 10, 20, 10" Foreground="NavajoWhite" Background="#FFCA5100" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Save_Game"></Button>
+                <Button Name="LoadBtn" Width="160" Height="29" Content="SPIEL LADEN" Margin="40, 8,200, 0" FontWeight="Bold" FontSize="16" Foreground="DarkKhaki" Background="#5A7E8F" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Load_Game"></Button>
+                <Button Name="SaveBtn" Width="160" Height="29" Content="SPIEL SPEICHERN" Margin="0, 8, 0, 0" FontWeight="Bold" FontSize="16" Foreground="DarkKhaki" Background="#5A7E8F" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Save_Game"></Button>
             </WrapPanel>
         </Canvas>
         

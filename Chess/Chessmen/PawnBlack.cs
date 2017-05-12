@@ -106,9 +106,9 @@ namespace Chess
                         ((source_col - 1 == dest_col) || (source_col + 1 == dest_col))
                           && (dest_row - source_row == -1)
                           && (source_row == 4)
-                          && (this.game.waiting_player.DoubleStepMovedPawn != null)
-                          && (Convert.ToInt16(this.game.waiting_player.DoubleStepMovedPawn.Current_position.Substring(1, 1)) == 4)
-                          && (Convert.ToInt16(Convert.ToChar(this.game.waiting_player.DoubleStepMovedPawn.Current_position.Substring(0, 1))) == dest_col)
+                          && (this.game.GetWaitingPlayer().DoubleStepMovedPawn != null)
+                          && (Convert.ToInt16(this.game.GetWaitingPlayer().DoubleStepMovedPawn.Current_position.Substring(1, 1)) == 4)
+                          && (Convert.ToInt16(Convert.ToChar(this.game.GetWaitingPlayer().DoubleStepMovedPawn.Current_position.Substring(0, 1))) == dest_col)
                     );
             }
         }
@@ -145,7 +145,7 @@ namespace Chess
                             // kann dieser unmittelbar danach 'en passant' geschlagen werden
                             if (Math.Abs(source_row - dest_row) == 2)
                             {
-                                this.game.active_player.DoubleStepMovedPawn = this;
+                                this.game.GetActivePlayer().DoubleStepMovedPawn = this;
                             }
                             // Zieht ein Bauer auf die letzte Linie,
                             // kann er gewandelt werden
@@ -156,7 +156,7 @@ namespace Chess
                                 // Der Logeintrag wird um die umgewandelte Figur ergänzt
                                 log.PromotedIn = this.promotedIn;
                             }
-                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
                             this.game.logger.Add(log);
                             this.game.View.movesList.Items.Add(log);
                         }
@@ -203,7 +203,7 @@ namespace Chess
                                 log.PromotedIn = this.promotedIn;
                             }
 
-                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
                             this.game.logger.Add(log);
                             this.game.View.movesList.Items.Add(log);
 
@@ -239,7 +239,7 @@ namespace Chess
                             LogEntry log = new LogEntry(this, last_pos, this.Current_position);
                             log.OpponentMan = opponent;
                             log.TookEnPassant = true;
-                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
                             this.game.logger.Add(log);
                             this.game.View.movesList.Items.Add(log);
                         }
