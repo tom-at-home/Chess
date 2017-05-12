@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Chess
 {
+
+    [Serializable()]
     public class LogEntry
     {
         public Chessman OwnMan;

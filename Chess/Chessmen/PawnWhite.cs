@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace Chess
 {
+
+    [Serializable()]
     public class PawnWhite : Pawn
     {
 
-        public PawnWhite(bool isWhite, string pos) : base(isWhite, pos)
+        public PawnWhite(bool isWhite, string pos, Game game) : base(isWhite, pos, game)
         {
 
             Image whitePawn = new Image();
@@ -23,10 +26,25 @@ namespace Chess
 
         }
 
+        [OnDeserialized()]
+        internal void OnDeserialized(StreamingContext context)
+        {
+            Image whitePawn = new Image();
+            whitePawn.Source = new BitmapImage(new Uri(@"pack://siteoforigin:,,,/Images/bauer.png"));
+
+            StackPanel whitePawnPnl = new StackPanel();
+            whitePawnPnl.Orientation = Orientation.Horizontal;
+            whitePawnPnl.Margin = new System.Windows.Thickness(8);
+            whitePawnPnl.Children.Add(whitePawn);
+
+            this.View = whitePawnPnl;
+
+        }
+
         public override bool IsMoveBlocked(Square dest)
         {
 
-            Square source = MainWindow.board.GetSquare(this.Current_position);
+            Square source = this.game.board.GetSquare(this.Current_position);
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);
             int dest_col = GetColumnCoordinate(dest);
@@ -34,7 +52,7 @@ namespace Chess
 
             for (int i = source_row + 1; i <= dest_row; i++)
             {
-                if (MainWindow.board.GetChessmanAtSquare(MainWindow.board.GetSquare(GetSquarenameFromCoordinates(dest_col, i))) != null)
+                if (this.game.board.GetChessmanAtSquare(this.game.board.GetSquare(GetSquarenameFromCoordinates(dest_col, i))) != null)
                 {
                     return true;
                 }
@@ -45,14 +63,14 @@ namespace Chess
 
         public override bool IsMoveValid(Square dest)
         {
-            Square source = MainWindow.board.GetSquare(this.Current_position);
+            Square source = this.game.board.GetSquare(this.Current_position);
             int source_col = GetColumnCoordinate(source);
             int source_row = GetRowCoordinate(source);
             int dest_col = GetColumnCoordinate(dest);
             int dest_row = GetRowCoordinate(dest);
 
             Chessman opponent = null;
-            Chessman chessman = MainWindow.board.GetChessmanAtSquare(dest);
+            Chessman chessman = this.game.board.GetChessmanAtSquare(dest);
             if (chessman != null && chessman.Color != this.Color)
             {
                 opponent = chessman;
@@ -86,9 +104,9 @@ namespace Chess
                         ((source_col - 1 == dest_col) || (source_col + 1 == dest_col))
                           && (dest_row - source_row == 1)
                           && (source_row == 5)
-                          && (MainWindow.appInstance.waiting_player.DoubleStepMovedPawn != null)
-                          && (Convert.ToInt16(MainWindow.appInstance.waiting_player.DoubleStepMovedPawn.Current_position.Substring(1, 1)) == 5)
-                          && (Convert.ToInt16(Convert.ToChar(MainWindow.appInstance.waiting_player.DoubleStepMovedPawn.Current_position.Substring(0, 1))) == dest_col)
+                          && (this.game.waiting_player.DoubleStepMovedPawn != null)
+                          && (Convert.ToInt16(this.game.waiting_player.DoubleStepMovedPawn.Current_position.Substring(1, 1)) == 5)
+                          && (Convert.ToInt16(Convert.ToChar(this.game.waiting_player.DoubleStepMovedPawn.Current_position.Substring(0, 1))) == dest_col)
                     );
             }
         }
@@ -110,10 +128,10 @@ namespace Chess
                         string last_pos = this.Current_position;
                         this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
 
-                        if (!MainWindow.board.IsKingInCheck(this.Color))
+                        if (!this.game.board.IsKingInCheck(this.Color))
                         {
                             source.Content = "";
-                            MainWindow.board.lastAction = "BEWEGE " + this.Desc
+                            this.game.board.lastAction = "BEWEGE " + this.Desc
                                     + " VON " + source.Name
                                     + " AUF " + dest.Name;
                             isMoved = true;
@@ -125,7 +143,7 @@ namespace Chess
                             // kann dieser unmittelbar danach 'en passant' geschlagen werden
                             if (Math.Abs(source_row - dest_row) == 2)
                             {
-                                MainWindow.appInstance.active_player.DoubleStepMovedPawn = this;
+                                this.game.active_player.DoubleStepMovedPawn = this;
                             }
                             // Zieht ein Bauer auf die letzte Linie, kann er umgewandelt werden
                             if (dest_row == 8)
@@ -135,9 +153,9 @@ namespace Chess
                                 // Der Logeintrag wird um die umgewandelte Figur ergänzt
                                 log.PromotedIn = this.promotedIn;
                             }
-                            log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
-                            MainWindow.appInstance.logger.Add(log);
-        
+                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                            this.game.logger.Add(log);
+                            this.game.View.movesList.Items.Add(log);        
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
                         // der König in Schach befinden würde
@@ -156,20 +174,20 @@ namespace Chess
                 // Angriffszug
                 else
                 {
-                    Chessman opponent = MainWindow.board.GetChessmanAtSquare(dest);
+                    Chessman opponent = this.game.board.GetChessmanAtSquare(dest);
                     string last_pos = this.Current_position;
 
                     // Standardangriff
                     if (opponent != null)
                     {
                         this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                        MainWindow.board.chessman.Remove(opponent);
+                        this.game.board.chessman.Remove(opponent);
 
-                        if (!MainWindow.board.IsKingInCheck(this.Color))
+                        if (!this.game.board.IsKingInCheck(this.Color))
                         {
                             source.Content = "";
                             isMoved = true;
-                            MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name;
+                            this.game.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name;
 
                             // Neuer Logeintrag wird initialisiert
                             LogEntry log = new LogEntry(this, last_pos, this.Current_position);
@@ -182,8 +200,9 @@ namespace Chess
                                 log.PromotedIn = this.promotedIn;
                             }
 
-                            log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
-                            MainWindow.appInstance.logger.Add(log);
+                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                            this.game.logger.Add(log);
+                            this.game.View.movesList.Items.Add(log);
 
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
@@ -191,7 +210,7 @@ namespace Chess
                         else
                         {
                             this.Current_position = last_pos;
-                            MainWindow.board.chessman.Add(opponent);
+                            this.game.board.chessman.Add(opponent);
                             throw new PlacedInCheckException();
                         }
 
@@ -200,33 +219,33 @@ namespace Chess
                     else
                     {
                         string opponent_curr_pos = GetSquarenameFromCoordinates(dest_col, 5);
-                        Square opponent_pos_square = MainWindow.board.GetSquare(opponent_curr_pos);
-                        opponent = MainWindow.board.GetChessmanAtSquare(opponent_pos_square);
+                        Square opponent_pos_square = this.game.board.GetSquare(opponent_curr_pos);
+                        opponent = this.game.board.GetChessmanAtSquare(opponent_pos_square);
 
                         this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                        MainWindow.board.chessman.Remove(opponent);
+                        this.game.board.chessman.Remove(opponent);
 
-                        if (!MainWindow.board.IsKingInCheck(this.Color))
+                        if (!this.game.board.IsKingInCheck(this.Color))
                         {
                             source.Content = "";
                             opponent_pos_square.Content = "";
                             isMoved = true;
-                            MainWindow.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name + " IM VORBEIGEHEN (EN PASSANT)";
+                            this.game.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name + " IM VORBEIGEHEN (EN PASSANT)";
 
                             // Neuer Logeintrag
                             LogEntry log = new LogEntry(this, last_pos, this.Current_position);
                             log.OpponentMan = opponent;
                             log.TookEnPassant = true;
-                            log.PlacedInCheck = MainWindow.board.IsKingInCheck(MainWindow.appInstance.waiting_player.Color);
-                            MainWindow.appInstance.logger.Add(log);
-
+                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.waiting_player.Color);
+                            this.game.logger.Add(log);
+                            this.game.View.movesList.Items.Add(log);
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
                         // der König in Schach befinden würde
                         else
                         {
                             this.Current_position = last_pos;
-                            MainWindow.board.chessman.Add(opponent);
+                            this.game.board.chessman.Add(opponent);
                             throw new PlacedInCheckException();
                         }
                     }

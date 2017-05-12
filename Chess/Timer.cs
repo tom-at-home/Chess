@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -9,13 +10,20 @@ using System.Windows.Threading;
 
 namespace Chess
 {
+
+    [Serializable()]
     public class Timer
     {
-
+        [NonSerialized]
         Label display;
+
         DateTime start_time;
+
         DateTime played_time;
+
+        [NonSerialized]
         DispatcherTimer dt;
+
         int played_seconds;
 
         private bool isInitialized = false;
@@ -23,6 +31,12 @@ namespace Chess
         public Timer(Label display)
         {
             this.display = display;
+        }
+
+        [OnDeserialized()]
+        internal void OnDeserialized(StreamingContext context)
+        {
+            dt = new DispatcherTimer();
         }
 
         public void Init()

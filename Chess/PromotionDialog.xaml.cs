@@ -12,10 +12,11 @@ namespace Chess
         Chessman knight;
         Chessman bishop;
         Chessman queen;
+        Game game;
 
-        public PromotionDialog(Pawn toPromote)
+        public PromotionDialog(Game game, Pawn toPromote)
         {
-
+            this.game = game;
             this.toPromote = toPromote;
             InitializeComponent();
             InitBoard();
@@ -24,10 +25,10 @@ namespace Chess
         public void InitBoard()
         {
 
-            rook = new Rook(toPromote.IsWhite, "A1") { Current_position = toPromote.Current_position, IsMoved = true };
-            knight = new Knight(toPromote.IsWhite, "A2") { Current_position = toPromote.Current_position };
-            bishop = new Bishop(toPromote.IsWhite, "A3") { Current_position = toPromote.Current_position };
-            queen = new Queen(toPromote.IsWhite, "A4") { Current_position = toPromote.Current_position };
+            rook = new Rook(toPromote.IsWhite, "A1", game) { Current_position = toPromote.Current_position, IsMoved = true };
+            knight = new Knight(toPromote.IsWhite, "A2", game) { Current_position = toPromote.Current_position };
+            bishop = new Bishop(toPromote.IsWhite, "A3", game) { Current_position = toPromote.Current_position };
+            queen = new Queen(toPromote.IsWhite, "A4", game) { Current_position = toPromote.Current_position };
 
             Chessman[] promMan = new Chessman[4] { rook, knight, bishop, queen };
 

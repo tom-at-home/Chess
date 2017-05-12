@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Chess
 {
+
+    [Serializable()]
     public class MemoryLogger
     {
 
@@ -18,7 +20,7 @@ namespace Chess
             //log.Representation = log.ToString();
             //log.TimeTaken = MainWindow.appInstance.active_player.timer.display.Content.ToString();
             this.logs.Add(log);
-            MainWindow.appInstance.movesList.Items.Add(log.ToString());
+            //MainWindow.appInstance.View.movesList.Items.Add(log.ToString());
         }
 
         public LogEntry Get(int index)

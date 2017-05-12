@@ -8,9 +8,7 @@ using System.Windows;
 
 namespace Chess
 {
-    /// <summary>
-    /// Interaktionslogik für "App.xaml"
-    /// </summary>
+
     public partial class App : Application
     {
 
@@ -18,9 +16,10 @@ namespace Chess
         {
             //MessageBox.Show("Anwendung wird gestartet");
             MainWindow mainWindow = new MainWindow();
+            //Chess.MainWindow.appInstance = mainWindow;
             //MainWindow.Title = "Hallo";
             mainWindow.Show();
-            Chess.MainWindow.appInstance = mainWindow;
+            
         }
 
     }
