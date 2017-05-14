@@ -1,10 +1,14 @@
-﻿namespace Chess
+﻿using System;
+
+namespace Chess
 {
-    class BoardController
+
+    [Serializable()]
+    class BoardHelper
     {
         private Chessboard board;
         
-        public BoardController(Chessboard board)
+        public BoardHelper(Chessboard board)
         {
             this.board = board;
         }
@@ -202,7 +206,5 @@
 
             }
         }
-
-
     }
 }

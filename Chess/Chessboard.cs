@@ -13,7 +13,7 @@ namespace Chess
 
         internal Game game;
 
-        private BoardController controller;
+        private BoardHelper helper;
 
         [NonSerialized]
         Square selectedField = null;
@@ -33,7 +33,7 @@ namespace Chess
         public Chessboard(Game game)
         {
             this.game = game;
-            this.controller = new BoardController(this);
+            this.helper = new BoardHelper(this);
         }
 
         public void Init()
@@ -106,11 +106,21 @@ namespace Chess
                 }
             }
 
-            //controller.SetupBoard("new_game_setup");
+            helper.SetupBoard("new_game_setup");
 
-            //controller.SetupBoard("promotion_setup");
+            //helper.SetupBoard("promotion_setup");
 
-            controller.SetupBoard("en_passant_setup");
+            //helper.SetupBoard("en_passant_setup");
+
+            // TODO
+
+            //helper.SetupBoard("castling_setup");
+
+            //helper.SetupBoard("pre_check_setup");
+
+            //helper.SetupBoard("check_setup");
+
+            //helper.SetupBoard("checkmate_setup");
 
             DisplayChessman();
         }
