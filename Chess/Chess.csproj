@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BlockedMoveException.cs" />
+    <Compile Include="BoardController.cs" />
     <Compile Include="Chessmen\King.cs" />
     <Compile Include="Chessmen\IMovable.cs" />
     <Compile Include="Chessmen\PawnWhite.cs" />

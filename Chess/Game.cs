@@ -4,6 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Windows;
 
 namespace Chess
 {
@@ -117,6 +118,7 @@ namespace Chess
             if (GetActivePlayer() == white)
             {
                 this.view.playerIndicator.Fill = Brushes.WhiteSmoke;
+                //this.view.playerIndicator.Click += new RoutedEventHandler(this.view.Select_Field);
             }
             else
             {

@@ -120,7 +120,6 @@ namespace Chess
                             this.Current_position = last_pos;
                             throw new PlacedInCheckException();
                         }
-
                     }
                     else
                     {
