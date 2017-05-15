@@ -116,11 +116,6 @@ namespace Chess
 
             //helper.SetupBoard("castling_setup");
 
-            //helper.SetupBoard("pre_check_setup");
-
-            //helper.SetupBoard("check_setup");
-
-            //helper.SetupBoard("checkmate_setup");
 
             DisplayChessman();
         }
@@ -169,7 +164,6 @@ namespace Chess
                     Square currentField = GetSquare(selectedChessman.Current_position);
                     try
                     {
-                        //selectedChessman.Game = game;
                         selectedChessman.Move(currentField, fieldToMove);
                         DisplayChessman();
                         game.RotatePlayer();

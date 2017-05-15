@@ -165,7 +165,7 @@ namespace Chess
        
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
-                        // der König in Schach befinden würde
+                        // der König im Schach befinden würde
                         else
                         {
                             this.Current_position = last_pos;
@@ -216,7 +216,7 @@ namespace Chess
 
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
-                        // der König in Schach befinden würde
+                        // der König im Schach befinden würde
                         else
                         {
                             this.Current_position = last_pos;
@@ -255,7 +255,7 @@ namespace Chess
 
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
-                        // der König in Schach befinden würde
+                        // der König im Schach befinden würde
                         else
                         {
                             this.Current_position = last_pos;

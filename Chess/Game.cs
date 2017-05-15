@@ -37,7 +37,6 @@ namespace Chess
             board.Init();
 
             logger = new MemoryLogger();
-            //movesList.ItemsSource = logger.GetAll();
 
             white = new Player("WEISS", "white", new Timer(this.view.timer_lbl_1));
             black = new Player("SCHWARZ", "black", new Timer(this.view.timer_lbl_2));
@@ -84,6 +83,13 @@ namespace Chess
                 this.view.info.Content += "\r\n";
                 this.view.info.Content += msg;
             }
+
+            if (GetActivePlayer().IsKingCheckmate)
+            {
+                this.view.info.Content = msg;
+                this.view.info.Content += "\r\n";
+                this.view.info.Content += GetActivePlayer().Name + " IST SCHACHMATT";
+            }
         }
 
         public void RotatePlayer()
@@ -102,6 +108,9 @@ namespace Chess
             GetActivePlayer().timer.Start();
             GetWaitingPlayer().timer.Stop();
 
+            // Der Bauer kann nur unmittelbar nach seinem Doppelzug en passant geschlagen werden,
+            // daher wird er in dieser Folgerunde aus der Eigenschaft DoubleStepMovedPawn
+            // des aktuellen Spielers wieder entfernt
             GetActivePlayer().DoubleStepMovedPawn = null;
 
             // Prüfen, ob dem Spieler Schach geboten wird
@@ -124,14 +133,13 @@ namespace Chess
             if (GetActivePlayer() == white)
             {
                 this.view.playerIndicator.Fill = Brushes.WhiteSmoke;
-                //this.view.playerIndicator.Click += new RoutedEventHandler(this.view.Select_Field);
             }
             else
             {
                 this.view.playerIndicator.Fill = Brushes.Black;
             }
 
-            // Färbt die Infoanzeige rot, 
+            // Färbt die Infoanzeige pastellrot, 
             // wenn dem aktiven Spieler Schach geboten wird
             if (GetActivePlayer().IsKingInCheck)
             {
@@ -147,7 +155,6 @@ namespace Chess
             if (GetActivePlayer().IsKingCheckmate)
             {
                 this.view.info.Background = Brushes.Red;
-                ShowInfo(GetActivePlayer().Color + " ist Schachmatt !");
             }
 
         }

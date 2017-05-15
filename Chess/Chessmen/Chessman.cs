@@ -118,7 +118,7 @@ namespace Chess
 
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
-                        // der König in Schach befinden würde
+                        // der König im Schach befinden würde
                         else
                         {
                             this.Current_position = last_pos;
@@ -154,7 +154,7 @@ namespace Chess
 
                             }
                             // Zug Rückgängig machen, wenn sich nach dem Zug
-                            // der König in Schach befinden würde
+                            // der König im Schach befinden würde
                             else
                             {
                                 this.Current_position = last_pos;
@@ -350,7 +350,7 @@ namespace Chess
             return false;
         }
 
-        // Überprüft, ob sich der König nach diesem Zug in Schach befinden würde
+        // Überprüft, ob sich der König nach diesem Zug im Schach befinden würde
         public bool IsMovePlacingKingInCheck(Square dest)
         {
 
