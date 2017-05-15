@@ -180,7 +180,7 @@ namespace Chess
             return false;
         }
 
-        public override void Move(Square source, Square dest)
+        public override void Move(Square source, Square dest, bool silentMode = false)
         {
 
             int source_col = GetColumnCoordinate(source);
@@ -209,22 +209,26 @@ namespace Chess
 
                             if (!this.game.board.IsKingInCheck(this.Color))
                             {
-                                source.Content = "";
-                                rook_source.Content = "";
-                                this.isMoved = true;
-                                this.HasPerformedCastling = true;
-                                rook.IsMoved = true;
-                                this.game.board.lastAction = this.Desc + " FÜHRT DIE KLEINE ROCHADE"
-                                        + " VON " + source.Name
-                                        + " AUF " + dest.Name
-                                        + " AUS";
+                                if (!silentMode)
+                                {
+                                    source.Content = "";
+                                    rook_source.Content = "";
+                                    this.isMoved = true;
+                                    this.HasPerformedCastling = true;
+                                    rook.IsMoved = true;
+                                    this.game.board.lastAction = this.Desc + " FÜHRT DIE KLEINE ROCHADE"
+                                            + " VON " + source.Name
+                                            + " AUF " + dest.Name
+                                            + " AUS";
 
-                                // Neuer Logeintrag
-                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
-                                log.PerformedCastlingKingsSide = true;
-                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
-                                this.game.logger.Add(log);
-                                this.game.View.movesList.Items.Add(log);
+                                    // Neuer Logeintrag
+                                    LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                    log.PerformedCastlingKingsSide = true;
+                                    log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
+                                    this.game.logger.Add(log);
+                                    this.game.View.movesList.Items.Add(log);
+                                }
+
                             }
                             // Zug Rückgängig machen, wenn sich nach dem Zug
                             // der König in Schach befinden würde
@@ -249,23 +253,25 @@ namespace Chess
 
                             if (!this.game.board.IsKingInCheck(this.Color))
                             {
-                                source.Content = "";
-                                rook_source.Content = "";
-                                this.isMoved = true;
-                                this.HasPerformedCastling = true;
-                                rook.IsMoved = true;
-                                this.game.board.lastAction = this.Desc + " FÜHRT DIE GROßE ROCHADE"
-                                        + " VON " + source.Name
-                                        + " AUF " + dest.Name
-                                        + " AUS";
+                                if (!silentMode)
+                                {
+                                    source.Content = "";
+                                    rook_source.Content = "";
+                                    this.isMoved = true;
+                                    this.HasPerformedCastling = true;
+                                    rook.IsMoved = true;
+                                    this.game.board.lastAction = this.Desc + " FÜHRT DIE GROßE ROCHADE"
+                                            + " VON " + source.Name
+                                            + " AUF " + dest.Name
+                                            + " AUS";
 
-                                // Neuer Logeintrag
-                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
-                                log.PerfomedCastlingQueensSide = true;
-                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
-                                this.game.logger.Add(log);
-                                this.game.View.movesList.Items.Add(log);
-
+                                    // Neuer Logeintrag
+                                    LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                    log.PerfomedCastlingQueensSide = true;
+                                    log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
+                                    this.game.logger.Add(log);
+                                    this.game.View.movesList.Items.Add(log);
+                                }
                             }
                             // Zug Rückgängig machen, wenn sich nach dem Zug
                             // der König in Schach befinden würde
@@ -284,17 +290,20 @@ namespace Chess
 
                             if (!this.game.board.IsKingInCheck(this.Color))
                             {
-                                source.Content = "";
-                                this.isMoved = true;
-                                this.game.board.lastAction = "BEWEGE " + this.Desc
-                                        + " VON " + source.Name
-                                        + " AUF " + dest.Name;
+                                if (!silentMode)
+                                {
+                                    source.Content = "";
+                                    this.isMoved = true;
+                                    this.game.board.lastAction = "BEWEGE " + this.Desc
+                                            + " VON " + source.Name
+                                            + " AUF " + dest.Name;
 
-                                // Neuer Logeintrag
-                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
-                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
-                                this.game.logger.Add(log);
-                                this.game.View.movesList.Items.Add(log);
+                                    // Neuer Logeintrag
+                                    LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                    log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
+                                    this.game.logger.Add(log);
+                                    this.game.View.movesList.Items.Add(log);
+                                }
                             }
                             // Zug Rückgängig machen, wenn sich nach dem Zug
                             // der König in Schach befinden würde
@@ -317,17 +326,19 @@ namespace Chess
 
                             if (!this.game.board.IsKingInCheck(this.Color))
                             {
-                                source.Content = "";
-                                this.isMoved = true;
-                                this.game.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
+                                if (!silentMode)
+                                {
+                                    source.Content = "";
+                                    this.isMoved = true;
+                                    this.game.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
 
-                                // Neuer Logeintrag
-                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
-                                log.OpponentMan = chessmanAtDest;
-                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
-                                this.game.logger.Add(log);
-                                this.game.View.movesList.Items.Add(log);
-
+                                    // Neuer Logeintrag
+                                    LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                    log.OpponentMan = chessmanAtDest;
+                                    log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
+                                    this.game.logger.Add(log);
+                                    this.game.View.movesList.Items.Add(log);
+                                }
                             }
                             // Zug Rückgängig machen, wenn sich nach dem Zug
                             // der König in Schach befinden würde

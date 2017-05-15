@@ -40,7 +40,7 @@ namespace Chess
         {
             int prefix;
             string name = "";
-           
+
             for (int row = 8; row > 0; row--)
             {
                 prefix = 65;
@@ -51,7 +51,7 @@ namespace Chess
                     square.Click += game.View.Select_Field;
                     square.Width = 50;
                     square.Height = 50;
-                    
+
                     //square.BorderThickness = Control.BorderThicknessProperty.;
                     //square.OverridesDefaultStyle = true;
                     //square.BorderThickness = new Thickness(0);
@@ -65,15 +65,15 @@ namespace Chess
                     //style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(10.0)));
 
                     //square.Style = style;
-                 
+
 
                     Char prefixChar = (Char)(prefix + col);
                     name = prefixChar + "" + row;
                     square.Name = name;
 
-                   if (row % 2 == 0)
+                    if (row % 2 == 0)
                     {
-                        if(col % 2 == 0)
+                        if (col % 2 == 0)
                         {
                             square.Color = Brushes.WhiteSmoke;
                             square.BorderBrush = Brushes.WhiteSmoke;
@@ -126,12 +126,12 @@ namespace Chess
         }
 
         public void Select_Field(Square selected)
-        {         
+        {
             // SCHACHFIGUR SELEKTIEREN
             if (selectedField == null)
             {
                 selectedChessman = GetChessmanAtSquare(selected);
-               
+
                 if (selectedChessman != null)
                 {
                     if (game.GetActivePlayer().Color == selectedChessman.Color)
@@ -161,15 +161,15 @@ namespace Chess
             }
             // SCHACHFIGUR BEWEGEN
             else
-            {                
+            {
                 fieldToMove = selected;
-                if(selectedChessman != null)
+                if (selectedChessman != null)
                 {
-                    
+
                     Square currentField = GetSquare(selectedChessman.Current_position);
                     try
                     {
-                        selectedChessman.Game = game;
+                        //selectedChessman.Game = game;
                         selectedChessman.Move(currentField, fieldToMove);
                         DisplayChessman();
                         game.RotatePlayer();
@@ -226,7 +226,7 @@ namespace Chess
         {
             foreach (Square item in squares)
             {
-                if(item.Name == pos)
+                if (item.Name == pos)
                 {
                     return item;
                 }
@@ -238,7 +238,7 @@ namespace Chess
         {
             foreach (Chessman item in chessman)
             {
-                if(square.Name == item.Current_position)
+                if (square.Name == item.Current_position)
                 {
                     return item;
                 }
@@ -281,13 +281,73 @@ namespace Chess
             {
                 if (color != chessman.Color)
                 {
-                    if (chessman.IsMoveValid(kings_pos) && !chessman.IsMoveBlocked(kings_pos) )
+                    if (chessman.IsMoveValid(kings_pos) && !chessman.IsMoveBlocked(kings_pos))
                     {
                         return true;
                     }
                 }
             }
             return false;
+        }
+
+        // Überprüft, ob der aktuelle Spieler Matt gesetzt wurde
+        public bool IsKingCheckmate(string color)
+        {
+            //Chessboard analysisBoard = this.Clone();
+
+          //  foreach (Chessman ownMan in chessman)
+            for(int i = 0; i < chessman.Count; i++)
+            {
+                Chessman ownMan = chessman[i];
+                if (ownMan.Color == color)
+                {
+
+                    Square source = GetSquare(ownMan.Current_position);
+                    string ownMan_last_pos = ownMan.Current_position;
+
+                    foreach (Square dest in squares)
+                    {
+                        Chessman opponent = null;
+                        Chessman chessmanAtDest = GetChessmanAtSquare(dest);
+                        if (chessmanAtDest != null && chessmanAtDest.Color != ownMan.Color)
+                        {
+                            opponent = chessmanAtDest;
+                        }
+
+                        try
+                        {
+                            ownMan.Move(source, dest, true);
+
+                            if (!IsKingInCheck(ownMan.Color))
+                            {
+                                ownMan.Current_position = ownMan_last_pos;
+                                if (opponent != null)
+                                {
+                                    chessman.Add(opponent);
+                                }
+                                Clear();
+                                DisplayChessman();
+                                return false;
+                            }
+                            else
+                            {
+                                ownMan.Current_position = ownMan_last_pos;
+                                if (opponent != null)
+                                {
+                                    chessman.Add(opponent);
+                                }
+                            }
+                        }
+                        catch (InvalidMoveException) { }
+                        catch (BlockedMoveException) { }
+                        catch (PlacedInCheckException) { }
+                    }
+                }
+            }
+            Clear();
+            DisplayChessman();
+            return true;
+
         }
     }
 }

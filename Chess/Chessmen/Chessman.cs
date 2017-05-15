@@ -78,7 +78,7 @@ namespace Chess
 
         //public abstract void Move(Square source, Square dest);
 
-        public virtual void Move(Square source, Square dest)
+        public virtual void Move(Square source, Square dest, bool silentMode = false)
         {
 
             int source_col = GetColumnCoordinate(source);
@@ -100,17 +100,21 @@ namespace Chess
 
                         if (!this.game.board.IsKingInCheck(this.Color))
                         {
-                            source.Content = "";
-                            //this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                            this.game.board.lastAction = "BEWEGE " + this.Desc
-                                    + " VON " + source.Name
-                                    + " AUF " + dest.Name;
 
-                            // Neuer Logeintrag
-                            LogEntry log = new LogEntry(this, last_pos, this.Current_position);
-                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
-                            this.game.logger.Add(log);
-                            this.game.View.movesList.Items.Add(log);
+                            if (!silentMode)
+                            {
+                                source.Content = "";
+
+                                this.game.board.lastAction = "BEWEGE " + this.Desc
+                                        + " VON " + source.Name
+                                        + " AUF " + dest.Name;
+
+                                // Neuer Logeintrag
+                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
+                                this.game.logger.Add(log);
+                                this.game.View.movesList.Items.Add(log);
+                            }
 
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
@@ -134,16 +138,20 @@ namespace Chess
 
                             if (!this.game.board.IsKingInCheck(this.Color))
                             {
-                                source.Content = "";
-                                //this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
-                                this.game.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
+                                if (!silentMode)
+                                {
+                                    source.Content = "";
+                                    //this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
+                                    this.game.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
 
-                                // Neuer Logeintrag
-                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
-                                log.OpponentMan = chessmanAtDest;
-                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
-                                this.game.logger.Add(log);
-                                this.game.View.movesList.Items.Add(log);
+                                    // Neuer Logeintrag
+                                    LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                    log.OpponentMan = chessmanAtDest;
+                                    log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
+                                    this.game.logger.Add(log);
+                                    this.game.View.movesList.Items.Add(log);
+                                }
+
                             }
                             // Zug Rückgängig machen, wenn sich nach dem Zug
                             // der König in Schach befinden würde
@@ -371,24 +379,5 @@ namespace Chess
             this.Current_position = last_pos;
             return false;
         }
-
-        //// Überprüft, ob sich der eigene König in Schach befindet
-        //public bool IsOwnKingInCheck()
-        //{
-        //    Square kings_pos = MainWindow.board.GetKingsPosition(this.Color);
-
-        //    foreach (Chessman chessman in MainWindow.board.chessman)
-        //    {
-        //        if (this.Color != chessman.Color)
-        //        {
-        //            if (chessman.IsMoveValid(kings_pos) && !chessman.IsMoveBlocked(kings_pos))
-        //            {
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //    return false;
-        //}
-
     }
 }

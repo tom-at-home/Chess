@@ -7,10 +7,13 @@ namespace Chess
     class BoardHelper
     {
         private Chessboard board;
+
+        private Factory factory;
         
         public BoardHelper(Chessboard board)
         {
             this.board = board;
+            this.factory = new Factory(this.board.game);
         }
 
         public void SetupBoard(string setup)
@@ -20,40 +23,40 @@ namespace Chess
                 case "new_game_setup":
 
                     // WEISSE SPIELFIGUREN
-                    PawnWhite pawn_w_1 = new PawnWhite(true, "A2", board.game);
-                    PawnWhite pawn_w_2 = new PawnWhite(true, "B2", board.game);
-                    PawnWhite pawn_w_3 = new PawnWhite(true, "C2", board.game);
-                    PawnWhite pawn_w_4 = new PawnWhite(true, "D2", board.game);
-                    PawnWhite pawn_w_5 = new PawnWhite(true, "E2", board.game);
-                    PawnWhite pawn_w_6 = new PawnWhite(true, "F2", board.game);
-                    PawnWhite pawn_w_7 = new PawnWhite(true, "G2", board.game);
-                    PawnWhite pawn_w_8 = new PawnWhite(true, "H2", board.game);
-                    Rook rook_w_1 = new Rook(true, "A1", board.game);
-                    Knight knight_w_1 = new Knight(true, "B1", board.game);
-                    Bishop bishop_w_1 = new Bishop(true, "C1", board.game);
-                    Queen queen_w = new Queen(true, "D1", board.game);
-                    King king_w = new King(true, "E1", board.game);
-                    Bishop bishop_w_2 = new Bishop(true, "F1", board.game);
-                    Knight knight_w_2 = new Knight(true, "G1", board.game);
-                    Rook rook_w_2 = new Rook(true, "H1", board.game);
+                    PawnWhite pawn_w_1 = factory.GetPawnWhite("A2");
+                    PawnWhite pawn_w_2 = factory.GetPawnWhite("B2");
+                    PawnWhite pawn_w_3 = factory.GetPawnWhite("C2");
+                    PawnWhite pawn_w_4 = factory.GetPawnWhite("D2");
+                    PawnWhite pawn_w_5 = factory.GetPawnWhite("E2");
+                    PawnWhite pawn_w_6 = factory.GetPawnWhite("F2");
+                    PawnWhite pawn_w_7 = factory.GetPawnWhite("G2");
+                    PawnWhite pawn_w_8 = factory.GetPawnWhite("H2");
+                    Rook rook_w_1 = factory.GetRook("white", "A1");
+                    Knight knight_w_1 = factory.GetKnight("white", "B1");
+                    Bishop bishop_w_1 = factory.GetBishop("white", "C1");
+                    Queen queen_w = factory.GetQueen("white", "D1");
+                    King king_w = factory.GetKing("white", "E1");
+                    Bishop bishop_w_2 = factory.GetBishop("white", "F1");
+                    Knight knight_w_2 = factory.GetKnight("white", "G1");
+                    Rook rook_w_2 = factory.GetRook("white", "H1");
 
                     // SCHWARZE SPIELFIGUREN
-                    PawnBlack pawn_b_1 = new PawnBlack(false, "A7", board.game);
-                    PawnBlack pawn_b_2 = new PawnBlack(false, "B7", board.game);
-                    PawnBlack pawn_b_3 = new PawnBlack(false, "C7", board.game);
-                    PawnBlack pawn_b_4 = new PawnBlack(false, "D7", board.game);
-                    PawnBlack pawn_b_5 = new PawnBlack(false, "E7", board.game);
-                    PawnBlack pawn_b_6 = new PawnBlack(false, "F7", board.game);
-                    PawnBlack pawn_b_7 = new PawnBlack(false, "G7", board.game);
-                    PawnBlack pawn_b_8 = new PawnBlack(false, "H7", board.game);
-                    Rook rook_b_1 = new Rook(false, "A8", board.game);
-                    Knight knight_b_1 = new Knight(false, "B8", board.game);
-                    Bishop bishop_b_1 = new Bishop(false, "C8", board.game);
-                    Queen queen_b = new Queen(false, "D8", board.game);
-                    King king_b = new King(false, "E8", board.game);
-                    Bishop bishop_b_2 = new Bishop(false, "F8", board.game);
-                    Knight knight_b_2 = new Knight(false, "G8", board.game);
-                    Rook rook_b_2 = new Rook(false, "H8", board.game);
+                    PawnBlack pawn_b_1 = factory.GetPawnBlack("A7");
+                    PawnBlack pawn_b_2 = factory.GetPawnBlack("B7");
+                    PawnBlack pawn_b_3 = factory.GetPawnBlack("C7");
+                    PawnBlack pawn_b_4 = factory.GetPawnBlack("D7");
+                    PawnBlack pawn_b_5 = factory.GetPawnBlack("E7");
+                    PawnBlack pawn_b_6 = factory.GetPawnBlack("F7");
+                    PawnBlack pawn_b_7 = factory.GetPawnBlack("G7");
+                    PawnBlack pawn_b_8 = factory.GetPawnBlack("H7");
+                    Rook rook_b_1 = factory.GetRook("black", "A8");
+                    Knight knight_b_1 = factory.GetKnight("black", "B8");
+                    Bishop bishop_b_1 = factory.GetBishop("black", "C8");
+                    Queen queen_b = factory.GetQueen("black", "D8");
+                    King king_b = factory.GetKing("black", "E8");
+                    Bishop bishop_b_2 = factory.GetBishop("black", "F8");
+                    Knight knight_b_2 = factory.GetKnight("black", "G8");
+                    Rook rook_b_2 = factory.GetRook("black", "H8");
 
                     // WEISSE SPIELFIGUREN
                     board.chessman.Add(pawn_w_1);
@@ -95,20 +98,20 @@ namespace Chess
 
                 case "promotion_setup":
                     // WEISSE SPIELFIGUREN
-                    PawnWhite promotion_pawn_w_1 = new PawnWhite(true, "A7", board.game);
-                    PawnWhite promotion_pawn_w_2 = new PawnWhite(true, "B7", board.game);
-                    King promotion_king_w = new King(true, "E1", board.game);
-                    Bishop promotion_bishop_w_2 = new Bishop(true, "F1", board.game);
-                    Knight promotion_knight_w_2 = new Knight(true, "G1", board.game);
-                    Rook promotion_rook_w_2 = new Rook(true, "H1", board.game);
+                    PawnWhite promotion_pawn_w_1 = factory.GetPawnWhite("A7");
+                    PawnWhite promotion_pawn_w_2 = factory.GetPawnWhite("B7");
+                    King promotion_king_w = factory.GetKing("white", "E1");
+                    Bishop promotion_bishop_w_2 = factory.GetBishop("white", "F1");
+                    Knight promotion_knight_w_2 = factory.GetKnight("white", "G1");
+                    Rook promotion_rook_w_2 = factory.GetRook("white", "H1");
 
                     // SCHWARZE SPIELFIGUREN
-                    PawnBlack promotion_pawn_b_1 = new PawnBlack(false, "A2", board.game);
-                    PawnBlack promotion_pawn_b_2 = new PawnBlack(false, "B2", board.game);
-                    King promotion_king_b = new King(false, "E8", board.game);
-                    Bishop promotion_bishop_b_2 = new Bishop(false, "F8", board.game);
-                    Knight promotion_knight_b_2 = new Knight(false, "G8", board.game);
-                    Rook promotion_rook_b_2 = new Rook(false, "H8", board.game);
+                    PawnBlack promotion_pawn_b_1 = factory.GetPawnBlack("A2");
+                    PawnBlack promotion_pawn_b_2 = factory.GetPawnBlack("B2");
+                    King promotion_king_b = factory.GetKing("black", "E8");
+                    Bishop promotion_bishop_b_2 = factory.GetBishop("black", "F8");
+                    Knight promotion_knight_b_2 = factory.GetKnight("black", "G8");
+                    Rook promotion_rook_b_2 = factory.GetRook("black", "H8");
 
                     // WEISSE SPIELFIGUREN
                     board.chessman.Add(promotion_pawn_w_1);
@@ -131,40 +134,40 @@ namespace Chess
                 case "en_passant_setup":
 
                     // WEISSE SPIELFIGUREN
-                    PawnWhite en_passant_pawn_w_1 = new PawnWhite(true, "A2", board.game);
-                    PawnWhite en_passant_pawn_w_2 = new PawnWhite(true, "B2", board.game);
-                    PawnWhite en_passant_pawn_w_3 = new PawnWhite(true, "C4", board.game);
-                    PawnWhite en_passant_pawn_w_4 = new PawnWhite(true, "D2", board.game);
-                    PawnWhite en_passant_pawn_w_5 = new PawnWhite(true, "E2", board.game);
-                    PawnWhite en_passant_pawn_w_6 = new PawnWhite(true, "F2", board.game);
-                    PawnWhite en_passant_pawn_w_7 = new PawnWhite(true, "G2", board.game);
-                    PawnWhite en_passant_pawn_w_8 = new PawnWhite(true, "H2", board.game);
-                    Rook en_passant_rook_w_1 = new Rook(true, "A1", board.game);
-                    Knight en_passant_knight_w_1 = new Knight(true, "B1", board.game);
-                    Bishop en_passant_bishop_w_1 = new Bishop(true, "C1", board.game);
-                    Queen en_passant_queen_w = new Queen(true, "D1", board.game);
-                    King en_passant_king_w = new King(true, "E1", board.game);
-                    Bishop en_passant_bishop_w_2 = new Bishop(true, "F1", board.game);
-                    Knight en_passant_knight_w_2 = new Knight(true, "G1", board.game);
-                    Rook en_passant_rook_w_2 = new Rook(true, "H1", board.game);
+                    PawnWhite en_passant_pawn_w_1 = factory.GetPawnWhite("A2");
+                    PawnWhite en_passant_pawn_w_2 = factory.GetPawnWhite("B2");
+                    PawnWhite en_passant_pawn_w_3 = factory.GetPawnWhite("C4");
+                    PawnWhite en_passant_pawn_w_4 = factory.GetPawnWhite("D2");
+                    PawnWhite en_passant_pawn_w_5 = factory.GetPawnWhite("E2");
+                    PawnWhite en_passant_pawn_w_6 = factory.GetPawnWhite("F2");
+                    PawnWhite en_passant_pawn_w_7 = factory.GetPawnWhite("G2");
+                    PawnWhite en_passant_pawn_w_8 = factory.GetPawnWhite("H2");
+                    Rook en_passant_rook_w_1 = factory.GetRook("white", "A1");
+                    Knight en_passant_knight_w_1 = factory.GetKnight("white", "B1");
+                    Bishop en_passant_bishop_w_1 = factory.GetBishop("white", "C1");
+                    Queen en_passant_queen_w = factory.GetQueen("white", "D1");
+                    King en_passant_king_w = factory.GetKing("white", "E1");
+                    Bishop en_passant_bishop_w_2 = factory.GetBishop("white", "F1");
+                    Knight en_passant_knight_w_2 = factory.GetKnight("white", "G1");
+                    Rook en_passant_rook_w_2 = factory.GetRook("white", "H1");
 
                     // SCHWARZE SPIELFIGUREN
-                    PawnBlack en_passant_pawn_b_1 = new PawnBlack(false, "A7", board.game);
-                    PawnBlack en_passant_pawn_b_2 = new PawnBlack(false, "B7", board.game);
-                    PawnBlack en_passant_pawn_b_3 = new PawnBlack(false, "C7", board.game);
-                    PawnBlack en_passant_pawn_b_4 = new PawnBlack(false, "D7", board.game);
-                    PawnBlack en_passant_pawn_b_5 = new PawnBlack(false, "E7", board.game);
-                    PawnBlack en_passant_pawn_b_6 = new PawnBlack(false, "F5", board.game);
-                    PawnBlack en_passant_pawn_b_7 = new PawnBlack(false, "G7", board.game);
-                    PawnBlack en_passant_pawn_b_8 = new PawnBlack(false, "H7", board.game);
-                    Rook en_passant_rook_b_1 = new Rook(false, "A8", board.game);
-                    Knight en_passant_knight_b_1 = new Knight(false, "B8", board.game);
-                    Bishop en_passant_bishop_b_1 = new Bishop(false, "C8", board.game);
-                    Queen en_passant_queen_b = new Queen(false, "D8", board.game);
-                    King en_passant_king_b = new King(false, "E8", board.game);
-                    Bishop en_passant_bishop_b_2 = new Bishop(false, "F8", board.game);
-                    Knight en_passant_knight_b_2 = new Knight(false, "G8", board.game);
-                    Rook en_passant_rook_b_2 = new Rook(false, "H8", board.game);
+                    PawnBlack en_passant_pawn_b_1 = factory.GetPawnBlack("A7");
+                    PawnBlack en_passant_pawn_b_2 = factory.GetPawnBlack("B7");
+                    PawnBlack en_passant_pawn_b_3 = factory.GetPawnBlack("C7");
+                    PawnBlack en_passant_pawn_b_4 = factory.GetPawnBlack("D7");
+                    PawnBlack en_passant_pawn_b_5 = factory.GetPawnBlack("E7");
+                    PawnBlack en_passant_pawn_b_6 = factory.GetPawnBlack("F5");
+                    PawnBlack en_passant_pawn_b_7 = factory.GetPawnBlack("G7");
+                    PawnBlack en_passant_pawn_b_8 = factory.GetPawnBlack("H7");
+                    Rook en_passant_rook_b_1 = factory.GetRook("black", "A8");
+                    Knight en_passant_knight_b_1 = factory.GetKnight("black", "B8");
+                    Bishop en_passant_bishop_b_1 = factory.GetBishop("black", "C8");
+                    Queen en_passant_queen_b = factory.GetQueen("black", "D8");
+                    King en_passant_king_b = factory.GetKing("black", "E8");
+                    Bishop en_passant_bishop_b_2 = factory.GetBishop("black", "F8");
+                    Knight en_passant_knight_b_2 = factory.GetKnight("black", "G8");
+                    Rook en_passant_rook_b_2 = factory.GetRook("black", "H8");
 
                     // WEISSE SPIELFIGUREN
                     board.chessman.Add(en_passant_pawn_w_1);

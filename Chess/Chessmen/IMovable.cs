@@ -13,7 +13,7 @@ namespace Chess.Chessmen
 
         bool IsMoveBlocked(Square dest);
 
-        void Move(Square source, Square dest);
+        void Move(Square source, Square dest, bool silentMode);
 
     }
 }

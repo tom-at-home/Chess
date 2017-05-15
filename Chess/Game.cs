@@ -107,11 +107,17 @@ namespace Chess
             // Prüfen, ob dem Spieler Schach geboten wird
             GetActivePlayer().IsKingInCheck = board.IsKingInCheck(GetActivePlayer().Color);
 
-            RefreshBoardIndicators();
+            // Prüfen, ob der Spieler Matt gesetzt wurde
+            if (GetActivePlayer().IsKingInCheck)
+            {
+                GetActivePlayer().IsKingCheckmate = board.IsKingCheckmate(GetActivePlayer().Color);
+            }
+
+            RefreshBoardStatus();
 
         }
 
-        private void RefreshBoardIndicators()
+        private void RefreshBoardStatus()
         {
             // Färbt die Anzeige des aktiven Spielers
             // Weiss respektive Schwarz
@@ -134,6 +140,14 @@ namespace Chess
             else
             {
                 this.view.info.Background = new SolidColorBrush(Color.FromRgb(0x5A, 0x7E, 0x8F));
+            }
+
+            // Färbt die Infoanzeige leuchtrot,
+            // wenn der aktive Spieler Matt gesetzt wurde
+            if (GetActivePlayer().IsKingCheckmate)
+            {
+                this.view.info.Background = Brushes.Red;
+                ShowInfo(GetActivePlayer().Color + " ist Schachmatt !");
             }
 
         }
@@ -185,7 +199,7 @@ namespace Chess
             }
 
             // Die Status-Anzeige des Schachbretts aktualisieren
-            RefreshBoardIndicators();
+            RefreshBoardStatus();
 
         }
 

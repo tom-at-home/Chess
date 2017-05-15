@@ -20,6 +20,13 @@ namespace Chess
             set { isKingInCheck = value; }
         }
 
+        private bool isKingCheckmate;
+        public bool IsKingCheckmate
+        {
+            get { return isKingCheckmate; }
+            set { isKingCheckmate = value; }
+        }
+
         private Chessman doubleStepMovedPawn;
         public Chessman DoubleStepMovedPawn
         {

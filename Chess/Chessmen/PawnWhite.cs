@@ -50,14 +50,17 @@ namespace Chess
             int dest_col = GetColumnCoordinate(dest);
             int dest_row = GetRowCoordinate(dest);
 
-            for (int i = source_row + 1; i <= dest_row; i++)
+            if(source_col == dest_col)
             {
-                if (this.game.board.GetChessmanAtSquare(this.game.board.GetSquare(GetSquarenameFromCoordinates(dest_col, i))) != null)
+                for (int i = source_row + 1; i <= dest_row; i++)
                 {
-                    return true;
+                    if (this.game.board.GetChessmanAtSquare(this.game.board.GetSquare(GetSquarenameFromCoordinates(dest_col, i))) != null)
+                    {
+                        return true;
+                    }
                 }
             }
-            
+
             return false;
         }
 
@@ -111,7 +114,7 @@ namespace Chess
             }
         }
 
-        public override void Move(Square source, Square dest)
+        public override void Move(Square source, Square dest, bool silentMode = false)
         {
             int source_col = Convert.ToInt16(Convert.ToChar(source.Name.Substring(0, 1)));
             int source_row = Convert.ToInt16(source.Name.Substring(1, 1));
@@ -130,32 +133,36 @@ namespace Chess
 
                         if (!this.game.board.IsKingInCheck(this.Color))
                         {
-                            source.Content = "";
-                            this.game.board.lastAction = "BEWEGE " + this.Desc
-                                    + " VON " + source.Name
-                                    + " AUF " + dest.Name;
-                            isMoved = true;
-
-                            // Neuer Logeintrag wird initialisiert
-                            LogEntry log = new LogEntry(this, last_pos, this.Current_position);
-
-                            // Zieht ein Bauer im Doppelschritt,
-                            // kann dieser unmittelbar danach 'en passant' geschlagen werden
-                            if (Math.Abs(source_row - dest_row) == 2)
+                            if (!silentMode)
                             {
-                                this.game.GetActivePlayer().DoubleStepMovedPawn = this;
+                                source.Content = "";
+                                this.game.board.lastAction = "BEWEGE " + this.Desc
+                                        + " VON " + source.Name
+                                        + " AUF " + dest.Name;
+                                isMoved = true;
+
+                                // Neuer Logeintrag wird initialisiert
+                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+
+                                // Zieht ein Bauer im Doppelschritt,
+                                // kann dieser unmittelbar danach 'en passant' geschlagen werden
+                                if (Math.Abs(source_row - dest_row) == 2)
+                                {
+                                    this.game.GetActivePlayer().DoubleStepMovedPawn = this;
+                                }
+                                // Zieht ein Bauer auf die letzte Linie, kann er umgewandelt werden
+                                if (dest_row == 8)
+                                {
+                                    // Ein modales Fenster zur Auswahl der neuen Figur wird geöffnet
+                                    PromotePawn();
+                                    // Der Logeintrag wird um die umgewandelte Figur ergänzt
+                                    log.PromotedIn = this.promotedIn;
+                                }
+                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
+                                this.game.logger.Add(log);
+                                this.game.View.movesList.Items.Add(log);
                             }
-                            // Zieht ein Bauer auf die letzte Linie, kann er umgewandelt werden
-                            if (dest_row == 8)
-                            {
-                                // Ein modales Fenster zur Auswahl der neuen Figur wird geöffnet
-                                PromotePawn();
-                                // Der Logeintrag wird um die umgewandelte Figur ergänzt
-                                log.PromotedIn = this.promotedIn;
-                            }
-                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
-                            this.game.logger.Add(log);
-                            this.game.View.movesList.Items.Add(log);        
+       
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
                         // der König in Schach befinden würde
@@ -185,24 +192,27 @@ namespace Chess
 
                         if (!this.game.board.IsKingInCheck(this.Color))
                         {
-                            source.Content = "";
-                            isMoved = true;
-                            this.game.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name;
-
-                            // Neuer Logeintrag wird initialisiert
-                            LogEntry log = new LogEntry(this, last_pos, this.Current_position);
-                            log.OpponentMan = opponent;
-
-                            // Zieht ein Bauer auf die letzte Linie, kann er umgewandelt werden
-                            if (dest_row == 8)
+                            if (!silentMode)
                             {
-                                PromotePawn();
-                                log.PromotedIn = this.promotedIn;
-                            }
+                                source.Content = "";
+                                isMoved = true;
+                                this.game.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name;
 
-                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
-                            this.game.logger.Add(log);
-                            this.game.View.movesList.Items.Add(log);
+                                // Neuer Logeintrag wird initialisiert
+                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                log.OpponentMan = opponent;
+
+                                // Zieht ein Bauer auf die letzte Linie, kann er umgewandelt werden
+                                if (dest_row == 8)
+                                {
+                                    PromotePawn();
+                                    log.PromotedIn = this.promotedIn;
+                                }
+
+                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
+                                this.game.logger.Add(log);
+                                this.game.View.movesList.Items.Add(log);
+                            }
 
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
@@ -227,18 +237,22 @@ namespace Chess
 
                         if (!this.game.board.IsKingInCheck(this.Color))
                         {
-                            source.Content = "";
-                            opponent_pos_square.Content = "";
-                            isMoved = true;
-                            this.game.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name + " IM VORBEIGEHEN (EN PASSANT)";
+                            if (!silentMode)
+                            {
+                                source.Content = "";
+                                opponent_pos_square.Content = "";
+                                isMoved = true;
+                                this.game.board.lastAction = this.Desc + " SCHLÄGT " + opponent.Desc + " AUF " + dest.Name + " IM VORBEIGEHEN (EN PASSANT)";
 
-                            // Neuer Logeintrag
-                            LogEntry log = new LogEntry(this, last_pos, this.Current_position);
-                            log.OpponentMan = opponent;
-                            log.TookEnPassant = true;
-                            log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
-                            this.game.logger.Add(log);
-                            this.game.View.movesList.Items.Add(log);
+                                // Neuer Logeintrag
+                                LogEntry log = new LogEntry(this, last_pos, this.Current_position);
+                                log.OpponentMan = opponent;
+                                log.TookEnPassant = true;
+                                log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
+                                this.game.logger.Add(log);
+                                this.game.View.movesList.Items.Add(log);
+                            }
+
                         }
                         // Zug Rückgängig machen, wenn sich nach dem Zug
                         // der König in Schach befinden würde
