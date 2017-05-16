@@ -169,48 +169,56 @@ namespace Chess
             GetActivePlayer().timer.Stop();
             this.View.movesList.Items.Clear();
 
-            FileStream fileStream = new FileStream("chess.sav", FileMode.Open);
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            this.white = (Player)formatter.Deserialize(fileStream);
-            this.black = (Player)formatter.Deserialize(fileStream);
-            this.board.chessman = (List<Chessman>)formatter.Deserialize(fileStream);
-            this.logger.logs = (List<LogEntry>)formatter.Deserialize(fileStream);
-
-            fileStream.Close();
-
-            // Nach dem Laden den Schachfiguren die Eigenschaft - Game - neu zuweisen
-            // und die Figuren auf dem Brett neu aufstellen
-            foreach (Chessman chessman in this.board.chessman)
+            if (File.Exists("chess.sav"))
             {
-                chessman.Game = this;
+                FileStream fileStream = new FileStream("chess.sav", FileMode.Open);
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                this.white = (Player)formatter.Deserialize(fileStream);
+                this.black = (Player)formatter.Deserialize(fileStream);
+                this.board.chessman = (List<Chessman>)formatter.Deserialize(fileStream);
+                this.logger.logs = (List<LogEntry>)formatter.Deserialize(fileStream);
+
+                fileStream.Close();
+
+                // Nach dem Laden den Schachfiguren die Eigenschaft - Game - neu zuweisen
+                // und die Figuren auf dem Brett neu aufstellen
+                foreach (Chessman chessman in this.board.chessman)
+                {
+                    chessman.Game = this;
+                }
+
+                board.Clear();
+                board.DisplayChessman();
+                this.ShowInfo("");
+
+                // Timer neu zuweisen
+                white.timer.display = this.view.timer_lbl_1;
+                black.timer.display = this.view.timer_lbl_2;
+
+                white.timer.Reset();
+                black.timer.Reset();
+
+                white.timer.RefreshDisplay();
+                black.timer.RefreshDisplay();
+
+                GetActivePlayer().timer.Start();
+
+                // Log-Einträge ( Historie der Züge )
+                // der Liste wieder neu hinzufügen
+                foreach (LogEntry log in this.logger.logs)
+                {
+                    this.View.movesList.Items.Add(log);
+                }
+
+                // Die Status-Anzeige des Schachbretts aktualisieren
+                RefreshBoardStatus();
+            }
+            else
+            {
+                this.ShowInfo("KEIN GESPEICHERTES SPIEL VORHANDEN");
             }
 
-            board.Clear();
-            board.DisplayChessman();
-            this.ShowInfo("");
-
-            // Timer neu zuweisen
-            white.timer.display = this.view.timer_lbl_1;
-            black.timer.display = this.view.timer_lbl_2;
-
-            white.timer.Reset();
-            black.timer.Reset();
-
-            white.timer.RefreshDisplay();
-            black.timer.RefreshDisplay();
-
-            GetActivePlayer().timer.Start();
-
-            // Log-Einträge ( Historie der Züge )
-            // der Liste wieder neu hinzufügen
-            foreach (LogEntry log in this.logger.logs)
-            {
-                this.View.movesList.Items.Add(log);
-            }
-
-            // Die Status-Anzeige des Schachbretts aktualisieren
-            RefreshBoardStatus();
 
         }
 

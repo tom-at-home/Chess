@@ -36,11 +36,6 @@ namespace Chess
             game.Save_Game();
         }
 
-        private void Selected_Listitem(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            info.Content = "Liste geklickt";
-        }
-
         private void Selection_DClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             int pos = movesList.SelectedIndex;

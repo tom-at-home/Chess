@@ -55,7 +55,7 @@
         <!-- ANZEIGE DER ZÜGE -->
         <Canvas Width="150" Height="370" Canvas.Top="85" Canvas.Left="450">
             <WrapPanel Name="moves_region_panel" HorizontalAlignment="Center" Height="370" VerticalAlignment="Top" Width="150">
-                <ListView x:Name="movesList" Height="370" Width="150" FontSize="14" Background="WhiteSmoke" BorderThickness="0" IsSynchronizedWithCurrentItem="False" MouseLeftButtonDown="Selected_Listitem" SelectionChanged="List_Selection_Changed" MouseDoubleClick="Selection_DClick">
+                <ListView x:Name="movesList" Height="370" Width="150" FontSize="14" Background="WhiteSmoke" BorderThickness="0" IsSynchronizedWithCurrentItem="False" MouseDoubleClick="Selection_DClick">
                     <ListView.View>
                         <GridView>
                             <!--<GridView.Columns>
