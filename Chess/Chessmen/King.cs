@@ -10,8 +10,6 @@ namespace Chess
     class King : Chessman
     {
 
-        private bool isMoved = false;
-
         // Speichert, ob der König bereits eine Rochade ausgeführt hat
         private bool HasPerformedCastling = false;
 
@@ -135,7 +133,7 @@ namespace Chess
             int dest_col = GetColumnCoordinate(dest);
             int dest_row = GetRowCoordinate(dest);
 
-            // Prüft auf gültigen Zug: VERTIKAL oder HORIZONTAL oder DIAGONAL
+            // Prüft auf gültigen Zug: VERTIKAL oder HORIZONTAL oder DIAGONAL oder ROCHADE
             // bei einer Zugweite von genau einem Feld
             return (
                 (source_col == dest_col && Math.Abs(source_row - dest_row) == 1) ||

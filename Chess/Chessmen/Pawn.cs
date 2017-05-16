@@ -7,7 +7,6 @@ namespace Chess
     [Serializable()]
     public abstract class Pawn : Chessman
     {
-        public bool isMoved = false;
 
         public Chessman promotedIn;
 

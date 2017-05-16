@@ -52,6 +52,8 @@ namespace Chess
                     square.Width = 50;
                     square.Height = 50;
 
+                    // TESTS MIT STYLE - ELEMENTEN
+
                     //square.BorderThickness = Control.BorderThicknessProperty.;
                     //square.OverridesDefaultStyle = true;
                     //square.BorderThickness = new Thickness(0);
@@ -105,6 +107,8 @@ namespace Chess
                     squares.Add(square);
                 }
             }
+        
+            // DIVERSE SCHACHBRETT - AUFSTELLUNGEN //
 
             helper.SetupBoard("new_game_setup");
 
@@ -112,12 +116,10 @@ namespace Chess
 
             //helper.SetupBoard("en_passant_setup");
 
-            // TODO
-
             //helper.SetupBoard("castling_setup");
 
-
             DisplayChessman();
+
         }
 
         public void Select_Field(Square selected)

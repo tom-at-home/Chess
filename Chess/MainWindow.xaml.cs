@@ -4,6 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Media;
 using System;
+using System.Windows.Controls;
 
 namespace Chess
 {
@@ -35,5 +36,18 @@ namespace Chess
             game.Save_Game();
         }
 
+        private void Selected_Listitem(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            info.Content = "Liste geklickt";
+        }
+
+        private void Selection_DClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            int pos = movesList.SelectedIndex;
+            string desc = this.game.logger.Get(movesList.SelectedIndex).OwnMan.Desc;
+            string cpos = this.game.logger.Get(movesList.SelectedIndex).OwnMan.Current_position;
+
+            info.Content = "Liste selektiert: " + desc + " auf " + cpos;
+        }
     }
 }

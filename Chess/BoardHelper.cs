@@ -207,6 +207,31 @@ namespace Chess
 
                     break;
 
+                case "castling_setup":
+
+                    // WEISSE SPIELFIGUREN
+
+                    Rook castling_rook_w_1 = factory.GetRook("white", "A1");
+                    King castling_king_w = factory.GetKing("white", "E1");
+                    Rook castling_rook_w_2 = factory.GetRook("white", "H1");
+
+                    // SCHWARZE SPIELFIGUREN
+                    Rook castling_rook_b_1 = factory.GetRook("black", "A8");
+                    King castling_king_b = factory.GetKing("black", "E8");
+                    Rook castling_rook_b_2 = factory.GetRook("black", "H8");
+
+                    // WEISSE SPIELFIGUREN
+                    board.chessman.Add(castling_rook_w_1);
+                    board.chessman.Add(castling_rook_w_2);
+                    board.chessman.Add(castling_king_w);
+
+                    // SCHWARZE SPIELFIGUREN
+                    board.chessman.Add(castling_rook_b_1);
+                    board.chessman.Add(castling_rook_b_2);
+                    board.chessman.Add(castling_king_b);
+
+                    break;
+
             }
         }
     }

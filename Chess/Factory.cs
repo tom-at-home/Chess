@@ -11,6 +11,8 @@ namespace Chess
     class Factory
     {
 
+        // DIESE KLASSE ERZEUGT INSTANZEN DER SCHACHFIGUREN UND LÖST DABEI DEREN ABHÄNGIGKEITEN AUF
+
         Game game;
 
         public Factory(Game game)

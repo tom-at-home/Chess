@@ -64,6 +64,13 @@ namespace Chess
             set { notationCode = value; }
         }
 
+        protected bool isMoved;
+        public bool IsMoved
+        {
+            get { return isMoved; }
+            set { isMoved = value; }
+        }
+
         public Chessman(bool isWhite, string pos, Game game)
         {
             this.IsWhite = isWhite;
@@ -109,6 +116,8 @@ namespace Chess
                                         + " VON " + source.Name
                                         + " AUF " + dest.Name;
 
+                                this.IsMoved = true;
+
                                 // Neuer Logeintrag
                                 LogEntry log = new LogEntry(this, last_pos, this.Current_position);
                                 log.PlacedInCheck = this.game.board.IsKingInCheck(this.game.GetWaitingPlayer().Color);
@@ -143,6 +152,8 @@ namespace Chess
                                     source.Content = "";
                                     //this.Current_position = GetSquarenameFromCoordinates(dest_col, dest_row);
                                     this.game.board.lastAction = this.Desc + " SCHLÄGT " + chessmanAtDest.Desc + " AUF " + dest.Name;
+
+                                    this.IsMoved = true;
 
                                     // Neuer Logeintrag
                                     LogEntry log = new LogEntry(this, last_pos, this.Current_position);

@@ -76,7 +76,7 @@ namespace Chess
         public void RefreshDisplay()
         {
             played_time = start_time.AddSeconds(played_seconds);
-            display.Content = played_time.ToString("HH:mm:ss");
+            display.Content = played_time.ToString("HH:mm:ss");            
         }
     }
 }

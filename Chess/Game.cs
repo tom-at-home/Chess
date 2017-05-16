@@ -105,7 +105,6 @@ namespace Chess
                 black.IsWaiting = true;
             }
 
-            GetActivePlayer().timer.Start();
             GetWaitingPlayer().timer.Stop();
 
             // Der Bauer kann nur unmittelbar nach seinem Doppelzug en passant geschlagen werden,
@@ -120,6 +119,11 @@ namespace Chess
             if (GetActivePlayer().IsKingInCheck)
             {
                 GetActivePlayer().IsKingCheckmate = board.IsKingCheckmate(GetActivePlayer().Color);
+            }
+
+            if (!GetActivePlayer().IsKingCheckmate)
+            {
+                GetActivePlayer().timer.Start();
             }
 
             RefreshBoardStatus();

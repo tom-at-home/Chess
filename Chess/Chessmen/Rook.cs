@@ -10,13 +10,6 @@ namespace Chess
     class Rook : Chessman
     {
 
-        private bool isMoved;
-        public bool IsMoved
-        {
-            get { return isMoved; }
-            set { isMoved = value; }
-        }
-
         public Rook(bool isWhite, string pos, Game game) : base(isWhite, pos, game)
         {
 
