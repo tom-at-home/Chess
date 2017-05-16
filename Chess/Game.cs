@@ -3,8 +3,6 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Windows;
 
 namespace Chess
 {
@@ -166,11 +164,12 @@ namespace Chess
         internal void Load_Game()
         {
 
-            GetActivePlayer().timer.Stop();
-            this.View.movesList.Items.Clear();
-
             if (File.Exists("chess.sav"))
             {
+
+                GetActivePlayer().timer.Stop();
+                this.View.movesList.Items.Clear();
+
                 FileStream fileStream = new FileStream("chess.sav", FileMode.Open);
                 BinaryFormatter formatter = new BinaryFormatter();
 
