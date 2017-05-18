@@ -14,8 +14,8 @@ namespace Chess
 
         Game game;
 
-        double last_top_pos;
-        double last_left_pos;
+        private double last_top_pos;
+        private double last_left_pos;
 
         public MainWindow()
         {
@@ -42,7 +42,7 @@ namespace Chess
 
         private void New_Game(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult decision = MessageBox.Show("NEUES SPIEL STARTEN?", "BITTE BESTÄTIGEN", MessageBoxButton.YesNo);
+            MessageBoxResult decision = MessageBox.Show("NEUES SPIEL STARTEN ?", "BITTE BESTÄTIGEN", MessageBoxButton.YesNo);
 
             if(decision == MessageBoxResult.Yes)
             {
@@ -69,7 +69,7 @@ namespace Chess
             UpdatePositionValues();
         }
 
-        // Noch sehr experimentell
+        // Erste Tests: Rücksprung zum bestimmten Logeintrag
         private void Selection_DClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             int pos = movesList.SelectedIndex;

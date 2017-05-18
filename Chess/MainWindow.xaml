@@ -7,9 +7,11 @@
         mc:Ignorable="d"
         Title="MyChess" SizeToContent="WidthAndHeight"
         x:Name="Hauptfenster"
-        Left="250"
-        Top="250"        
-        ResizeMode="CanMinimize" Closing="Window_Closing">
+        Left="450"
+        Top="150"        
+        ResizeMode="CanMinimize" 
+        Closing="Window_Closing"
+        Icon="Images\dame.png">
 
     <Window.Resources>
         <Style x:Key="MenuButton" TargetType="Button">
