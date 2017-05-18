@@ -7,10 +7,12 @@
         mc:Ignorable="d"
         Title="MyChess" SizeToContent="WidthAndHeight"
         x:Name="Hauptfenster"
-        ResizeMode="CanMinimize">
+        Left="250"
+        Top="250"        
+        ResizeMode="CanMinimize" Closing="Window_Closing">
 
     <Window.Resources>
-        <Style x:Key="LoadSaveButton" TargetType="Button">
+        <Style x:Key="MenuButton" TargetType="Button">
             <Setter Property="Background" Value="#5A7E8F"/>
             <Setter Property="Foreground" Value="DarkKhaki"/>
             <Setter Property="FontSize" Value="18"/>
@@ -287,8 +289,9 @@
         <!-- LOAD / SAVE BUTTONS ( UNTEN ) -->
         <Canvas Width="600" Height="45" Canvas.Top="495" Canvas.Left="0" Background="#5A7E8F" >
             <WrapPanel Width="600" Height="45">
-                <Button Name="SaveBtn" Style="{StaticResource LoadSaveButton}" Width="160" Height="29" Content="SPIEL SPEICHERN" Margin="40, 8,220, 0" Click="Save_Game"></Button>
-                <Button Name="LoadBtn" Style="{StaticResource LoadSaveButton}" Width="160" Height="29" Content="SPIEL LADEN" Margin="0, 8, 0, 0" Click="Load_Game"></Button>
+                <Button Name="NewGameBtn" Style="{StaticResource MenuButton}" Width="160" Height="29" Content="NEUES SPIEL" Margin="30, 8, 0, 0" Click="New_Game"></Button>
+                <Button Name="SaveBtn" Style="{StaticResource MenuButton}" Width="160" Height="29" Content="SPIEL SPEICHERN" Margin="30, 8, 30, 0" Click="Save_Game"></Button>
+                <Button Name="LoadBtn" Style="{StaticResource MenuButton}" Width="160" Height="29" Content="SPIEL LADEN" Margin="0, 8, 0, 0" Click="Load_Game"></Button>
             </WrapPanel>
         </Canvas>
 
